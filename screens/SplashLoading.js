@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, StyleSheet, Image, ImageBackground } from "react-native";
+import { Text, View, StyleSheet, Image, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import LoadingProgress from "../components/LoadingProgress";
 
 const propTypes = {};
 
@@ -42,6 +43,15 @@ function SplashLoading(props) {
             />
           </View>
         </LinearGradient>
+        <LoadingProgress
+          percent={50}
+          radius={30}
+          borderWidth={4}
+          shadowColor="rgba(0, 0, 0, 0.6)"
+          bgColor="#292231"
+        >
+          <Text style={{ fontSize: 10, color: "#9197e1" }}>{"50%"}</Text>
+        </LoadingProgress>
       </ImageBackground>
     </View>
   );
