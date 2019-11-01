@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, View, ViewPropTypes, I18nManager } from "react-native";
+import { StyleSheet, View, ViewPropTypes, I18nManager} from "react-native";
 
 const ViewPropTypesStyle = ViewPropTypes
   ? ViewPropTypes.style
@@ -45,6 +45,12 @@ function percentToDegrees(percent) {
 }
 
 export default class LoadingProgress extends Component {
+  constructor() {
+    super();
+    this.state = {
+      percent: 0
+    }
+  }
   static propTypes = {
     color: PropTypes.string,
     shadowColor: PropTypes.string,
@@ -68,7 +74,12 @@ export default class LoadingProgress extends Component {
 
   computeDerivedState() {
     const { props } = this;
-    const percent = Math.max(Math.min(100, props.percent), 0);
+    const handleIncrement = () => setTimeout(() =>{
+      this.setState({
+        percent: this.state.percent + 1
+      })},100);
+
+    const percent = Math.max(Math.min( handleIncrement()));
     const needHalfCircle2 = percent > 50;
     let halfCircle1Degree;
     let halfCircle2Degree;
@@ -187,6 +198,7 @@ export default class LoadingProgress extends Component {
           {this.renderHalfCircle(halfCircle1Degree)}
           {this.renderHalfCircle(halfCircle2Degree, halfCircle2Styles)}
           {this.renderInnerCircle()}
+
         </View>
       </View>
     );

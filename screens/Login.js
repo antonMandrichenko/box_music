@@ -10,7 +10,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import firebase from "../config/firebase";
+// import firebase from "../config/firebase";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { updateEmail, updatePassword, loginAction } from '../actions/user'
@@ -325,10 +325,6 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   circleInnerImage: {
-    width: 120,
-    height: 140,
-    alignItems: "center",
-    justifyContent: "center",
     transform: [{ rotate: "45deg" }],
   },
   login: {

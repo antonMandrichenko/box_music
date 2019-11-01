@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import { Text, View, StyleSheet, Image, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import LoadingProgress from "../components/LoadingProgress";
+import AnimatedProgressProvider from "../components/AnimatedProgressProvider";
+import {easeQuadInOut} from "d3-ease";
+import {buildStyles, CircularProgressbar} from "react-circular-progressbar";
 
 const propTypes = {};
 
@@ -40,6 +43,7 @@ function SplashLoading(props) {
                   ? require("../assets/images/vybn.png")
                   : require("../assets/images/vybn.png")
               }
+              style={styles.circleInnerImage}
             />
           </View>
         </LinearGradient>
@@ -50,7 +54,24 @@ function SplashLoading(props) {
           shadowColor="rgba(0, 0, 0, 0.6)"
           bgColor="#292231"
         >
-          <Text style={{ fontSize: 10, color: "#9197e1" }}>{"50%"}</Text>
+          <AnimatedProgressProvider
+              valueStart={0}
+              valueEnd={100}
+              duration={1}
+              easingFunction={easeQuadInOut}
+          >
+            {value => {
+              const roundedValue = Math.round(value);
+              return (
+                  <CircularProgressbar
+                      style={{color: "#ffffff", fontSize: 29}}
+
+                      value={value}
+                      text={`${roundedValue}%`}
+                  />
+              );
+            }}
+          </AnimatedProgressProvider>
         </LoadingProgress>
       </ImageBackground>
     </View>
@@ -69,7 +90,8 @@ const styles = StyleSheet.create({
     height: 185,
     borderRadius: 100,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    transform: [{ rotate: "-45deg" }]
   },
   circleInner: {
     width: 175,
@@ -78,6 +100,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#292930",
     alignItems: "center",
     justifyContent: "center"
+  },
+  circleInnerImage: {
+    transform: [{ rotate: "45deg" }]
   }
 });
 

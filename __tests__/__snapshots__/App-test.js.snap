@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App renders the loading screen 1`] = `
+exports[`Stripe renders the loading screen 1`] = `
 <AppLoading
   onError={[Function]}
   onFinish={[Function]}
@@ -8,7 +8,7 @@ exports[`App renders the loading screen 1`] = `
 />
 `;
 
-exports[`App renders the root without loading screen 1`] = `
+exports[`Stripe renders the root without loading screen 1`] = `
 <View
   style={
     Object {
