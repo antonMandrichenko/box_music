@@ -5,13 +5,14 @@ import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import AppNavigator from './navigation/AppNavigator';
-import reducer from './reducers';
+import reducer from './reducers'
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
 const middleware = applyMiddleware(thunkMiddleware, logger);
 const store = createStore(reducer, middleware);
+import firebase from 'firebase';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);

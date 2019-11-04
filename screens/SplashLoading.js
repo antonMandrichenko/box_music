@@ -3,78 +3,142 @@ import PropTypes from "prop-types";
 import { Text, View, StyleSheet, Image, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import LoadingProgress from "../components/LoadingProgress";
-import AnimatedProgressProvider from "../components/AnimatedProgressProvider";
-import {easeQuadInOut} from "d3-ease";
-import {buildStyles, CircularProgressbar} from "react-circular-progressbar";
+import AnimatedCircularProgress from '../components/AnimatedCircularProgress'
 
 const propTypes = {};
 
 function SplashLoading(props) {
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={
-          __DEV__
-            ? require("../assets/images/background.png")
-            : require("../assets/images/background.png")
-        }
-        style={{
-          width: "100%",
-          height: "100%",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundPosition: "center"
-        }}
-      >
-        <LinearGradient
-          colors={[
-            "rgba(151,232,243,1)",
-            "rgba(50,149,182,1)",
-            "rgba(204,63,223,1)",
-            "rgba(255,127,136,1)"
-          ]}
-          style={styles.circle}
-          locations={[0, 0.2, 0.8, 1]}
-        >
-          <View style={styles.circleInner}>
-            <Image
-              source={
-                __DEV__
-                  ? require("../assets/images/vybn.png")
-                  : require("../assets/images/vybn.png")
-              }
-              style={styles.circleInnerImage}
-            />
-          </View>
-        </LinearGradient>
-        <LoadingProgress
-          percent={50}
-          radius={30}
-          borderWidth={4}
-          shadowColor="rgba(0, 0, 0, 0.6)"
-          bgColor="#292231"
-        >
-          <AnimatedProgressProvider
-              valueStart={0}
-              valueEnd={100}
-              duration={1}
-              easingFunction={easeQuadInOut}
-          >
-            {value => {
-              const roundedValue = Math.round(value);
-              return (
-                  <CircularProgressbar
-                      style={{color: "#ffffff", fontSize: 29}}
-
-                      value={value}
-                      text={`${roundedValue}%`}
-                  />
-              );
+      <View style={styles.container}>
+        <ImageBackground
+            source={
+              __DEV__
+                  ? require("../assets/images/background.png")
+                  : require("../assets/images/background.png")
+            }
+            style={{
+              width: "100%",
+              height: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundPosition: "center"
             }}
-          </AnimatedProgressProvider>
-        </LoadingProgress>
-      </ImageBackground>
-    </View>
+        >
+          <LinearGradient
+              colors={[
+                "rgba(151,232,243,1)",
+                "rgba(50,149,182,1)",
+                "rgba(204,63,223,1)",
+                "rgba(255,127,136,1)"
+              ]}
+              style={styles.circle}
+              locations={[0, 0.2, 0.8, 1]}
+          >
+            <View style={styles.circleInner}>
+              <Image
+                  source={
+                    __DEV__
+                        ? require("../assets/images/vybn.png")
+                        : require("../assets/images/vybn.png")
+                  }
+              />
+            </View>
+          </LinearGradient>
+          <LinearGradient
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              colors={[
+                "#211725",
+                "#382742",
+                "#211725"
+              ]}
+              style={{
+                width: 78,
+                height: 78,
+                borderRadius: 50,
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+              locations={[0, 0.5, 1]}
+          >
+            <View
+            style={{
+              borderRadius: 50,
+              alignItems: "center",
+              justifyContent: "center",
+              position:"relative"
+            }}>
+              <LinearGradient
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}
+                  colors={[
+                    "#211725",
+                    "#382742",
+                    "#211725"
+                  ]}
+                  style={{
+                    width: 58,
+                    height: 58,
+                    borderRadius: 50,
+                    position: "absolute",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                  locations={[0, 0.5, 1]}
+              >
+                <LinearGradient
+                    start={{x: 0, y: 0}}
+                    end={{x: 1, y: 0}}
+                    colors={[
+                      "#211725",
+                      "#382742",
+                      "#211725"
+                    ]}
+                    style={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: 50,
+                      position: "absolute",
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}
+                    locations={[0, 0.5, 1]}
+                >
+                </LinearGradient>
+              </LinearGradient>
+              <AnimatedCircularProgress
+                  size={68}
+                  width={5}
+                  prefill={0}
+                  fill={100}
+                  duration={3000}
+                  onAnimationComplete={() => props.navigation.navigate('Login')}
+                  backgroundColor="#3a2e42"
+                  tintColor="#7a5dd5"
+                  style={{
+                    transform: [
+                      { rotate: `-90deg` },
+                    ],
+                  }}
+              >
+                {
+                  (fill) => (
+                    <Text style={{
+                      color: "#7a5dd5",
+                      fontSize: 9,
+                      transform: [
+                        { rotate: `90deg` },
+                      ],
+                    }}>
+                      { `${fill.toFixed(0)}%` }
+                    </Text>
+                  )
+                }
+              </AnimatedCircularProgress>
+            </View>
+          </LinearGradient>
+        </ImageBackground>
+      </View>
   );
 }
 
@@ -91,7 +155,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
-    transform: [{ rotate: "-45deg" }]
+    marginBottom: 130
   },
   circleInner: {
     width: 175,
@@ -100,9 +164,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#292930",
     alignItems: "center",
     justifyContent: "center"
-  },
-  circleInnerImage: {
-    transform: [{ rotate: "45deg" }]
   }
 });
 

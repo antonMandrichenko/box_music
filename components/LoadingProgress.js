@@ -48,7 +48,7 @@ export default class LoadingProgress extends Component {
   constructor() {
     super();
     this.state = {
-      percent: 0
+      percent: 10
     }
   }
   static propTypes = {
@@ -74,12 +74,13 @@ export default class LoadingProgress extends Component {
 
   computeDerivedState() {
     const { props } = this;
-    const handleIncrement = () => setTimeout(() =>{
+    const handleIncrement = () => setTimeout(() => {
+
       this.setState({
         percent: this.state.percent + 1
       })},100);
 
-    const percent = Math.max(Math.min( handleIncrement()));
+    const percent = Math.max(Math.min(1));
     const needHalfCircle2 = percent > 50;
     let halfCircle1Degree;
     let halfCircle2Degree;

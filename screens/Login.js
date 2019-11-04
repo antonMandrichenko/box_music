@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Text,
@@ -7,13 +7,14 @@ import {
   Image,
   ImageBackground,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  BackHandler
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-// import firebase from "../config/firebase";
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { updateEmail, updatePassword, loginAction } from '../actions/user'
+import firebase from "../config/firebase";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateEmail, updatePassword, loginAction } from '../actions/user';
 
 const propTypes = {};
 
@@ -21,14 +22,21 @@ function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [forgotPassword, setForgotPassword] = useState(false);
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState();
   const [signupFacebook, setSignupFacebook] = useState(false);
   const [signupGoogle, setSignupGoogle] = useState(false);
-  const [signup, setSignup] = useState(false);
-
+  const [signup, setSignup] = useState('');
+  const [goback, setgoBack] = useState(false);
+  const handleBackButtonClick = () => {
+    setgoBack(props.navigation.goBack());
+    return true;
+  }
   useEffect(() => {
-    setLogin(loginAction)
-  }, []);
+    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick); // works best when the goBack is async
+    return () => {
+    BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+    };
+  }, [])
 
   return (
       <View style={styles.container}>
@@ -91,7 +99,7 @@ function Login(props) {
             </View>
             <TextInput
                 style={styles.input}
-                onChangeText={email => setEmail(email)}
+                onChangeText={input => setEmail(input)}
                 value={email}
                 placeholder="Enter your email"
                 placeholderTextColor="#abaed0"
@@ -125,14 +133,14 @@ function Login(props) {
             <TextInput
                 secureTextEntry={true}
                 style={styles.input}
-                onChangeText={password => setPassword(password)}
+                onChangeText={input => setPassword(input)}
                 value={password}
                 placeholder="Enter password"
                 placeholderTextColor="#abaed0"
             />
           </LinearGradient>
           <TouchableOpacity
-              onPress={() => setForgotPassword()}>
+              onPress={() => setForgotPassword(props.navigation.navigate('EmailConfirm'))}>
             <Text
                 style={{
                   color: "#abaed0",
@@ -144,8 +152,10 @@ function Login(props) {
           </TouchableOpacity>
           <TouchableOpacity
               onPress={() => setLogin(
-                  firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-                    alert(error)
+                  firebase.auth().signInWithEmailAndPassword(email, password)
+                      .then(setSignup(props.navigation.navigate('ChooseChannel')))
+                      .catch(function (error) {
+                      alert(error)
                   })
               )}
           >
@@ -386,9 +396,8 @@ const styles = StyleSheet.create({
 });
 
 Login.propTypes = propTypes;
-
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ updateEmail, updatePassword }, dispatch)
+  return bindActionCreators({ updateEmail, updatePassword, loginAction }, dispatch)
 }
 
 const mapStateToProps = (state) => {

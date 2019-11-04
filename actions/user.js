@@ -7,14 +7,28 @@ export const updateEmail = (email) => {
 export const updatePassword = (password) => {
 	return {type: 'UPDATE_PASSWORD', payload: password}
 }
+export const updateUsername = (username) => {
+  return {type: 'UPDATE_USERNAME', payload: username}
+}
 
 export const loginAction = () => {
   return async (dispatch, getState) => {
     try {
       const { email, password } = getState().user
-      console.log(email, password)
       const response = await firebase.auth().signInWithEmailAndPassword(email, password)
-      console.log(response)
+      dispatch({type: 'LOGIN', payload: response.user})
+    } catch (e) {
+      alert(e)
+    }
+  }
+}
+
+export const signup = () => {
+  return async (dispatch, getState) => {
+    try {
+      const { email, password } = getState().user
+      const response = await firebase.auth().createUserWithEmailAndPassword(email, password)
+      dispatch({type: 'SIGNUP', payload: response.user})
     } catch (e) {
       alert(e)
     }

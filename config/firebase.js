@@ -6,11 +6,11 @@ var firebaseConfig = {
   databaseURL: "https://crypto-react-native-new.firebaseio.com",
   projectId: "crypto-react-native-new",
   storageBucket: "crypto-react-native-new.appspot.com",
-  messagingSenderId: "sk_test_ARheZyTVUBvISYKLeENdPaXg000YUHloSf",
-  appId: "1:1005128051245:web:8e99a391d79044b9af66a4",
-  measurementId: "G-WVXT5WV9H2"
+  messagingSenderId: "1005128051245",
+  appId: "1:1005128051245:web:86a57e7b2034d66daf66a4",
+  measurementId: "G-LFTG1VVZCP"
 };
+
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-export default firebase;
+const  initialize = firebase.initializeApp(firebaseConfig);
+export default initialize;
