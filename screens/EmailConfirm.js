@@ -10,7 +10,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-// import firebase from "../config/firebase";
+import firebase from "../config/firebase";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { updateEmail, updatePassword, loginAction } from '../actions/user'
@@ -19,13 +19,23 @@ const propTypes = {};
 
 function Login(props) {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [forgotPassword, setForgotPassword] = useState(false);
   const [login, setLogin] = useState(false);
   const [signupFacebook, setSignupFacebook] = useState(false);
   const [signupGoogle, setSignupGoogle] = useState(false);
   const [signup, setSignup] = useState(false);
 
+    const handlePasswordReset = async (values, actions) => {
+        const { email } = email;
+        try {
+            await this.props.firebase.passwordReset(email);
+
+            console.log('Password reset email sent successfully')
+            this.props.navigation.navigate('Login')
+        } catch (error) {
+            actions.setFieldError('general', error.message)
+        }
+
+    }
   useEffect(() => {
     setLogin(loginAction)
   }, []);
@@ -105,6 +115,9 @@ function Login(props) {
                 value={email}
                 placeholder="Enter your email"
                 placeholderTextColor="#abaed0"
+                onSubmit={(values, actions) => {
+                    handlePasswordReset(values, actions)
+                }}
             />
           </LinearGradient>
           <Text style={{
@@ -119,11 +132,11 @@ function Login(props) {
           </Text>
           <View style={styles.blackLine} />
           <TouchableOpacity
-              onPress={() => setLogin(
-                  firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+              onPress={() =>
+                  firebase.auth().sendPasswordResetEmail(email).catch(function (error) {
                     alert(error)
                   })
-              )}
+              }
           >
             <LinearGradient
                 style={{

@@ -26,18 +26,45 @@ function Login(props) {
   const [signupFacebook, setSignupFacebook] = useState(false);
   const [signupGoogle, setSignupGoogle] = useState(false);
   const [signup, setSignup] = useState('');
-  const [goback, setgoBack] = useState(false);
-  const handleBackButtonClick = () => {
-    setgoBack(props.navigation.goBack());
-    return true;
-  }
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick); // works best when the goBack is async
-    return () => {
-    BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
-    };
-  }, [])
+  const [goback, setgoBack] = useState('hardwareBackPress');
+  const [errorState, setErrorState] = useState('');
 
+  const handleBackButtonClick = () => {
+      setgoBack(props.navigation.goBack());
+        return true;
+  };
+
+  useEffect(() => {
+    BackHandler.addEventListener(goback, handleBackButtonClick); // works best when the goBack is async
+    return () => {
+    BackHandler.removeEventListener(goback, handleBackButtonClick);
+    };
+  }, [goback]);
+
+  const validate = () => {
+      firebase.auth().signInWithEmailAndPassword(email, password)
+          .then(firebase.auth().onAuthStateChanged(user => {
+              if(user.emailVerified) {
+                  props.navigation.navigate('ChooseChannel');
+                  console.log(user)
+                  console.log(user.emailVerified)
+              }
+          }))
+          .catch((error) => {
+              // Handle Errors here.
+              let errorCode = error.code;
+              switch (errorCode) {
+                  case 'auth/invalid-email':
+                      return setErrorState('The email address is badly formatted.');
+                  case 'auth/wrong-password':
+                      return setErrorState('The password or email is invalid');
+                  case 'auth/user-not-found':
+                      return setErrorState('There is no such user');
+                  default: return setErrorState('error');
+              }
+          })
+
+  }
   return (
       <View style={styles.container}>
         <ImageBackground
@@ -140,25 +167,20 @@ function Login(props) {
             />
           </LinearGradient>
           <TouchableOpacity
-              onPress={() => setForgotPassword(props.navigation.navigate('EmailConfirm'))}>
+              onPress={() => props.navigation.navigate('EmailConfirm')}>
             <Text
                 style={{
                   color: "#abaed0",
                   width: 302,
                   textAlign: "right",
-                  marginBottom: 20
+                  marginBottom: 5
                 }}
             >Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity
-              onPress={() => setLogin(
-                  firebase.auth().signInWithEmailAndPassword(email, password)
-                      .then(setSignup(props.navigation.navigate('ChooseChannel')))
-                      .catch(function (error) {
-                      alert(error)
-                  })
-              )}
+              onPress={validate}
           >
+              <Text style={{color: 'red', height: '15px'}}>{errorState}</Text>
             <LinearGradient
                 style={{
                   height: 39,
