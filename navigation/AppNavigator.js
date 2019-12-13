@@ -3,7 +3,9 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 
 import SplashLoading from "../screens/SplashLoading";
 import Login from "../screens/Login"
-import EmailConfirm from "../screens/EmailConfirm"
+import EmailConfirmation from "../screens/EmailConfirmation"
+import EmailConfirm from "../screens/EmailConfirm";
+import EnterPassword from "../screens/EnterPassword";
 import ChooseChannel from "../screens/ChooseChannel"
 
 export default createAppContainer(
@@ -20,12 +22,24 @@ export default createAppContainer(
         header: 'Login'
       }
     },
-    EmailConfirm: {
-      screen: EmailConfirm,
+      EmailConfirmation: {
+      screen: EmailConfirmation,
       navigationOptions: {
-        title: 'EmailConfirm'
+        title: 'EmailConfirmation'
       }
     },
+      EmailConfirm: {
+          screen: EmailConfirm,
+          navigationOptions: {
+              title: 'EmailConfirm'
+          }
+      },
+      EnterPassword: {
+          screen: EnterPassword,
+          navigationOptions: {
+              title: 'EnterPassword'
+          }
+      },
     ChooseChannel: {
       screen: ChooseChannel,
       navigationOptions: {

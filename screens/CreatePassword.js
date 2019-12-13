@@ -17,35 +17,13 @@ import { updateEmail, updatePassword, loginAction } from '../actions/user'
 
 const propTypes = {};
 
-function EmailConfirmation(props) {
+function CreatePassword(props) {
     const [email, setEmail] = useState("");
     const [login, setLogin] = useState(false);
 
     const handlePasswordReset = async (values, actions) => {
         const { email } = email;
         try {
-            var actionCodeSettings = {
-                url: 'https://crypto-react-native-new.firebaseio.com/?email=' + firebase.auth().currentUser.email,
-                iOS: {
-                    bundleId: 'com.example.ios'
-                },
-                android: {
-                    packageName: 'com.example.android',
-                    installApp: true,
-                    minimumVersion: '12'
-                },
-                handleCodeInApp: true,
-                // When multiple custom dynamic link domains are defined, specify which
-                // one to use.
-                dynamicLinkDomain: "example.page.link"
-            };
-            firebase.auth().currentUser.sendEmailVerification(actionCodeSettings)
-                .then(function() {
-                    // Verification email sent.
-                })
-                .catch(function(error) {
-                    // Error occurred. Inspect error.code.
-                });
             await this.props.firebase.passwordReset(email);
 
             console.log('Password reset email sent successfully')
@@ -154,7 +132,7 @@ function EmailConfirmation(props) {
                     onPress={() =>
                         firebase.auth().sendPasswordResetEmail(email).catch(function (error) {
                             alert(error)
-                        }).then(props.navigation.navigate('EmailConfirm'))
+                        })
                     }
                 >
                     <LinearGradient
@@ -279,7 +257,7 @@ const styles = StyleSheet.create({
     }
 });
 
-EmailConfirmation.propTypes = propTypes;
+CreatePassword.propTypes = propTypes;
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({ updateEmail, updatePassword }, dispatch)
@@ -291,5 +269,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmailConfirmation)
-
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePassword)

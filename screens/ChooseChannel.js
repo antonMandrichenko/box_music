@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {
-  BackHandler,
-  Text,
-  View
+    BackHandler, ImageBackground,
+    Text, TouchableOpacity,
+    View
 } from "react-native";
+import firebase from "../config/firebase";
 
 function ChooseChannel(props) {
   const [goback, setgoBack] = useState(false);
+
   const handleBackButtonClick = () => {
     setgoBack(props.navigation.goBack());
     return true;
@@ -26,6 +28,17 @@ function ChooseChannel(props) {
         }>
           ChooseChannel
         </Text>
+          <TouchableOpacity
+              onPress={() =>
+                  firebase.auth().signOut().then(function() {
+                      props.navigation.navigate('Login');
+                  }).catch(function(error) {
+                      // An error happened.
+                  })
+              }
+          >
+              <Text>sign out</Text>
+          </TouchableOpacity>
       </View>
   );
 }
