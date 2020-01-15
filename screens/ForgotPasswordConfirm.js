@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
     Text,
@@ -11,29 +11,28 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import firebase from "../config/firebase";
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { updateEmail, updatePassword, loginAction } from '../actions/user'
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { updateEmail, updatePassword, loginAction } from "../actions/user";
 
 const propTypes = {};
 
-function EmailConfirmation(props) {
+function ForgotPasswordConfirm(props) {
     const [email, setEmail] = useState("");
-    const [login, setLogin] = useState(false);
+    const [error, setError] = useState("");
 
-    useEffect(() => {
-        setLogin(loginAction)
-    }, []);
+    const handlePasswordReset = async () => {
+            firebase
+                .auth()
+                .sendPasswordResetEmail(email)
+                .then(function() {
+                props.navigation.navigate("ForgotPassword");
+            }).catch(function(error) {
+                setError(error.message);
+            });
 
-    const onSubmit = (e) => {
-        fetch(email)
-            .then(response => {
-                setEmail({ details: response.data }, () => {
-                    if (email) {
-                        sessionStorage.setItem('email', setEmail(details));
-                        e.preventDefault();
-                    }})})
-    }
+    };
+
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -46,14 +45,16 @@ function EmailConfirmation(props) {
             >
                 <Text
                     style={{
-                        color: '#fff',
+                        color: "#fff",
                         textTransform: "uppercase",
                         textAlign: "center",
                         paddingTop: 45,
                         paddingBottom: 75,
-                        fontSize: 21,
+                        fontSize: 21
                     }}
-                >just a more step</Text>
+                >
+                    reset password
+                </Text>
                 <Image
                     source={
                         __DEV__
@@ -67,7 +68,7 @@ function EmailConfirmation(props) {
                 />
                 <Text
                     style={{
-                        color: '#abaed0',
+                        color: "#abaed0",
                         textTransform: "uppercase",
                         textAlign: "center",
                         paddingTop: 48,
@@ -75,12 +76,14 @@ function EmailConfirmation(props) {
                         fontSize: 21,
                         fontWeight: "700"
                     }}
-                >email confirmation</Text>
+                >
+                    please, type your email
+                </Text>
                 <View style={styles.blackLine} />
                 <LinearGradient
                     colors={["#08080a", "#1d1e25"]}
                     style={styles.inputWrapper}
-                    locations={[0.05,1]}
+                    locations={[0.05, 1]}
                 >
                     <ImageBackground
                         source={
@@ -89,9 +92,9 @@ function EmailConfirmation(props) {
                                 : require("../assets/images/icons/email.png")
                         }
                         style={{
-                            width: 40,
-                            height: 40,
-                            marginRight: 6,
+                            width: 32,
+                            height: 26,
+                            marginRight: 12
                         }}
                     />
                     <View
@@ -101,29 +104,44 @@ function EmailConfirmation(props) {
                             backgroundColor: "#abaed0",
                             marginRight: 12
                         }}
-                    >
-                    </View>
+                    />
                     <TextInput
                         style={styles.input}
-                        onChangeText={email => setEmail(email)}
+                        onChangeText={input => setEmail(input)}
                         value={email}
                         placeholder="Enter your email"
                         placeholderTextColor="#abaed0"
                     />
                 </LinearGradient>
-                <Text style={{
-                    width: 285,
-                    textAlign: "center",
-                    color: "#abaed0",
-                    paddingTop: 5,
-                    marginBottom: 70
-                }}>
-                    Please verify your email address so you can sign in
-                    if you ever forgot your password, we've sent confirmation email too.
+                <Text
+                    style={{
+                        width: 285,
+                        textAlign: "center",
+                        color: "#abaed0",
+                        paddingTop: 5,
+                        marginBottom: 25
+                    }}
+                >
+                    You told us you forgot your password. If you really did, click here to choose a new one
                 </Text>
+                <Text
+                    style={{
+                        width: 285,
+                        textAlign: "center",
+                        color: "#abaed0",
+                        paddingTop: 5,
+                        marginBottom: 25
+                    }}
+                >
+                    If you didn't mean to reset your password, then you can just ignore this email;
+                    your password will not change.
+                </Text>
+                <Text style={{ color: "red", height: "15px", marginBottom: "20px" }}>{error}</Text>
                 <View style={styles.blackLine} />
                 <TouchableOpacity
-                    onPress={onSubmit}
+                    onPress={() =>
+                        handlePasswordReset()
+                    }
                 >
                     <LinearGradient
                         style={{
@@ -143,15 +161,16 @@ function EmailConfirmation(props) {
                         colors={["#373843", "#2e2f39", "#24252d"]}
                         locations={[0.3, 0.5, 0.8]}
                     >
-                        <Text  style={styles.text}>Confirm Mail</Text>
+                        <Text style={styles.text}>Next</Text>
                     </LinearGradient>
                 </TouchableOpacity>
-                <View style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginBottom: 35
-                }}>
-                </View>
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginBottom: 35
+                    }}
+                />
             </ImageBackground>
         </View>
     );
@@ -162,7 +181,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#fff",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "center"
     },
     imageBackground: {
         width: "100%",
@@ -188,7 +207,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     circleInnerImage: {
-        transform: [{ rotate: "45deg" }],
+        transform: [{ rotate: "45deg" }]
     },
     login: {
         color: "#abaed0",
@@ -221,13 +240,13 @@ const styles = StyleSheet.create({
         borderRightColor: "#202024",
         borderBottomColor: "#4d4f5e",
         height: 39,
-        width: 302,
+        width: 302
     },
     input: {
         borderWidth: 0,
         height: 39,
         width: 302,
-        color: "#abaed0",
+        color: "#abaed0"
     },
     buttonLogin: {
         height: 39,
@@ -237,27 +256,25 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#abaed0",
         textShadowColor: "#272730",
-        textShadowOffset: {width: -1, height: -1},
+        textShadowOffset: { width: -1, height: -1 }
     },
     text: {
         color: "#abaed0",
         textShadowColor: "#272730",
-        textShadowOffset: {width: 1, height: 2},
+        textShadowOffset: { width: 1, height: 2 },
         fontSize: 12
     }
 });
 
-EmailConfirmation.propTypes = propTypes;
+ForgotPasswordConfirm.propTypes = propTypes;
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ updateEmail, updatePassword }, dispatch)
-}
-
-const mapStateToProps = (state) => {
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ updateEmail, updatePassword }, dispatch);
+};
+const mapStateToProps = state => {
     return {
         user: state.user
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmailConfirmation)
-
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordConfirm);

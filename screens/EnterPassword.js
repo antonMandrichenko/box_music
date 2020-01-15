@@ -21,7 +21,7 @@ function EnterPassword(props) {
   const [email, setEmail] = useState("");
   const [login, setLogin] = useState(false);
 
-  const handleConfirmPassword = async (values, actions) => {
+      const handleConfirmPassword = async (values, actions) => {
     const { email } = email;
     try {
       // await this.props.firebase.passwordReset(email);

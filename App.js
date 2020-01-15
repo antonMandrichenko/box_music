@@ -12,7 +12,6 @@ import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
 const middleware = applyMiddleware(thunkMiddleware, logger);
 const store = createStore(reducer, middleware);
-import firebase from 'firebase';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);

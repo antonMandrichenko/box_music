@@ -15,7 +15,6 @@ import firebase from "../config/firebase";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { updateEmail, updatePassword, loginAction } from "../actions/user";
-import { inline } from "react-native-web/dist/exports/StyleSheet/compile";
 
 const propTypes = {};
 
@@ -176,7 +175,7 @@ function Login(props) {
           style={{
             marginLeft: 190
           }}
-          onPress={() => props.navigation.navigate("EmailConfirmation")}
+          onPress={() => props.navigation.navigate("ForgotPasswordConfirm")}
         >
           <Text
             style={{
@@ -323,7 +322,7 @@ function Login(props) {
           >
             Don't have an account
           </Text>
-          <TouchableOpacity onPress={() => console.log("press")}>
+          <TouchableOpacity onPress={() => props.navigation.navigate('EmailConfirmation')}>
             <Text
               style={{
                 color: "#4c4cda"

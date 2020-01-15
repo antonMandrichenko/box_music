@@ -18,46 +18,8 @@ import { updateEmail, updatePassword, loginAction } from "../actions/user";
 const propTypes = {};
 
 function EmailConfirm(props) {
-  const [email, setEmail] = useState("");
   const [login, setLogin] = useState(false);
 
-  const handlePasswordReset = async (values, actions) => {
-    const { email } = email;
-    try {
-      var actionCodeSettings = {
-        url:
-          "https://crypto-react-native-new.firebaseio.com/?email=" +
-          firebase.auth().currentUser.email,
-        iOS: {
-          bundleId: "com.example.ios"
-        },
-        android: {
-          packageName: "com.example.android",
-          installApp: true,
-          minimumVersion: "12"
-        },
-        handleCodeInApp: true,
-        // When multiple custom dynamic link domains are defined, specify which
-        // one to use.
-        dynamicLinkDomain: "example.page.link"
-      };
-      firebase
-        .auth()
-        .currentUser.sendEmailVerification(actionCodeSettings)
-        .then(function() {
-          // Verification email sent.
-        })
-        .catch(function(error) {
-          // Error occurred. Inspect error.code.
-        });
-      await this.props.firebase.passwordReset(email);
-
-      console.log("Password reset email sent successfully");
-      this.props.navigation.navigate("Login");
-    } catch (error) {
-      actions.setFieldError("general", error.message);
-    }
-  };
   useEffect(() => {
     setLogin(loginAction);
   }, []);

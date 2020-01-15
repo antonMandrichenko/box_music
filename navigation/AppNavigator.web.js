@@ -6,6 +6,8 @@ import Login from "../screens/Login"
 import EmailConfirmation from "../screens/EmailConfirmation";
 import EmailConfirm from "../screens/EmailConfirm";
 import EnterPassword from "../screens/EnterPassword";
+import ForgotPassword from "../screens/ForgotPassword";
+import ForgotPasswordConfirm from "../screens/ForgotPasswordConfirm";
 import ChooseChannel from "../screens/ChooseChannel";
 
 const switchNavigator = createSwitchNavigator({
@@ -18,31 +20,43 @@ const switchNavigator = createSwitchNavigator({
   Login: {
     screen: Login,
     navigationOptions: {
-      header: 'Login'
+      header: "Login"
     }
   },
   EmailConfirmation: {
     screen: EmailConfirmation,
     navigationOptions: {
-      title: 'EmailConfirmation'
+      title: "EmailConfirmation"
     }
   },
   EmailConfirm: {
     screen: EmailConfirm,
     navigationOptions: {
-      title: 'EmailConfirm'
+      title: "EmailConfirm"
     }
   },
   EnterPassword: {
     screen: EnterPassword,
     navigationOptions: {
-      title: 'EnterPassword'
+      title: "EnterPassword"
     }
   },
+  ForgotPassword: {
+    screen: ForgotPassword,
+    navigationOptions: {
+      title: "ForgotPassword"
+    }
+  },
+    ForgotPasswordConfirm: {
+  screen: ForgotPasswordConfirm,
+      navigationOptions: {
+    title: "ForgotPasswordConfirm"
+  }
+},
   ChooseChannel: {
     screen: ChooseChannel,
     navigationOptions: {
-      title: 'ChooseChannel'
+      title: "ChooseChannel"
     }
   }
 });
