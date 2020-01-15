@@ -2,12 +2,13 @@ import { createBrowserApp } from "@react-navigation/web";
 import { createSwitchNavigator } from "react-navigation";
 
 import SplashLoading from "../screens/SplashLoading";
-import Login from "../screens/Login"
+import Login from "../screens/Login";
 import EmailConfirmation from "../screens/EmailConfirmation";
 import EmailConfirm from "../screens/EmailConfirm";
 import EnterPassword from "../screens/EnterPassword";
 import ForgotPassword from "../screens/ForgotPassword";
 import ForgotPasswordConfirm from "../screens/ForgotPasswordConfirm";
+import CreatePassword from "../screens/EnterPassword";
 import ChooseChannel from "../screens/ChooseChannel";
 
 const switchNavigator = createSwitchNavigator({
@@ -47,12 +48,12 @@ const switchNavigator = createSwitchNavigator({
       title: "ForgotPassword"
     }
   },
-    ForgotPasswordConfirm: {
-  screen: ForgotPasswordConfirm,
-      navigationOptions: {
-    title: "ForgotPasswordConfirm"
-  }
-},
+  ForgotPasswordConfirm: {
+    screen: ForgotPasswordConfirm,
+    navigationOptions: {
+      title: "ForgotPasswordConfirm"
+    }
+  },
   ChooseChannel: {
     screen: ChooseChannel,
     navigationOptions: {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import {
   Text,
@@ -10,32 +10,22 @@ import {
   TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import firebase from "../config/firebase";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { updateEmail, updatePassword, loginAction } from "../actions/user";
+import { updateEmail, updatePassword } from "../actions/user";
+import AppContext from "../context/AppContext";
 
 const propTypes = {};
 
 function EnterPassword(props) {
-  const [email, setEmail] = useState("");
-  const [login, setLogin] = useState(false);
-
-      const handleConfirmPassword = async (values, actions) => {
-    const { email } = email;
-    try {
-      // await this.props.firebase.passwordReset(email);
-
-      console.log("Password reset email sent successfully");
-      this.props.navigation.navigate("Login");
-    } catch (error) {
-      actions.setFieldError("general", error.message);
-    }
-  };
-  useEffect(() => {
-    setLogin(loginAction);
-  }, []);
-
+  const {
+    password,
+    passwordConfirm,
+    handleChangePassword,
+    handleChangeConfirmPassword,
+    signUp,
+  error
+  } = useContext(AppContext);
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -61,12 +51,12 @@ function EnterPassword(props) {
         <Image
           source={
             __DEV__
-              ? require("../assets/images/icons/email-copy.png")
-              : require("../assets/images/icons/email-copy.png")
+              ? require("../assets/images/icons/key-confirm.png")
+              : require("../assets/images/icons/key-confirm.png")
           }
           style={{
-            width: 135,
-            height: 100
+            width: 155,
+            height: 155
           }}
         />
         <Text
@@ -95,7 +85,7 @@ function EnterPassword(props) {
                 : require("../assets/images/icons/password.png")
             }
             style={{
-              width: 40,
+              width: 52,
               height: 40,
               marginRight: 6
             }}
@@ -107,16 +97,13 @@ function EnterPassword(props) {
               backgroundColor: "#abaed0",
               marginRight: 12
             }}
-          />
+          ></View>
           <TextInput
             style={styles.input}
-            onChangeText={email => setEmail(email)}
-            value={email}
+            onChange={e => handleChangePassword(e)}
+            value={password}
             placeholder="Enter password"
             placeholderTextColor="#abaed0"
-            onSubmit={(values, actions) => {
-              handleConfirmPassword(values, actions);
-            }}
           />
         </LinearGradient>
         <LinearGradient
@@ -131,7 +118,7 @@ function EnterPassword(props) {
                 : require("../assets/images/icons/password.png")
             }
             style={{
-              width: 40,
+              width: 52,
               height: 40,
               marginRight: 6
             }}
@@ -143,16 +130,13 @@ function EnterPassword(props) {
               backgroundColor: "#abaed0",
               marginRight: 12
             }}
-          />
+          ></View>
           <TextInput
             style={styles.input}
-            onChangeText={email => setEmail(email)}
-            value={email}
-            placeholder="Enter password"
+            onChange={e => handleChangeConfirmPassword(e)}
+            value={passwordConfirm}
+            placeholder="Confirm password"
             placeholderTextColor="#abaed0"
-            onSubmit={(values, actions) => {
-              handleConfirmPassword(values, actions);
-            }}
           />
         </LinearGradient>
         <Text
@@ -164,11 +148,13 @@ function EnterPassword(props) {
             marginBottom: 70
           }}
         >
-          Make sure that! The passwords you entere are the same in both fields.
+          Make sure that! The passwords you entered are the same in both fields
         </Text>
+        <Text style={{ color: "red", height: "15px" }}>{error}</Text>
+
         <View style={styles.blackLine} />
         <TouchableOpacity
-          onPress={() => props.navigation.navigate("ChooseChannel")}
+          onPress={signUp}
         >
           <LinearGradient
             style={{
@@ -188,7 +174,7 @@ function EnterPassword(props) {
             colors={["#373843", "#2e2f39", "#24252d"]}
             locations={[0.3, 0.5, 0.8]}
           >
-            <Text style={styles.text}>Confirm Mail</Text>
+            <Text style={styles.text}>Start My Adventure</Text>
           </LinearGradient>
         </TouchableOpacity>
         <View

@@ -6,11 +6,9 @@ import {
     StyleSheet,
     Image,
     ImageBackground,
-    TextInput,
     TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import firebase from "../config/firebase";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { updateEmail, updatePassword, loginAction } from "../actions/user";
@@ -18,49 +16,6 @@ import { updateEmail, updatePassword, loginAction } from "../actions/user";
 const propTypes = {};
 
 function ForgotPassword(props) {
-    const [email, setEmail] = useState("");
-    const [login, setLogin] = useState(false);
-
-    const handlePasswordReset = async (values, actions) => {
-        const { email } = email;
-        try {
-            var actionCodeSettings = {
-                url:
-                    "https://crypto-react-native-new.firebaseio.com/?email=" +
-                    firebase.auth().currentUser.email,
-                iOS: {
-                    bundleId: "com.example.ios"
-                },
-                android: {
-                    packageName: "com.example.android",
-                    installApp: true,
-                    minimumVersion: "12"
-                },
-                handleCodeInApp: true,
-                // When multiple custom dynamic link domains are defined, specify which
-                // one to use.
-                dynamicLinkDomain: "example.page.link"
-            };
-            firebase
-                .auth()
-                .currentUser.sendEmailVerification(actionCodeSettings)
-                .then(function() {
-                    // Verification email sent.
-                })
-                .catch(function(error) {
-                    // Error occurred. Inspect error.code.
-                });
-            await this.props.firebase.passwordReset(email);
-
-            console.log("Password reset email sent successfully");
-            this.props.navigation.navigate("Login");
-        } catch (error) {
-            actions.setFieldError("general", error.message);
-        }
-    };
-    useEffect(() => {
-        setLogin(loginAction);
-    }, []);
 
     return (
         <View style={styles.container}>
@@ -87,12 +42,12 @@ function ForgotPassword(props) {
                 <Image
                     source={
                         __DEV__
-                            ? require("../assets/images/icons/email-copy.png")
-                            : require("../assets/images/icons/email-copy.png")
+                            ? require("../assets/images/icons/email-confirm.png")
+                            : require("../assets/images/icons/email-confirm.png")
                     }
                     style={{
-                        width: 135,
-                        height: 100
+                        width: 137,
+                        height: 148
                     }}
                 />
                 <Text

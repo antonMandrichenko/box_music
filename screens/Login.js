@@ -21,11 +21,6 @@ const propTypes = {};
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [forgotPassword, setForgotPassword] = useState(false);
-  const [login, setLogin] = useState();
-  const [signupFacebook, setSignupFacebook] = useState(false);
-  const [signupGoogle, setSignupGoogle] = useState(false);
-  const [signup, setSignup] = useState("");
   const [goback, setgoBack] = useState("hardwareBackPress");
   const [errorState, setErrorState] = useState("");
 
