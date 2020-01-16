@@ -8,7 +8,6 @@ import EmailConfirm from "../screens/EmailConfirm";
 import EnterPassword from "../screens/EnterPassword";
 import ForgotPassword from "../screens/ForgotPassword";
 import ForgotPasswordConfirm from "../screens/ForgotPasswordConfirm";
-import CreatePassword from "../screens/EnterPassword";
 import ChooseChannel from "../screens/ChooseChannel";
 
 const switchNavigator = createSwitchNavigator({

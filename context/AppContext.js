@@ -67,7 +67,7 @@ const AppProvider = ({ children},props) => {
       await firebase
           .auth()
           .createUserWithEmailAndPassword(emailStorage, password)
-              .catch(function(error) {
+          .catch(function(error) {
             // Handle Errors here.
             const errorMessage = error.message;
             setError(errorMessage);

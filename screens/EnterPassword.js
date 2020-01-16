@@ -19,13 +19,19 @@ const propTypes = {};
 
 function EnterPassword(props) {
   const {
+    nav,
     password,
     passwordConfirm,
     handleChangePassword,
     handleChangeConfirmPassword,
     signUp,
-  error
+    error
   } = useContext(AppContext);
+
+  const authClient = async e => {
+    await signUp(e);
+    await nav(props, "Login");
+  };
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -153,9 +159,7 @@ function EnterPassword(props) {
         <Text style={{ color: "red", height: "15px" }}>{error}</Text>
 
         <View style={styles.blackLine} />
-        <TouchableOpacity
-          onPress={signUp}
-        >
+        <TouchableOpacity onPress={authClient}>
           <LinearGradient
             style={{
               height: 39,
