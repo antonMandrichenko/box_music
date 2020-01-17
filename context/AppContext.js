@@ -12,6 +12,7 @@ const AppProvider = ({ children }, props) => {
   const [checked, setChecked] = useState({});
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
+  const [data, setData] = useState([]);
 
   const validateEmail = email => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -72,17 +73,30 @@ const AppProvider = ({ children }, props) => {
     }
   };
 
-  const checkBoxIn = (e) => setChecked({...checked, [e.target.innerText]: !checked[e.target.innerText]});
-
-  const searchFilterFunction = (text, data) => {
-    //passing the inserted text in textinput
-    const newData = data.filter(function(item) {
-      //applying filter for the inserted text in search bar
-      const itemData = item.title ? item.title.toUpperCase() : "".toUpperCase();
-      return itemData.indexOf(text) > -1;
+  const checkBoxIn = e =>
+    setChecked({
+      ...checked,
+      [e.target.innerText]: !checked[e.target.innerText]
     });
-    setSearch(newData);
+
+  const loadData = async () => {
+    try {
+      fetch("https://genius.p.rapidapi.com/artists/16775/songs", {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": "genius.p.rapidapi.com",
+          "x-rapidapi-key": "309479cf94mshb9bec2e785880d9p149c01jsn2e869001ab9f"
+        }
+      })
+        .then(response => response.json())
+        .then(json => setData(json.response.songs));
+    } catch (error) {
+    } finally {
+    }
   };
+  useEffect(() => {
+    loadData();
+  }, []);
   return (
     <AppContext.Provider
       value={{
@@ -93,15 +107,16 @@ const AppProvider = ({ children }, props) => {
         signUp,
         nav,
         checkBoxIn,
-        searchFilterFunction,
-          setFilter,
+        loadData,
+        setFilter,
         email,
         error,
         password,
         passwordConfirm,
         checked,
         search,
-          filter
+        filter,
+        data
       }}
     >
       {children}

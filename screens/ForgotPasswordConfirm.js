@@ -38,14 +38,7 @@ const ForgotPasswordConfirm = (props) => {
                 style={styles.imageBackground}
             >
                 <Text
-                    style={{
-                        color: "#fff",
-                        textTransform: "uppercase",
-                        textAlign: "center",
-                        paddingTop: 45,
-                        paddingBottom: 75,
-                        fontSize: 21
-                    }}
+                    style={styles.textMain}
                 >
                     reset password
                 </Text>
@@ -55,21 +48,10 @@ const ForgotPasswordConfirm = (props) => {
                             ? require("../assets/images/icons/email-copy.png")
                             : require("../assets/images/icons/email-copy.png")
                     }
-                    style={{
-                        width: 135,
-                        height: 100
-                    }}
+                    style={styles.iconEmail}
                 />
                 <Text
-                    style={{
-                        color: "#abaed0",
-                        textTransform: "uppercase",
-                        textAlign: "center",
-                        paddingTop: 48,
-                        paddingBottom: 28,
-                        fontSize: 21,
-                        fontWeight: "700"
-                    }}
+                    style={styles.textAdditional}
                 >
                     please, type your email
                 </Text>
@@ -85,19 +67,10 @@ const ForgotPasswordConfirm = (props) => {
                                 ? require("../assets/images/icons/email.png")
                                 : require("../assets/images/icons/email.png")
                         }
-                        style={{
-                            width: 32,
-                            height: 26,
-                            marginRight: 12
-                        }}
+                        style={styles.iconEmailMain}
                     />
                     <View
-                        style={{
-                            height: 13,
-                            width: 1,
-                            backgroundColor: "#abaed0",
-                            marginRight: 12
-                        }}
+                        style={styles.line}
                     />
                     <TextInput
                         style={styles.input}
@@ -108,29 +81,17 @@ const ForgotPasswordConfirm = (props) => {
                     />
                 </LinearGradient>
                 <Text
-                    style={{
-                        width: 285,
-                        textAlign: "center",
-                        color: "#abaed0",
-                        paddingTop: 5,
-                        marginBottom: 25
-                    }}
+                    style={styles.textDescription}
                 >
                     You told us you forgot your password. If you really did, click here to choose a new one
                 </Text>
                 <Text
-                    style={{
-                        width: 285,
-                        textAlign: "center",
-                        color: "#abaed0",
-                        paddingTop: 5,
-                        marginBottom: 25
-                    }}
+                    style={styles.textDescription}
                 >
                     If you didn't mean to reset your password, then you can just ignore this email;
                     your password will not change.
                 </Text>
-                <Text style={{ color: "red", height: 15, marginBottom: 20 }}>{error}</Text>
+                <Text style={styles.error}>{error}</Text>
                 <View style={styles.blackLine} />
                 <TouchableOpacity
                     onPress={() =>
@@ -138,20 +99,7 @@ const ForgotPasswordConfirm = (props) => {
                     }
                 >
                     <LinearGradient
-                        style={{
-                            height: 39,
-                            width: 302,
-                            marginBottom: 9,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            borderRadius: 4,
-                            borderWidth: 1,
-                            borderTopColor: "#202024",
-                            borderLeftColor: "#202024",
-                            borderRightColor: "#202024",
-                            borderBottomColor: "#4d4f5e"
-                        }}
+                        style={styles.button}
                         colors={["#373843", "#2e2f39", "#24252d"]}
                         locations={[0.3, 0.5, 0.8]}
                     >
@@ -159,11 +107,7 @@ const ForgotPasswordConfirm = (props) => {
                     </LinearGradient>
                 </TouchableOpacity>
                 <View
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        marginBottom: 35
-                    }}
+                    style={styles.add}
                 />
             </ImageBackground>
         </View>
@@ -182,6 +126,65 @@ const styles = StyleSheet.create({
         height: "100%",
         alignItems: "center",
         justifyContent: "flex-start"
+    },
+    textMain: {
+        color: "#fff",
+        textTransform: "uppercase",
+        textAlign: "center",
+        paddingTop: 45,
+        paddingBottom: 75,
+        fontSize: 21
+    },
+    iconEmail: {
+        width: 135,
+        height: 100
+    },
+    textAdditional: {
+        color: "#abaed0",
+        textTransform: "uppercase",
+        textAlign: "center",
+        paddingTop: 48,
+        paddingBottom: 28,
+        fontSize: 21,
+        fontWeight: "700"
+    },
+    iconEmailMain: {
+        width: 32,
+        height: 26,
+        marginRight: 12
+    },
+    line: {
+        height: 13,
+        width: 1,
+        backgroundColor: "#abaed0",
+        marginRight: 12
+    },
+    error: { color: "red", height: 15, marginBottom: 20 },
+    textDescription: {
+        width: 285,
+        textAlign: "center",
+        color: "#abaed0",
+        paddingTop: 5,
+        marginBottom: 25
+    },
+    button: {
+        height: 39,
+        width: 302,
+        marginBottom: 9,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 4,
+        borderWidth: 1,
+        borderTopColor: "#202024",
+        borderLeftColor: "#202024",
+        borderRightColor: "#202024",
+        borderBottomColor: "#4d4f5e"
+    },
+    add: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: 35
     },
     circle: {
         width: 185,

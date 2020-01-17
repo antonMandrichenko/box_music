@@ -22,14 +22,7 @@ const ForgotPassword = (props) => {
                 style={styles.imageBackground}
             >
                 <Text
-                    style={{
-                        color: "#fff",
-                        textTransform: "uppercase",
-                        textAlign: "center",
-                        paddingTop: 45,
-                        paddingBottom: 75,
-                        fontSize: 21
-                    }}
+                    style={styles.textTitle}
                 >
                     just a more step
                 </Text>
@@ -39,33 +32,16 @@ const ForgotPassword = (props) => {
                             ? require("../assets/images/icons/email-confirm.png")
                             : require("../assets/images/icons/email-confirm.png")
                     }
-                    style={{
-                        width: 137,
-                        height: 148
-                    }}
+                    style={styles.iconEmail}
                 />
                 <Text
-                    style={{
-                        color: "#abaed0",
-                        textTransform: "uppercase",
-                        textAlign: "center",
-                        paddingTop: 48,
-                        paddingBottom: 28,
-                        fontSize: 21,
-                        fontWeight: "700"
-                    }}
+                    style={styles.textMain}
                 >
                     check your email
                 </Text>
                 <View style={styles.blackLine} />
                 <Text
-                    style={{
-                        width: 285,
-                        textAlign: "center",
-                        color: "#abaed0",
-                        paddingTop: 5,
-                        marginBottom: 90
-                    }}
+                    style={styles.textAdditional}
                 >
                     We've sent an email. Click the link in the email to reset your password.
                 </Text>
@@ -76,20 +52,7 @@ const ForgotPassword = (props) => {
                     }
                 >
                     <LinearGradient
-                        style={{
-                            height: 39,
-                            width: 302,
-                            marginBottom: 9,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            borderRadius: 4,
-                            borderWidth: 1,
-                            borderTopColor: "#202024",
-                            borderLeftColor: "#202024",
-                            borderRightColor: "#202024",
-                            borderBottomColor: "#4d4f5e"
-                        }}
+                        style={styles.button}
                         colors={["#373843", "#2e2f39", "#24252d"]}
                         locations={[0.3, 0.5, 0.8]}
                     >
@@ -97,11 +60,7 @@ const ForgotPassword = (props) => {
                     </LinearGradient>
                 </TouchableOpacity>
                 <View
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        marginBottom: 35
-                    }}
+                    style={styles.additional}
                 />
             </ImageBackground>
         </View>
@@ -120,6 +79,53 @@ const styles = StyleSheet.create({
         height: "100%",
         alignItems: "center",
         justifyContent: "flex-start"
+    },
+    textTitle: {
+        color: "#fff",
+        textTransform: "uppercase",
+        textAlign: "center",
+        paddingTop: 45,
+        paddingBottom: 75,
+        fontSize: 21
+    },
+    iconEmail: {
+        width: 137,
+        height: 148
+    },
+    textMain: {
+        color: "#abaed0",
+        textTransform: "uppercase",
+        textAlign: "center",
+        paddingTop: 48,
+        paddingBottom: 28,
+        fontSize: 21,
+        fontWeight: "700"
+    },
+    textAdditional: {
+        width: 285,
+        textAlign: "center",
+        color: "#abaed0",
+        paddingTop: 5,
+        marginBottom: 90
+    },
+    button: {
+        height: 39,
+        width: 302,
+        marginBottom: 9,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 4,
+        borderWidth: 1,
+        borderTopColor: "#202024",
+        borderLeftColor: "#202024",
+        borderRightColor: "#202024",
+        borderBottomColor: "#4d4f5e"
+    },
+    additional: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: 35
     },
     circle: {
         width: 185,

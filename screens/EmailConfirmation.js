@@ -11,7 +11,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import AppContext from "../context/AppContext";
 
-const EmailConfirmation = (props) => {
+const EmailConfirmation = props => {
   const { email, onSubmitEmail, handleChange, error, nav } = useContext(
     AppContext
   );
@@ -25,42 +25,16 @@ const EmailConfirmation = (props) => {
         }
         style={styles.imageBackground}
       >
-        <Text
-          style={{
-            color: "#fff",
-            textTransform: "uppercase",
-            textAlign: "center",
-            paddingTop: 45,
-            paddingBottom: 75,
-            fontSize: 21
-          }}
-        >
-          just a more step
-        </Text>
+        <Text style={styles.textTitle}>just a more step</Text>
         <Image
           source={
             __DEV__
               ? require("../assets/images/icons/email-copy.png")
               : require("../assets/images/icons/email-copy.png")
           }
-          style={{
-            width: 135,
-            height: 100
-          }}
+          style={styles.emailIcon}
         />
-        <Text
-          style={{
-            color: "#abaed0",
-            textTransform: "uppercase",
-            textAlign: "center",
-            paddingTop: 48,
-            paddingBottom: 28,
-            fontSize: 21,
-            fontWeight: "700"
-          }}
-        >
-          email confirmation
-        </Text>
+        <Text style={styles.mainText}>email confirmation</Text>
         <View style={styles.blackLine} />
         <LinearGradient
           colors={["#08080a", "#1d1e25"]}
@@ -73,20 +47,9 @@ const EmailConfirmation = (props) => {
                 ? require("../assets/images/icons/email.png")
                 : require("../assets/images/icons/email.png")
             }
-            style={{
-              width: 40,
-              height: 40,
-              marginRight: 6
-            }}
+            style={styles.emailSmallIcon}
           />
-          <View
-            style={{
-              height: 13,
-              width: 1,
-              backgroundColor: "#abaed0",
-              marginRight: 12
-            }}
-          />
+          <View style={styles.line} />
           <TextInput
             style={styles.input}
             onChangeText={e => handleChange(e)}
@@ -98,15 +61,7 @@ const EmailConfirmation = (props) => {
         <Text style={{ color: "red", height: 15 }}>
           {error && "The email address is badly formatted."}
         </Text>
-        <Text
-          style={{
-            width: 285,
-            textAlign: "center",
-            color: "#abaed0",
-            paddingTop: 5,
-            marginBottom: 70
-          }}
-        >
+        <Text style={styles.textAdditional}>
           Please verify your email address so you can sign in if you ever forgot
           your password, we've sent confirmation email too.
         </Text>
@@ -117,37 +72,18 @@ const EmailConfirmation = (props) => {
           }}
         >
           <LinearGradient
-            style={{
-              height: 39,
-              width: 302,
-              marginBottom: 9,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 4,
-              borderWidth: 1,
-              borderTopColor: "#202024",
-              borderLeftColor: "#202024",
-              borderRightColor: "#202024",
-              borderBottomColor: "#4d4f5e"
-            }}
+            style={styles.button}
             colors={["#373843", "#2e2f39", "#24252d"]}
             locations={[0.3, 0.5, 0.8]}
           >
             <Text style={styles.text}>Confirm Mail</Text>
           </LinearGradient>
         </TouchableOpacity>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            marginBottom: 35
-          }}
-        />
+        <View style={styles.buttonImage} />
       </ImageBackground>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -161,6 +97,64 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     justifyContent: "flex-start"
+  },
+  textTitle: {
+    color: "#fff",
+    textTransform: "uppercase",
+    textAlign: "center",
+    paddingTop: 45,
+    paddingBottom: 75,
+    fontSize: 21
+  },
+  emailIcon: {
+    width: 135,
+    height: 100
+  },
+  mainText: {
+    color: "#abaed0",
+    textTransform: "uppercase",
+    textAlign: "center",
+    paddingTop: 48,
+    paddingBottom: 28,
+    fontSize: 21,
+    fontWeight: "700"
+  },
+  emailSmallIcon: {
+    width: 40,
+    height: 40,
+    marginRight: 6
+  },
+  line: {
+    height: 13,
+    width: 1,
+    backgroundColor: "#abaed0",
+    marginRight: 12
+  },
+  textAdditional: {
+    width: 285,
+    textAlign: "center",
+    color: "#abaed0",
+    paddingTop: 5,
+    marginBottom: 70
+  },
+  button: {
+    height: 39,
+    width: 302,
+    marginBottom: 9,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 4,
+    borderWidth: 1,
+    borderTopColor: "#202024",
+    borderLeftColor: "#202024",
+    borderRightColor: "#202024",
+    borderBottomColor: "#4d4f5e"
+  },
+  buttonImage: {
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: 35
   },
   circle: {
     width: 185,
@@ -238,6 +232,5 @@ const styles = StyleSheet.create({
     fontSize: 12
   }
 });
-
 
 export default EmailConfirmation;

@@ -92,19 +92,10 @@ const Login = (props) => {
                 ? require("../assets/images/icons/email.png")
                 : require("../assets/images/icons/email.png")
             }
-            style={{
-              width: 32,
-              height: 26,
-              marginRight: 12
-            }}
+            style={styles.emailIcon}
           />
           <View
-            style={{
-              height: 13,
-              width: 1,
-              backgroundColor: "#abaed0",
-              marginRight: 12
-            }}
+            style={styles.line}
           />
           <TextInput
             style={styles.input}
@@ -125,19 +116,10 @@ const Login = (props) => {
                 ? require("../assets/images/icons/password.png")
                 : require("../assets/images/icons/password.png")
             }
-            style={{
-              width: 32,
-              height: 26,
-              marginRight: 12
-            }}
+            style={styles.passwordIcon}
           />
           <View
-            style={{
-              height: 13,
-              width: 1,
-              backgroundColor: "#abaed0",
-              marginRight: 12
-            }}
+            style={styles.line}
           />
           <TextInput
             secureTextEntry={true}
@@ -149,48 +131,23 @@ const Login = (props) => {
           />
         </LinearGradient>
         <TouchableOpacity
-          style={{
-            marginLeft: 190
-          }}
+          style={styles.forgotPassword}
           onPress={() => props.navigation.navigate("ForgotPasswordConfirm")}
         >
           <Text
-            style={{
-              color: "#abaed0",
-              marginBottom: 5
-            }}
+            style={styles.forgotPasswordText}
           >
             Forgot Password?
           </Text>
         </TouchableOpacity>
         <Text
-          style={{
-            color: "red",
-            height: 30,
-            width: 302,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
+          style={styles.error}
         >
           {errorState}
         </Text>
         <TouchableOpacity onPress={() => signIn()}>
           <LinearGradient
-            style={{
-              height: 39,
-              width: 302,
-              marginBottom: 9,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 4,
-              borderWidth: 1,
-              borderTopColor: "#202024",
-              borderLeftColor: "#202024",
-              borderRightColor: "#202024",
-              borderBottomColor: "#4d4f5e"
-            }}
+            style={styles.button}
             colors={["#373843", "#2e2f39", "#24252d"]}
             locations={[0.3, 0.5, 0.8]}
           >
@@ -198,31 +155,11 @@ const Login = (props) => {
           </LinearGradient>
         </TouchableOpacity>
         <View
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            flexDirection: "row",
-            marginBottom: 20
-          }}
+          style={styles.socialWrapper}
         >
           <TouchableOpacity onPress={() => setSignupFacebook()}>
             <LinearGradient
-              style={{
-                height: 39,
-                width: 148,
-                marginBottom: 9,
-                marginRight: 7,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "row",
-                borderRadius: 4,
-                borderWidth: 1,
-                borderTopColor: "#202024",
-                borderLeftColor: "#202024",
-                borderRightColor: "#202024",
-                borderBottomColor: "#4d4f5e"
-              }}
+              style={styles.facebook}
               colors={["#373843", "#2e2f39", "#24252d"]}
               locations={[0.3, 0.5, 0.8]}
             >
@@ -232,40 +169,17 @@ const Login = (props) => {
                     ? require("../assets/images/icons/facebook.png")
                     : require("../assets/images/icons/facebook.png")
                 }
-                style={{
-                  width: 7,
-                  height: 13,
-                  marginRight: 12
-                }}
+                style={styles.facebookBaseline}
               />
               <View
-                style={{
-                  height: 13,
-                  width: 1,
-                  backgroundColor: "#abaed0",
-                  marginRight: 12
-                }}
+                style={styles.line}
               />
               <Text style={styles.text}>Facebook</Text>
             </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setSignupGoogle()}>
             <LinearGradient
-              style={{
-                height: 39,
-                width: 148,
-                marginBottom: 9,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "row",
-                borderRadius: 4,
-                borderWidth: 1,
-                borderTopColor: "#202024",
-                borderLeftColor: "#202024",
-                borderRightColor: "#202024",
-                borderBottomColor: "#4d4f5e"
-              }}
+              style={styles.google}
               colors={["#373843", "#2e2f39", "#24252d"]}
               locations={[0.3, 0.5, 0.8]}
             >
@@ -275,19 +189,10 @@ const Login = (props) => {
                     ? require("../assets/images/icons/google.png")
                     : require("../assets/images/icons/google.png")
                 }
-                style={{
-                  width: 14,
-                  height: 14,
-                  marginRight: 15
-                }}
+                style={styles.googleBaseline}
               />
               <View
-                style={{
-                  height: 13,
-                  width: 1,
-                  backgroundColor: "#abaed0",
-                  marginRight: 12
-                }}
+                style={styles.line}
               />
 
               <Text style={styles.text}>Google</Text>
@@ -296,17 +201,10 @@ const Login = (props) => {
         </View>
         <View style={styles.blackLine} />
         <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            marginBottom: 35
-          }}
+          style={styles.accountWrapper}
         >
           <Text
-            style={{
-              marginRight: 5,
-              color: "#abaed0"
-            }}
+            style={styles.account}
           >
             Don't have an account
           </Text>
@@ -314,9 +212,7 @@ const Login = (props) => {
             onPress={() => props.navigation.navigate("EmailConfirmation")}
           >
             <Text
-              style={{
-                color: "#4c4cda"
-              }}
+              style={styles.signUp}
             >
               Sign up
             </Text>
@@ -394,6 +290,110 @@ const styles = StyleSheet.create({
     height: 39,
     width: 302
   },
+    emailIcon: {
+        width: 32,
+        height: 26,
+        marginRight: 12
+    },
+    line: {
+        height: 13,
+        width: 1,
+        backgroundColor: "#abaed0",
+        marginRight: 12
+    },
+    forgotPassword: {
+        marginLeft: 190
+    },
+    forgotPasswordText: {
+        color: "#abaed0",
+        marginBottom: 5
+    },
+    error:{
+        color: "red",
+        height: 30,
+        width: 302,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    button: {
+        height: 39,
+        width: 302,
+        marginBottom: 9,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 4,
+        borderWidth: 1,
+        borderTopColor: "#202024",
+        borderLeftColor: "#202024",
+        borderRightColor: "#202024",
+        borderBottomColor: "#4d4f5e"
+    },
+    socialWrapper: {
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        marginBottom: 20
+    },
+    facebook: {
+        height: 39,
+        width: 148,
+        marginBottom: 9,
+        marginRight: 7,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "row",
+        borderRadius: 4,
+        borderWidth: 1,
+        borderTopColor: "#202024",
+        borderLeftColor: "#202024",
+        borderRightColor: "#202024",
+        borderBottomColor: "#4d4f5e"
+    },
+    facebookBaseline: {
+        width: 7,
+        height: 13,
+        marginRight: 12
+    },
+    google: {
+        height: 39,
+        width: 148,
+        marginBottom: 9,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "row",
+        borderRadius: 4,
+        borderWidth: 1,
+        borderTopColor: "#202024",
+        borderLeftColor: "#202024",
+        borderRightColor: "#202024",
+        borderBottomColor: "#4d4f5e"
+    },
+    googleBaseline: {
+        width: 14,
+        height: 14,
+        marginRight: 15
+    },
+    accountWrapper: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: 35
+    },
+    account: {
+        marginRight: 5,
+        color: "#abaed0"
+    },
+    signUp: {
+        color: "#4c4cda"
+    },
+    passwordIcon: {
+        width: 32,
+        height: 26,
+        marginRight: 12
+    },
   input: {
     borderWidth: 0,
     height: 39,

@@ -11,7 +11,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import AppContext from "../context/AppContext";
 
-const EnterPassword = (props) => {
+const EnterPassword = props => {
   const {
     nav,
     password,
@@ -22,9 +22,9 @@ const EnterPassword = (props) => {
     error
   } = useContext(AppContext);
 
-  const authClient = async e => {
+  const authClient = async (e) => {
     await signUp(e);
-    await nav(props, "Login");
+    await nav(props, "ChooseChannel");
   };
   return (
     <View style={styles.container}>
@@ -36,42 +36,16 @@ const EnterPassword = (props) => {
         }
         style={styles.imageBackground}
       >
-        <Text
-          style={{
-            color: "#fff",
-            textTransform: "uppercase",
-            textAlign: "center",
-            paddingTop: 45,
-            paddingBottom: 35,
-            fontSize: 21
-          }}
-        >
-          let's finish this.
-        </Text>
+        <Text style={styles.textTitle}>let's finish this.</Text>
         <Image
           source={
             __DEV__
               ? require("../assets/images/icons/key-confirm.png")
               : require("../assets/images/icons/key-confirm.png")
           }
-          style={{
-            width: 155,
-            height: 155
-          }}
+          style={styles.keyIcon}
         />
-        <Text
-          style={{
-            color: "#abaed0",
-            textTransform: "uppercase",
-            textAlign: "center",
-            paddingTop: 48,
-            paddingBottom: 28,
-            fontSize: 21,
-            fontWeight: "700"
-          }}
-        >
-          create your password
-        </Text>
+        <Text style={styles.textMain}>create your password</Text>
         <View style={styles.blackLine} />
         <LinearGradient
           colors={["#08080a", "#1d1e25"]}
@@ -84,20 +58,9 @@ const EnterPassword = (props) => {
                 ? require("../assets/images/icons/password.png")
                 : require("../assets/images/icons/password.png")
             }
-            style={{
-              width: 52,
-              height: 40,
-              marginRight: 6
-            }}
+            style={styles.iconPassword}
           />
-          <View
-            style={{
-              height: 13,
-              width: 1,
-              backgroundColor: "#abaed0",
-              marginRight: 12
-            }}
-          />
+          <View style={styles.line} />
           <TextInput
             secureTextEntry={true}
             style={styles.input}
@@ -118,20 +81,9 @@ const EnterPassword = (props) => {
                 ? require("../assets/images/icons/password.png")
                 : require("../assets/images/icons/password.png")
             }
-            style={{
-              width: 52,
-              height: 40,
-              marginRight: 6
-            }}
+            style={styles.iconPasswordMain}
           />
-          <View
-            style={{
-              height: 13,
-              width: 1,
-              backgroundColor: "#abaed0",
-              marginRight: 12
-            }}
-          />
+          <View style={styles.line} />
           <TextInput
             secureTextEntry={true}
             style={styles.input}
@@ -141,53 +93,26 @@ const EnterPassword = (props) => {
             placeholderTextColor="#abaed0"
           />
         </LinearGradient>
-        <Text
-          style={{
-            width: 285,
-            textAlign: "center",
-            color: "#abaed0",
-            paddingTop: 5,
-            marginBottom: 35
-          }}
-        >
+        <Text style={styles.textAdditional}>
           Make sure that! The passwords you entered are the same in both fields
         </Text>
-        <Text style={{ color: "red", height: 15 }}>{error}</Text>
+        <Text style={styles.textError}>{error}</Text>
 
         <View style={styles.blackLine} />
         <TouchableOpacity onPress={authClient}>
           <LinearGradient
-            style={{
-              height: 39,
-              width: 302,
-              marginBottom: 9,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 4,
-              borderWidth: 1,
-              borderTopColor: "#202024",
-              borderLeftColor: "#202024",
-              borderRightColor: "#202024",
-              borderBottomColor: "#4d4f5e"
-            }}
+            style={styles.button}
             colors={["#373843", "#2e2f39", "#24252d"]}
             locations={[0.3, 0.5, 0.8]}
           >
             <Text style={styles.text}>Start My Adventure</Text>
           </LinearGradient>
         </TouchableOpacity>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            marginBottom: 35
-          }}
-        />
+        <View style={styles.imageAdditional} />
       </ImageBackground>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -201,6 +126,70 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     justifyContent: "flex-start"
+  },
+  textTitle: {
+    color: "#fff",
+    textTransform: "uppercase",
+    textAlign: "center",
+    paddingTop: 45,
+    paddingBottom: 35,
+    fontSize: 21
+  },
+  keyIcon: {
+    width: 155,
+    height: 155
+  },
+  textMain: {
+    color: "#abaed0",
+    textTransform: "uppercase",
+    textAlign: "center",
+    paddingTop: 48,
+    paddingBottom: 28,
+    fontSize: 21,
+    fontWeight: "700"
+  },
+  iconPassword: {
+    width: 52,
+    height: 40,
+    marginRight: 6
+  },
+  line: {
+    height: 13,
+    width: 1,
+    backgroundColor: "#abaed0",
+    marginRight: 12
+  },
+  textAdditional: {
+    width: 285,
+    textAlign: "center",
+    color: "#abaed0",
+    paddingTop: 5,
+    marginBottom: 35
+  },
+  textError: { color: "red", height: 15 },
+  iconPasswordMain: {
+    width: 52,
+    height: 40,
+    marginRight: 6
+  },
+  button: {
+    height: 39,
+    width: 302,
+    marginBottom: 9,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 4,
+    borderWidth: 1,
+    borderTopColor: "#202024",
+    borderLeftColor: "#202024",
+    borderRightColor: "#202024",
+    borderBottomColor: "#4d4f5e"
+  },
+  imageAdditional: {
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: 35
   },
   circle: {
     width: 185,

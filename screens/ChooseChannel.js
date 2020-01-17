@@ -15,26 +15,7 @@ import Button from "../components/Button";
 import AppContext from "../context/AppContext";
 
 const ChooseChannel = (props) => {
-  const [data, setData] = useState([]);
-  const {setFilter, filter} = useContext(AppContext);
-  const loadData = async () => {
-    try {
-      fetch("https://genius.p.rapidapi.com/artists/16775/songs", {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "genius.p.rapidapi.com",
-          "x-rapidapi-key": "309479cf94mshb9bec2e785880d9p149c01jsn2e869001ab9f"
-        }
-      })
-        .then(response => response.json())
-        .then(json => setData(json.response.songs));
-    } catch (error) {
-    } finally {
-    }
-  };
-  useEffect(() => {
-    loadData();
-  }, []);
+  const {setFilter, filter, data} = useContext(AppContext);
 
   return (
     <View style={styles.container}>
