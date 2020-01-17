@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import firebase from "../config/firebase";
-import { NavigationContext } from "react-navigation";
 
 const AppContext = React.createContext();
 import { AsyncStorage } from "react-native";
 
-const AppProvider = ({ children},props) => {
+const AppProvider = ({ children }, props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -26,54 +25,50 @@ const AppProvider = ({ children},props) => {
     }
   };
 
-  const onSubmitEmail = async e => {
-    await e.preventDefault();
+  const onSubmitEmail = e => {
+    e.preventDefault();
     try {
       if (validateEmail(email)) {
-        await setError("");
-        // await AsyncStorage.setItem('email', email);
-        await localStorage.setItem("email", email);
+        setError("");
+        // await localStorage.setItem("email", email);
+        AsyncStorage.setItem("email", email);
       } else setError(true);
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  const handleChange = e => {
-    const val = e.target.value;
-    setEmail(val);
+  const handleChange = async e => {
+    await setEmail(e);
   };
 
-  const handleChangePassword = e => {
-    const val = e.target.value;
-    setPassword(val);
+  const handleChangePassword = async e => {
+    await setPassword(e);
   };
 
-  const handleChangeConfirmPassword = e => {
-    const val = e.target.value;
-    setPasswordConfirm(val);
+  const handleChangeConfirmPassword = async e => {
+    await setPasswordConfirm(e);
   };
 
   useEffect(() => {
-    localStorage.setItem("email", email);
-  }, [email]);
+    AsyncStorage.setItem("email", email);
+    AsyncStorage.setItem("password", password);
+  }, [email, password]);
 
   const signUp = async e => {
     if (password !== passwordConfirm) {
       setError("password must be the same");
     } else {
       e.preventDefault();
-      const emailStorage = await localStorage.getItem("email");
+      const emailStorage = await AsyncStorage.getItem("email");
+      const passwordStorage = await AsyncStorage.getItem("password");
       await firebase
-          .auth()
-          .createUserWithEmailAndPassword(emailStorage, password)
-          .catch(function(error) {
-            // Handle Errors here.
-            const errorMessage = error.message;
-            setError(errorMessage);
-            console.log(errorMessage);
-            // ...
-          });
+        .auth()
+        .createUserWithEmailAndPassword(emailStorage, passwordStorage)
+        .catch(function(error) {
+          const errorMessage = error.message;
+          setError(errorMessage);
+        });
     }
   };
 

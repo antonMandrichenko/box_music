@@ -172,7 +172,7 @@ function Login(props) {
         <Text
           style={{
             color: "red",
-            height: "30px",
+            height: 30,
             width: 302,
             display: "flex",
             alignItems: "center",

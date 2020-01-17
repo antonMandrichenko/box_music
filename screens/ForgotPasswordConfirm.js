@@ -136,7 +136,7 @@ function ForgotPasswordConfirm(props) {
                     If you didn't mean to reset your password, then you can just ignore this email;
                     your password will not change.
                 </Text>
-                <Text style={{ color: "red", height: "15px", marginBottom: "20px" }}>{error}</Text>
+                <Text style={{ color: "red", height: 15, marginBottom: 20 }}>{error}</Text>
                 <View style={styles.blackLine} />
                 <TouchableOpacity
                     onPress={() =>

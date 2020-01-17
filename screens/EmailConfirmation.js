@@ -92,16 +92,16 @@ function EmailConfirmation(props) {
               backgroundColor: "#abaed0",
               marginRight: 12
             }}
-          ></View>
+          />
           <TextInput
             style={styles.input}
-            onChange={e => handleChange(e)}
+            onChangeText={e => handleChange(e)}
             value={email}
             placeholder="Enter your email"
             placeholderTextColor="#abaed0"
           />
         </LinearGradient>
-        <Text style={{ color: "red", height: "15px" }}>
+        <Text style={{ color: "red", height: 15 }}>
           {error && "The email address is badly formatted."}
         </Text>
         <Text
@@ -149,7 +149,7 @@ function EmailConfirmation(props) {
             flexDirection: "row",
             marginBottom: 35
           }}
-        ></View>
+        />
       </ImageBackground>
     </View>
   );

@@ -48,7 +48,7 @@ function EnterPassword(props) {
             textTransform: "uppercase",
             textAlign: "center",
             paddingTop: 45,
-            paddingBottom: 75,
+            paddingBottom: 35,
             fontSize: 21
           }}
         >
@@ -103,10 +103,10 @@ function EnterPassword(props) {
               backgroundColor: "#abaed0",
               marginRight: 12
             }}
-          ></View>
+          />
           <TextInput
             style={styles.input}
-            onChange={e => handleChangePassword(e)}
+            onChangeText={e => handleChangePassword(e)}
             value={password}
             placeholder="Enter password"
             placeholderTextColor="#abaed0"
@@ -136,10 +136,10 @@ function EnterPassword(props) {
               backgroundColor: "#abaed0",
               marginRight: 12
             }}
-          ></View>
+          />
           <TextInput
             style={styles.input}
-            onChange={e => handleChangeConfirmPassword(e)}
+            onChangeText={e => handleChangeConfirmPassword(e)}
             value={passwordConfirm}
             placeholder="Confirm password"
             placeholderTextColor="#abaed0"
@@ -151,12 +151,12 @@ function EnterPassword(props) {
             textAlign: "center",
             color: "#abaed0",
             paddingTop: 5,
-            marginBottom: 70
+            marginBottom: 35
           }}
         >
           Make sure that! The passwords you entered are the same in both fields
         </Text>
-        <Text style={{ color: "red", height: "15px" }}>{error}</Text>
+        <Text style={{ color: "red", height: 15 }}>{error}</Text>
 
         <View style={styles.blackLine} />
         <TouchableOpacity onPress={authClient}>

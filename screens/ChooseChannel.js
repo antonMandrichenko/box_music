@@ -1,7 +1,8 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+import { vw } from "react-native-expo-viewport-units";
 import {
-  BackHandler,
   ImageBackground,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -9,46 +10,42 @@ import {
 } from "react-native";
 import firebase from "../config/firebase";
 import { LinearGradient } from "expo-linear-gradient";
-import CheckboxComponent from "../components/CheckboxComponent";
 import Channel from "../components/Channel";
 import Button from "../components/Button";
 import AppContext from "../context/AppContext";
 
 function ChooseChannel(props) {
-
   const [search, setSearch] = useState("");
   const [checked, setChecked] = useState(true);
-  const [data, setData] = useState('');
-  const [error, setError] = useState('');
-    const loadData =  async () => {
-        try {
-            fetch("https://genius.p.rapidapi.com/artists/16775/songs", {
-                "method": "GET",
-                "headers": {
-                    "x-rapidapi-host": "genius.p.rapidapi.com",
-                    "x-rapidapi-key": "309479cf94mshb9bec2e785880d9p149c01jsn2e869001ab9f"
-                }
-            })
-                .then(response => response.json())
-                .then(json => setData(json.response.songs))
-        } catch (error) {
-            console.log('error')
-        } finally {
-            // setLoadingData(false)
+  const [data, setData] = useState("");
+  const [error, setError] = useState("");
+  const loadData = async () => {
+    try {
+      fetch("https://genius.p.rapidapi.com/artists/16775/songs", {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": "genius.p.rapidapi.com",
+          "x-rapidapi-key": "309479cf94mshb9bec2e785880d9p149c01jsn2e869001ab9f"
         }
-
+      })
+        .then(response => response.json())
+        .then(json => setData(json.response.songs));
+    } catch (error) {
+      console.log("error");
+    } finally {
     }
-    useEffect(() => {
-        loadData();
-    }, []);
-    let test;
-    if (data) {
-        test = data.map(song => ({
-            ...song,
-            img: song['header_image_thumbnail_url'],
-            title: song.title,
-        }));
-    };
+  };
+  useEffect(() => {
+    loadData();
+  }, []);
+  let test;
+  if (data) {
+    test = data.map(song => ({
+      ...song,
+      img: song["header_image_thumbnail_url"],
+      title: song.title
+    }));
+  }
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -115,87 +112,85 @@ function ChooseChannel(props) {
 
         <View style={styles.channelContainer}>
           <Channel styles={styles} data={test} />
-          {/*<Channel styles={styles} data={data} />*/}
-          {/*<Channel styles={styles} data={data} />*/}
-          {/*<Channel styles={styles} data={data} />*/}
-          {/*<Channel styles={styles} data={data} />*/}
-          {/*<Channel styles={styles} data={data} />*/}
-          {/*<Channel styles={styles} data={data} />*/}
-          {/*<Channel styles={styles} data={data} />*/}
-          {/*<Channel styles={styles} data={data} />*/}
         </View>
 
-        <View  style={styles.channelContainer}>
-          <TouchableOpacity onPress={() => console.log('w1')}>
+        <View style={styles.channelContainer}>
+          <TouchableOpacity onPress={() => console.log("w1")}>
             <LinearGradient
-                style={{
-                  height: 39,
-                    width: 260,
-                  marginBottom: 9,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 4,
-                  borderWidth: 1,
-                  borderTopColor: "#202024",
-                  borderLeftColor: "#202024",
-                  borderRightColor: "#202024",
-                  borderBottomColor: "#4d4f5e"
-                }}
-                colors={["#373843", "#2e2f39", "#24252d"]}
-                locations={[0.3, 0.5, 0.8]}
+              style={{
+                height: 39,
+                width: vw(65),
+                marginBottom: 9,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 4,
+                borderWidth: 1,
+                borderTopColor: "#202024",
+                borderLeftColor: "#202024",
+                borderRightColor: "#202024",
+                borderBottomColor: "#4d4f5e"
+              }}
+              colors={["#373843", "#2e2f39", "#24252d"]}
+              locations={[0.3, 0.5, 0.8]}
             >
               <Text style={styles.text}>play selected</Text>
             </LinearGradient>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log('w2')}>
+          <TouchableOpacity onPress={() => console.log("w2")}>
             <LinearGradient
-                style={{
-                  height: 39,
-                  width: 39,
-                  marginBottom: 9,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 4,
-                  borderWidth: 1,
-                  borderTopColor: "#202024",
-                  borderLeftColor: "#202024",
-                  borderRightColor: "#202024",
-                  borderBottomColor: "#4d4f5e"
-                }}
-                colors={["#373843", "#2e2f39", "#24252d"]}
-                locations={[0.3, 0.5, 0.8]}
+              style={{
+                height: 39,
+                width: vw(12),
+                marginBottom: 9,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 4,
+                borderWidth: 1,
+                borderTopColor: "#202024",
+                borderLeftColor: "#202024",
+                borderRightColor: "#202024",
+                borderBottomColor: "#4d4f5e"
+              }}
+              colors={["#373843", "#2e2f39", "#24252d"]}
+              locations={[0.3, 0.5, 0.8]}
             >
-              <Text style={styles.text}>
-                  <View style={styles.triangleLeft} />
-              </Text>
+              <View>
+                <Text style={styles.triangleLeft} />
+              </View>
             </LinearGradient>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log('w3')}>
+          <TouchableOpacity onPress={() => console.log("w3")}>
             <LinearGradient
-                style={{
-                  height: 39,
-                  width: 39,
-                  marginBottom: 9,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 4,
-                  borderWidth: 1,
-                  borderTopColor: "#202024",
-                  borderLeftColor: "#202024",
-                  borderRightColor: "#202024",
-                  borderBottomColor: "#4d4f5e"
-                }}
-                colors={["#373843", "#2e2f39", "#24252d"]}
-                locations={[0.3, 0.5, 0.8]}
+              style={{
+                height: 39,
+                width: vw(12),
+                marginBottom: 9,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 4,
+                borderWidth: 1,
+                borderTopColor: "#202024",
+                borderLeftColor: "#202024",
+                borderRightColor: "#202024",
+                borderBottomColor: "#4d4f5e"
+              }}
+              colors={["#373843", "#2e2f39", "#24252d"]}
+              locations={[0.3, 0.5, 0.8]}
             >
-              <Text style={styles.text}><View style={styles.triangleRight} /></Text>
+              <View>
+                <Text style={styles.triangleRight} />
+              </View>
             </LinearGradient>
           </TouchableOpacity>
         </View>
-        <Button styles={styles} title="create your own channel" handleChange={() => console.log('w')}/>
+        <Button
+          styles={styles}
+          title="create your own channel"
+          handleChange={() => console.log("w")}
+        />
         <TouchableOpacity
           onPress={() =>
             firebase
@@ -204,9 +199,7 @@ function ChooseChannel(props) {
               .then(function() {
                 props.navigation.navigate("Login");
               })
-              .catch(function(error) {
-                // An error happened.
-              })
+              .catch(function(error) {})
           }
         >
           <Text>sign out</Text>
@@ -215,7 +208,7 @@ function ChooseChannel(props) {
     </View>
   );
 }
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
@@ -230,7 +223,7 @@ const styles = {
     backgroundColor: "#08080a",
     borderColor: "#202024",
     borderRadius: 3,
-    marginBottom: 18,
+    marginBottom: 10,
     marginTop: 10
   },
   inputWrapper: {
@@ -238,13 +231,14 @@ const styles = {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20
+    marginBottom: 10,
+    borderRadius: 5
   },
   input: {
     borderWidth: 1,
     borderColor: "#202024",
     height: 37,
-    width: "100%",
+    width: 300,
     color: "#abaed0",
     paddingLeft: 10,
     borderRadius: 5
@@ -261,43 +255,41 @@ const styles = {
   },
   circleWrapper: {
     display: "flex",
-    width: 105,
-    marginBottom: 20
+    width: 85,
+    marginBottom: 10
   },
   circle: {
-    width: 105,
-    height: 105,
+    width: 80,
+    height: 80,
     borderRadius: 50,
     borderColor: "#1f1a26",
-    borderWidth: 5,
+    borderWidth: 4,
     alignItems: "center",
     justifyContent: "center"
   },
   circleInner: {
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
-    width: 95,
-    height: 95,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 72,
+    height: 72,
     borderRadius: 50,
     borderColor: "#5a5ae3",
-    borderWidth: 4
+    borderWidth: 3
   },
   imageBackground: {
     width: "100%",
     height: "100%",
     borderRadius: 50,
     overflow: "hidden",
-    display: "flex",
+    flex: 1,
     alignItems: "center",
     justifyContent: "center"
   },
   checkboxCircle: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     width: 30,
     height: 30,
     backgroundColor: "#fff",
@@ -305,11 +297,9 @@ const styles = {
     zIndex: 1
   },
   checkboxInner: {
-    ...StyleSheet.absoluteFillObject,
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     width: 15,
     height: 15,
     backgroundColor: "transparent",
@@ -333,37 +323,40 @@ const styles = {
     textShadowColor: "#272730",
     textShadowOffset: { width: 1, height: 2 },
     fontSize: 12,
-      textTransform: "uppercase"
+    textTransform: "uppercase"
   },
-    triangleLeft: {
-        width: 0,
-        height: 0,
-        backgroundColor: 'transparent',
-        borderStyle: 'solid',
-        borderLeftWidth: 5,
-        borderRightWidth: 5,
-        borderBottomWidth: 10,
-        borderLeftColor: 'transparent',
-        borderRightColor: 'transparent',
-        borderBottomColor: '#abaed0',
-        transform: [
-            {rotate: '-90deg'}
-        ]
-    },
-    triangleRight: {
-        width: 0,
-        height: 0,
-        backgroundColor: 'transparent',
-        borderStyle: 'solid',
-        borderLeftWidth: 5,
-        borderRightWidth: 5,
-        borderBottomWidth: 10,
-        borderLeftColor: 'transparent',
-        borderRightColor: 'transparent',
-        borderBottomColor: '#abaed0',
-        transform: [
-            {rotate: '90deg'}
-        ]
-    }
-};
+  triangle: {
+    color: "#abaed0",
+    textShadowColor: "#272730",
+    textShadowOffset: { width: 1, height: 2 },
+    fontSize: 12,
+    textTransform: "uppercase"
+  },
+  triangleLeft: {
+    width: 0,
+    height: 0,
+    backgroundColor: "transparent",
+    borderStyle: "solid",
+    borderLeftWidth: 5,
+    borderRightWidth: 5,
+    borderBottomWidth: 10,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#abaed0",
+    transform: [{ rotate: "-90deg" }]
+  },
+  triangleRight: {
+    width: 0,
+    height: 0,
+    backgroundColor: "transparent",
+    borderStyle: "solid",
+    borderLeftWidth: 5,
+    borderRightWidth: 5,
+    borderBottomWidth: 10,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#abaed0",
+    transform: [{ rotate: "90deg" }]
+  }
+});
 export default ChooseChannel;
