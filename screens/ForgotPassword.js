@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import {
     Text,
     View,
@@ -9,13 +8,8 @@ import {
     TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { updateEmail, updatePassword, loginAction } from "../actions/user";
 
-const propTypes = {};
-
-function ForgotPassword(props) {
+const ForgotPassword = (props) => {
 
     return (
         <View style={styles.container}>
@@ -108,7 +102,7 @@ function ForgotPassword(props) {
                         flexDirection: "row",
                         marginBottom: 35
                     }}
-                ></View>
+                />
             </ImageBackground>
         </View>
     );
@@ -204,15 +198,4 @@ const styles = StyleSheet.create({
     }
 });
 
-ForgotPassword.propTypes = propTypes;
-
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ updateEmail, updatePassword }, dispatch);
-};
-const mapStateToProps = state => {
-    return {
-        user: state.user
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);
+export default ForgotPassword;

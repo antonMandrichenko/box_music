@@ -1,13 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Text, View, StyleSheet, Image, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import LoadingProgress from "../components/LoadingProgress";
 import AnimatedCircularProgress from '../components/AnimatedCircularProgress'
 
-const propTypes = {};
-
-function SplashLoading(props) {
+const SplashLoading = (props) => {
   return (
       <View style={styles.container}>
         <ImageBackground
@@ -166,7 +162,5 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
-
-SplashLoading.propTypes = propTypes;
 
 export default SplashLoading;

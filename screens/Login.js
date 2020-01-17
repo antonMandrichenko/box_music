@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import {
   Text,
   View,
@@ -12,13 +11,8 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import firebase from "../config/firebase";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { updateEmail, updatePassword, loginAction } from "../actions/user";
 
-const propTypes = {};
-
-function Login(props) {
+const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [goback, setgoBack] = useState("hardwareBackPress");
@@ -414,18 +408,4 @@ const styles = StyleSheet.create({
   }
 });
 
-Login.propTypes = propTypes;
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    { updateEmail, updatePassword, loginAction },
-    dispatch
-  );
-};
-
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

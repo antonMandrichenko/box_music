@@ -9,6 +9,9 @@ const AppProvider = ({ children }, props) => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState(false);
+  const [checked, setChecked] = useState({});
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("");
 
   const validateEmail = email => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -20,9 +23,7 @@ const AppProvider = ({ children }, props) => {
       if (validateEmail(email)) {
         props.navigation.navigate(page);
       } else setError(true);
-    } catch (error) {
-      console.log(error.message);
-    }
+    } catch (error) {}
   };
 
   const onSubmitEmail = e => {
@@ -30,7 +31,6 @@ const AppProvider = ({ children }, props) => {
     try {
       if (validateEmail(email)) {
         setError("");
-        // await localStorage.setItem("email", email);
         AsyncStorage.setItem("email", email);
       } else setError(true);
     } catch (error) {
@@ -72,6 +72,17 @@ const AppProvider = ({ children }, props) => {
     }
   };
 
+  const checkBoxIn = (e) => setChecked({...checked, [e.target.innerText]: !checked[e.target.innerText]});
+
+  const searchFilterFunction = (text, data) => {
+    //passing the inserted text in textinput
+    const newData = data.filter(function(item) {
+      //applying filter for the inserted text in search bar
+      const itemData = item.title ? item.title.toUpperCase() : "".toUpperCase();
+      return itemData.indexOf(text) > -1;
+    });
+    setSearch(newData);
+  };
   return (
     <AppContext.Provider
       value={{
@@ -81,10 +92,16 @@ const AppProvider = ({ children }, props) => {
         handleChangeConfirmPassword,
         signUp,
         nav,
+        checkBoxIn,
+        searchFilterFunction,
+          setFilter,
         email,
         error,
         password,
-        passwordConfirm
+        passwordConfirm,
+        checked,
+        search,
+          filter
       }}
     >
       {children}

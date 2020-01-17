@@ -1,31 +1,42 @@
-import React from "react";
-import { Text, View, Image, ImageBackground } from "react-native";
+import React, { useContext } from "react";
+import { Text, View, ImageBackground } from "react-native";
 import CheckboxComponent from "./CheckboxComponent";
+import AppContext from "../context/AppContext";
+import TouchableOpacity from "react-native-web/dist/exports/TouchableOpacity";
+import PropTypes from 'prop-types';
 
 const Channel = ({ styles, data }) => {
-  console.log(data);
+  const { checkBoxIn, checked, filter } = useContext(AppContext);
   return (
     <>
       {data &&
-        data
+        data.filter(item => item.title.slice(0, 10).includes(filter))
           .map((song, i) => (
-            <View key={i} style={styles.circleWrapper}>
+            <TouchableOpacity
+              key={i}
+              style={styles.circleWrapper}
+              onPress={checkBoxIn}
+            >
               <View style={styles.circle}>
                 <View style={styles.circleInner}>
                   <ImageBackground
                     style={styles.imageBackground}
-                    source={{ uri: `${song.img}` }}
+                    source={{ uri: `${song.header_image_thumbnail_url}` }}
                   >
-                    <CheckboxComponent />
+                    <CheckboxComponent checked={checked[song.title.slice(0, 10)]} />
                   </ImageBackground>
                 </View>
               </View>
               <Text style={styles.radioStation}>{song.title.slice(0, 10)}</Text>
-            </View>
+            </TouchableOpacity>
           ))
           .slice(0, 9)}
     </>
   );
 };
 
+Channel.propTypes = {
+  styles: PropTypes.object.isRequired,
+  data: PropTypes.array,
+};
 export default Channel;

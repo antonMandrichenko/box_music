@@ -1,6 +1,7 @@
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Text, TouchableOpacity } from "react-native";
+import PropTypes from 'prop-types';
 
 const Button = ({ styles, title, handleChange }) => {
   return (
@@ -26,6 +27,12 @@ const Button = ({ styles, title, handleChange }) => {
       </LinearGradient>
     </TouchableOpacity>
   );
+};
+
+Button.propTypes = {
+    styles: PropTypes.object.isRequired,
+    title: PropTypes.string.isRequired,
+    handleChange: PropTypes.func.isRequired,
 };
 
 export default Button;

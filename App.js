@@ -5,13 +5,6 @@ import React, { useState } from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import AppNavigator from "./navigation/AppNavigator";
-import reducer from "./reducers";
-import { createStore, applyMiddleware } from "redux";
-import { Provider } from "react-redux";
-import thunkMiddleware from "redux-thunk";
-import logger from "redux-logger";
-const middleware = applyMiddleware(thunkMiddleware, logger);
-const store = createStore(reducer, middleware);
 import { AppProvider } from "./context/AppContext"
 export default function App(props) {
 
@@ -28,12 +21,10 @@ export default function App(props) {
   } else {
     return (
         <AppProvider>
-        <Provider store={store}>
           <View style={styles.container}>
             {Platform.OS === "ios" && <StatusBar barStyle="default" />}
             <AppNavigator />
           </View>
-        </Provider>
         </AppProvider>
     );
   }

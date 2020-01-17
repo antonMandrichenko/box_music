@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import {
   Text,
   View,
@@ -10,14 +9,9 @@ import {
   TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { updateEmail, updatePassword } from "../actions/user";
 import AppContext from "../context/AppContext";
 
-const propTypes = {};
-
-function EnterPassword(props) {
+const EnterPassword = (props) => {
   const {
     nav,
     password,
@@ -105,6 +99,7 @@ function EnterPassword(props) {
             }}
           />
           <TextInput
+            secureTextEntry={true}
             style={styles.input}
             onChangeText={e => handleChangePassword(e)}
             value={password}
@@ -138,6 +133,7 @@ function EnterPassword(props) {
             }}
           />
           <TextInput
+            secureTextEntry={true}
             style={styles.input}
             onChangeText={e => handleChangeConfirmPassword(e)}
             value={passwordConfirm}
@@ -187,7 +183,7 @@ function EnterPassword(props) {
             flexDirection: "row",
             marginBottom: 35
           }}
-        ></View>
+        />
       </ImageBackground>
     </View>
   );
@@ -283,16 +279,4 @@ const styles = StyleSheet.create({
   }
 });
 
-EnterPassword.propTypes = propTypes;
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateEmail, updatePassword }, dispatch);
-};
-
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EnterPassword);
+export default EnterPassword;

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
 import {
   Text,
   View,
@@ -10,14 +9,9 @@ import {
   TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { updateEmail, updatePassword } from "../actions/user";
 import AppContext from "../context/AppContext";
 
-const propTypes = {};
-
-function EmailConfirmation(props) {
+const EmailConfirmation = (props) => {
   const { email, onSubmitEmail, handleChange, error, nav } = useContext(
     AppContext
   );
@@ -245,16 +239,5 @@ const styles = StyleSheet.create({
   }
 });
 
-EmailConfirmation.propTypes = propTypes;
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateEmail, updatePassword }, dispatch);
-};
-
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EmailConfirmation);
+export default EmailConfirmation;

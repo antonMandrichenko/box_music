@@ -1,29 +1,15 @@
 import React from "react";
 import { CheckBox } from "react-native-elements";
+import {ImageBackground, Text} from "react-native";
 
-const CheckboxComponent = () => {
-  const [checked, setChecked] = React.useState(true);
+const CheckboxComponent = ({checked}) => {
 
   return (
-    <CheckBox
-      // checkedIcon={
-      //   <Image source={require("../assets/images/icons/check-circle.svg")} />
-      // }
-      // uncheckedIcon={
-      //   <Image source={require("../assets/images/icons/key-confirm.png")} />
-      // }
-      checked
-      // onPress={setChecked(!checked)}
-      // value={checked}
-
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        width: 20,
-        height: 20
-      }}
-    />
+      <CheckBox
+          checkedIcon={<ImageBackground style={{width: 20, height: 20}} source={require("../assets/images/icons/checkbox-circle.png")} />}
+          uncheckedIcon={<Text />}
+          checked={checked}
+      />
   );
 };
 
