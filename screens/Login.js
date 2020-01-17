@@ -45,24 +45,12 @@ function Login(props) {
           if (user) {
             props.navigation.navigate("ChooseChannel");
           }
-          console.log(user);
           return false;
         })
       )
       .catch(error => {
-        // Handle Errors here.
-        let errorCode = error.code;
-        console.log(errorCode);
-        switch (errorCode) {
-          case "auth/invalid-email":
-            return setErrorState("The email address is badly formatted.");
-          case "auth/wrong-password":
-            return setErrorState("The password is invalid");
-          case "auth/user-not-found":
-            return setErrorState("There is no such user");
-          default:
-            return setErrorState("error");
-        }
+        const errorCode = error.message;
+        setErrorState(errorCode);
       });
   };
 
@@ -181,8 +169,19 @@ function Login(props) {
             Forgot Password?
           </Text>
         </TouchableOpacity>
+        <Text
+          style={{
+            color: "red",
+            height: "30px",
+            width: 302,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          {errorState}
+        </Text>
         <TouchableOpacity onPress={() => signIn()}>
-          <Text style={{ color: "red", height: "15px" }}>{errorState}</Text>
           <LinearGradient
             style={{
               height: 39,
@@ -317,7 +316,9 @@ function Login(props) {
           >
             Don't have an account
           </Text>
-          <TouchableOpacity onPress={() => props.navigation.navigate('EmailConfirmation')}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("EmailConfirmation")}
+          >
             <Text
               style={{
                 color: "#4c4cda"
@@ -404,16 +405,6 @@ const styles = StyleSheet.create({
     height: 39,
     width: 302,
     color: "#abaed0"
-  },
-  buttonLogin: {
-    height: 39,
-    width: 302,
-    marginBottom: 9,
-    borderWidth: 0,
-    textAlign: "center",
-    color: "#abaed0",
-    textShadowColor: "#272730",
-    textShadowOffset: { width: -1, height: -1 }
   },
   text: {
     color: "#abaed0",
