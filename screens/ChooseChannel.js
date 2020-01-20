@@ -24,8 +24,6 @@ const ChooseChannel = props => {
     handleChangeCountNext,
     counter
   } = useContext(AppContext);
-  console.log(counter.end + data.length + 9);
-  console.log(data);
   return data.length === 0 ? (
     <View style={[styles.containerLoader, styles.horizontal]}>
       <ActivityIndicator size="large" color="#0000ff" />
