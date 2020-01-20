@@ -10,10 +10,13 @@ const AppProvider = ({ children }, props) => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState(false);
   const [checked, setChecked] = useState({});
-  const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
   const [data, setData] = useState([]);
+  const [counter, setCounter] = useState({ start: 0, end: 9 });
 
+  const handleChangeCountNext = () =>
+    setCounter({ start: counter.start + 9, end: counter.end + 9 });
+  const handleChangeCountPrev = () => setCounter({ start: counter.start - 9, end: counter.end - 9 });
   const validateEmail = email => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -94,6 +97,7 @@ const AppProvider = ({ children }, props) => {
     } finally {
     }
   };
+
   useEffect(() => {
     loadData();
   }, []);
@@ -108,15 +112,17 @@ const AppProvider = ({ children }, props) => {
         nav,
         checkBoxIn,
         loadData,
+          handleChangeCountNext,
+          handleChangeCountPrev,
         setFilter,
         email,
         error,
         password,
         passwordConfirm,
         checked,
-        search,
         filter,
-        data
+        data,
+        counter,
       }}
     >
       {children}

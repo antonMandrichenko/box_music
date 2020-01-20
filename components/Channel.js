@@ -6,7 +6,7 @@ import TouchableOpacity from "react-native-web/dist/exports/TouchableOpacity";
 import PropTypes from 'prop-types';
 
 const Channel = ({ styles, data }) => {
-  const { checkBoxIn, checked, filter } = useContext(AppContext);
+  const { checkBoxIn, checked, filter, counter } = useContext(AppContext);
   return (
     <>
       {data &&
@@ -30,7 +30,7 @@ const Channel = ({ styles, data }) => {
               <Text style={styles.radioStation}>{song.title.slice(0, 10)}</Text>
             </TouchableOpacity>
           ))
-          .slice(0, 9)}
+          .slice(counter.start, counter.end)}
     </>
   );
 };
