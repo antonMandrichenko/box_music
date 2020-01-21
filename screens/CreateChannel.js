@@ -210,30 +210,26 @@ const CreateChannel = props => {
               </TouchableNativeFeedback>
 
               <Modal
-                  visible={typeDisplayed}
-                  animationType={"slide"}
-                  transparent={true}
+                visible={typeDisplayed}
+                animationType={"slide"}
+                transparent={true}
               >
                 <View style={styles.modalWindow}>
                   {dataType.map((value, index) => {
                     return (
-                        <TouchableHighlight
-                            key={index}
-                            onPress={() =>
-                                setTypeValue(value.value)
-                            }
-                            style={{ paddingTop: 4, paddingBottom: 4 }}
-                        >
-                          <Text style={styles.modalText}>
-                            {value.value}
-                          </Text>
-                        </TouchableHighlight>
+                      <TouchableHighlight
+                        key={index}
+                        onPress={() => setTypeValue(value.value)}
+                        style={{ paddingTop: 4, paddingBottom: 4 }}
+                      >
+                        <Text style={styles.modalText}>{value.value}</Text>
+                      </TouchableHighlight>
                     );
                   })}
 
                   <TouchableHighlight
-                      onPress={togglePicker}
-                      style={{ paddingTop: 4, paddingBottom: 4 }}
+                    onPress={togglePicker}
+                    style={{ paddingTop: 4, paddingBottom: 4 }}
                   >
                     <Text style={styles.modalTextCancel}>Cancel</Text>
                   </TouchableHighlight>

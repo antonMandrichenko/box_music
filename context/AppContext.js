@@ -110,21 +110,17 @@ const AppProvider = ({ children }, props) => {
   const togglePicker = () => {
     setPickerDisplayed(!pickerDisplayed);
   };
-    const toggleType = () => {
-        setTypeDisplayed(!typeDisplayed);
-    };
-  const setPickerValue = newValue =>{
-    setPickerSelection(
-      newValue
-    );
-  togglePicker()
+  const toggleType = () => {
+    setTypeDisplayed(!typeDisplayed);
   };
-    const setTypeValue = newValue =>{
-        setTypeSelection(
-            newValue
-        );
-        toggleType()
-    };
+  const setPickerValue = newValue => {
+    setPickerSelection(newValue);
+    togglePicker();
+  };
+  const setTypeValue = newValue => {
+    setTypeSelection(newValue);
+    toggleType();
+  };
   return (
     <AppContext.Provider
       value={{
@@ -140,8 +136,8 @@ const AppProvider = ({ children }, props) => {
         handleChangeCountPrev,
         togglePicker,
         setPickerValue,
-          setTypeValue,
-          toggleType,
+        setTypeValue,
+        toggleType,
         setFilter,
         email,
         error,
@@ -153,8 +149,8 @@ const AppProvider = ({ children }, props) => {
         counter,
         pickerDisplayed,
         pickerSelection,
-          typeSelection,
-          typeDisplayed
+        typeSelection,
+        typeDisplayed
       }}
     >
       {children}
