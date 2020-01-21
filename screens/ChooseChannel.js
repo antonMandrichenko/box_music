@@ -30,11 +30,12 @@ const ChooseChannel = props => {
     </View>
   ) : (
     <View style={styles.container}>
+
       <LinearGradient
         style={styles.containerWrapper}
         colors={["#396276", "#4a4160", "#603b66"]}
         locations={[0.3, 0.5, 0.8]}
-      >
+      ><View style={styles.containerHeader}>
         <Text style={styles.textTitle}>choose your favorite</Text>
         <Text style={styles.textMain}>channels</Text>
         <View style={styles.blackLine} />
@@ -65,12 +66,13 @@ const ChooseChannel = props => {
             />
           </LinearGradient>
         </LinearGradient>
-
+      </View>
         <View style={styles.channelContainer}>
           <Channel styles={styles} data={data} />
         </View>
 
-        <View style={styles.channelContainer}>
+        <View style={styles.containerFooter}>
+        <View style={styles.containerFooterWrapper}>
           <TouchableOpacity onPress={() => true}>
             <LinearGradient
               style={styles.inputChannel}
@@ -109,10 +111,11 @@ const ChooseChannel = props => {
             </LinearGradient>
           </TouchableOpacity>
         </View>
+        </View>
         <Button
           styles={styles}
           title="create your own channel"
-          handleChange={() => true}
+          handleChange={() =>  props.navigation.navigate("CreateChannel")}
         />
         <TouchableOpacity
           onPress={() =>
@@ -137,6 +140,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center"
+  },
+  containerHeader: {
+    flex: 2,
+  },
+  containerFooter: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  containerFooterWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  channelContainer: {
+    flex: 6,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+    flexWrap: "wrap"
   },
   containerWrapper: {
     height: "100%",
@@ -283,21 +305,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 9
   },
-  channelContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    alignContent: "flex-start",
-    flexWrap: "wrap"
-  },
   text: {
-    color: "#abaed0",
-    textShadowColor: "#272730",
-    textShadowOffset: { width: 1, height: 2 },
-    fontSize: 12,
-    textTransform: "uppercase"
-  },
-  triangle: {
     color: "#abaed0",
     textShadowColor: "#272730",
     textShadowOffset: { width: 1, height: 2 },

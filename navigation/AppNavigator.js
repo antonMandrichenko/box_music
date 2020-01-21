@@ -9,6 +9,7 @@ import EnterPassword from "../screens/EnterPassword";
 import ForgotPassword from "../screens/ForgotPassword";
 import ChooseChannel from "../screens/ChooseChannel";
 import ForgotPasswordConfirm from "../screens/ForgotPasswordConfirm";
+import CreateChannel from "../screens/CreateChannel";
 
 export default createAppContainer(
   createSwitchNavigator({
@@ -52,6 +53,12 @@ export default createAppContainer(
           screen: ForgotPasswordConfirm,
           navigationOptions: {
               title: "ForgotPasswordConfirm"
+          }
+      },
+      CreateChannel: {
+          screen: CreateChannel,
+          navigationOptions: {
+              title: "CreateChannel"
           }
       },
     ChooseChannel: {

@@ -9,6 +9,7 @@ import EnterPassword from "../screens/EnterPassword";
 import ForgotPassword from "../screens/ForgotPassword";
 import ForgotPasswordConfirm from "../screens/ForgotPasswordConfirm";
 import ChooseChannel from "../screens/ChooseChannel";
+import CreateChannel from "../screens/CreateChannel";
 
 const switchNavigator = createSwitchNavigator({
   Load: {
@@ -51,6 +52,12 @@ const switchNavigator = createSwitchNavigator({
     screen: ForgotPasswordConfirm,
     navigationOptions: {
       title: "ForgotPasswordConfirm"
+    }
+  },
+  CreateChannel: {
+    screen: CreateChannel,
+    navigationOptions: {
+      title: "CreateChannel"
     }
   },
   ChooseChannel: {
