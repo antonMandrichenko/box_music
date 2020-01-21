@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import {
   Text,
   View,
@@ -6,28 +6,62 @@ import {
   Image,
   ImageBackground,
   TextInput,
-  TouchableOpacity
+  Modal,
+  TouchableHighlight,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  Platform
 } from "react-native";
+
 import { LinearGradient } from "expo-linear-gradient";
-import firebase from "../config/firebase";
-import {vw} from "react-native-expo-viewport-units";
-import Picker from "react-native-web/dist/exports/Picker";
+import { vw } from "react-native-expo-viewport-units";
+import AppContext from "../context/AppContext";
 
 const CreateChannel = props => {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const {
+    pickerDisplayed,
+    setPickerValue,
+    togglePicker,
+    pickerSelection,
+    data,
+    setTypeValue,
+    typeSelection,
+    typeDisplayed,
+    toggleType
+  } = useContext(AppContext);
 
-  const handlePasswordReset = async () => {
-    firebase
-      .auth()
-      .sendPasswordResetEmail(email)
-      .then(function() {
-        props.navigation.navigate("ForgotPassword");
-      })
-      .catch(function(error) {
-        setError(error.message);
-      });
-  };
+  const dataType = [
+    {
+      value: "Electronic Dance Music"
+    },
+    {
+      value: "Rock Music"
+    },
+    {
+      value: "Jazz"
+    },
+    {
+      value: "Dubstep"
+    },
+    {
+      value: "Rhythm and Blues"
+    },
+    {
+      value: "Techno"
+    },
+    {
+      value: "Country Music"
+    },
+    {
+      value: "Electro"
+    },
+    {
+      value: "Indie Rock"
+    },
+    {
+      value: "Pop Music"
+    }
+  ];
 
   return (
     <View style={styles.container}>
@@ -40,131 +74,203 @@ const CreateChannel = props => {
         style={styles.imageBackground}
       >
         <View style={styles.headerContainer}>
-        <Text style={styles.textTitle}>create your own channel</Text>
-        <LinearGradient
-          colors={[
-            "rgba(151,232,243,1)",
-            "rgba(50,149,182,1)",
-            "rgba(204,63,223,1)",
-            "rgba(255,127,136,1)"
-          ]}
-          style={styles.circle}
-          locations={[0, 0.2, 0.8, 1]}
-        >
-          <View style={styles.circleInner}>
-            <Image
-              source={
-                __DEV__
-                  ? require("../assets/images/plus.png")
-                  : require("../assets/images/plus.png")
-              }
-              style={styles.circleInnerImage}
-            />
-          </View>
-        </LinearGradient>
-        <Text style={styles.textAdditional}>Choose your Album Cover</Text>
-        <View style={styles.blackLine} />
+          <Text style={styles.textTitle}>create your own channel</Text>
+          <LinearGradient
+            colors={[
+              "rgba(151,232,243,1)",
+              "rgba(50,149,182,1)",
+              "rgba(204,63,223,1)",
+              "rgba(255,127,136,1)"
+            ]}
+            style={styles.circle}
+            locations={[0, 0.2, 0.8, 1]}
+          >
+            <View style={styles.circleInner}>
+              <Image
+                source={
+                  __DEV__
+                    ? require("../assets/images/plus.png")
+                    : require("../assets/images/plus.png")
+                }
+                style={styles.circleInnerImage}
+              />
+            </View>
+          </LinearGradient>
+          <Text style={styles.textAdditional}>Choose your Album Cover</Text>
+          <View style={styles.blackLine} />
         </View>
         <View style={styles.mainContainer}>
           <View style={styles.selectWrapper}>
             <LinearGradient
-                colors={["#08080a", "#1d1e25"]}
-                style={styles.inputWrapperShort}
-                locations={[0.05, 1]}
-            >
-              <TextInput
-                  style={styles.inputShort}
-                  placeholder="Choose Category"
-                  placeholderTextColor="#abaed0"
-              />
-
-            </LinearGradient>
-
-            <TouchableOpacity>
-              <LinearGradient
-                  style={styles.inputChannelButton}
-                  colors={["#373843", "#2e2f39", "#24252d"]}
-                  locations={[0.3, 0.5, 0.8]}
-              >
-                <View
-                    style={styles.triangleBottom}
-                >
-
-                </View>
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-        <LinearGradient
-          colors={["#08080a", "#1d1e25"]}
-          style={styles.inputWrapperLong}
-          locations={[0.05, 1]}
-        >
-          <TextInput
-            style={styles.inputLong}
-            placeholder="Add Album Title"
-            placeholderTextColor="#abaed0"
-          />
-        </LinearGradient>
-        <View style={styles.selectWrapper}>
-          <LinearGradient
               colors={["#08080a", "#1d1e25"]}
               style={styles.inputWrapperShort}
               locations={[0.05, 1]}
-          >
-            <TextInput
+            >
+              <TextInput
                 style={styles.inputShort}
                 placeholder="Choose Category"
                 placeholderTextColor="#abaed0"
-            />
-
-          </LinearGradient>
-
-          <TouchableOpacity>
-            <LinearGradient
-                style={styles.inputChannelButton}
-                colors={["#373843", "#2e2f39", "#24252d"]}
-                locations={[0.3, 0.5, 0.8]}
-            >
-              <View
-                  style={styles.triangleBottom}
+                value={pickerSelection}
+              />
+            </LinearGradient>
+            <View>
+              <TouchableNativeFeedback
+                onPress={togglePicker}
+                background={
+                  Platform.OS === "android"
+                    ? TouchableNativeFeedback.SelectableBackground()
+                    : ""
+                }
               >
+                <LinearGradient
+                  style={styles.inputChannelButton}
+                  colors={["#373843", "#2e2f39", "#24252d"]}
+                  locations={[0.3, 0.5, 0.8]}
+                >
+                  <View>
+                    <Text style={styles.triangleBottom} />
+                  </View>
+                </LinearGradient>
+              </TouchableNativeFeedback>
 
-              </View>
+              <Modal
+                visible={pickerDisplayed}
+                animationType={"slide"}
+                transparent={true}
+              >
+                <View style={styles.modalWindow}>
+                  {data.map((value, index) => {
+                    return (
+                      <TouchableHighlight
+                        key={index}
+                        onPress={() =>
+                          setPickerValue(value.primary_artist.url.slice(27))
+                        }
+                        style={{ paddingTop: 4, paddingBottom: 4 }}
+                      >
+                        <Text style={styles.modalText}>
+                          {value.primary_artist.url.slice(27)}
+                        </Text>
+                      </TouchableHighlight>
+                    );
+                  })}
+
+                  <TouchableHighlight
+                    onPress={toggleType}
+                    style={{ paddingTop: 4, paddingBottom: 4 }}
+                  >
+                    <Text style={styles.modalTextCancel}>Cancel</Text>
+                  </TouchableHighlight>
+                </View>
+              </Modal>
+            </View>
+          </View>
+          <LinearGradient
+            colors={["#08080a", "#1d1e25"]}
+            style={styles.inputWrapperLong}
+            locations={[0.05, 1]}
+          >
+            <TextInput
+              style={styles.inputLong}
+              placeholder="Add Album Title"
+              placeholderTextColor="#abaed0"
+            />
+          </LinearGradient>
+          <View style={styles.selectWrapper}>
+            <LinearGradient
+              colors={["#08080a", "#1d1e25"]}
+              style={styles.inputWrapperShort}
+              locations={[0.05, 1]}
+            >
+              <TextInput
+                style={styles.inputShort}
+                placeholder="Choose Category"
+                placeholderTextColor="#abaed0"
+                value={typeSelection}
+              />
+            </LinearGradient>
+            <View>
+              <TouchableNativeFeedback
+                onPress={toggleType}
+                background={
+                  Platform.OS === "android"
+                    ? TouchableNativeFeedback.SelectableBackground()
+                    : ""
+                }
+              >
+                <LinearGradient
+                  style={styles.inputChannelButton}
+                  colors={["#373843", "#2e2f39", "#24252d"]}
+                  locations={[0.3, 0.5, 0.8]}
+                >
+                  <View>
+                    <Text style={styles.triangleBottom} />
+                  </View>
+                </LinearGradient>
+              </TouchableNativeFeedback>
+
+              <Modal
+                  visible={typeDisplayed}
+                  animationType={"slide"}
+                  transparent={true}
+              >
+                <View style={styles.modalWindow}>
+                  {dataType.map((value, index) => {
+                    return (
+                        <TouchableHighlight
+                            key={index}
+                            onPress={() =>
+                                setTypeValue(value.value)
+                            }
+                            style={{ paddingTop: 4, paddingBottom: 4 }}
+                        >
+                          <Text style={styles.modalText}>
+                            {value.value}
+                          </Text>
+                        </TouchableHighlight>
+                    );
+                  })}
+
+                  <TouchableHighlight
+                      onPress={togglePicker}
+                      style={{ paddingTop: 4, paddingBottom: 4 }}
+                  >
+                    <Text style={styles.modalTextCancel}>Cancel</Text>
+                  </TouchableHighlight>
+                </View>
+              </Modal>
+            </View>
+          </View>
+          <LinearGradient
+            colors={["#08080a", "#1d1e25"]}
+            style={styles.inputWrapperLong}
+            locations={[0.05, 1]}
+          >
+            <TextInput
+              style={styles.inputLong}
+              placeholder="Music Type"
+              placeholderTextColor="#abaed0"
+            />
+          </LinearGradient>
+        </View>
+        <View style={styles.footerContainer}>
+          <View style={styles.blackLine} />
+          <TouchableOpacity onPress={() => true}>
+            <LinearGradient
+              style={styles.button}
+              colors={["#373843", "#2e2f39", "#24252d"]}
+              locations={[0.3, 0.5, 0.8]}
+            >
+              <Text style={styles.text}>Create My Channel</Text>
             </LinearGradient>
           </TouchableOpacity>
         </View>
-        <LinearGradient
-          colors={["#08080a", "#1d1e25"]}
-          style={styles.inputWrapperLong}
-          locations={[0.05, 1]}
-        >
-          <TextInput
-            style={styles.inputLong}
-            placeholder="Music Type"
-            placeholderTextColor="#abaed0"
-          />
-        </LinearGradient>
-        </View>
-        <View style={styles.footerContainer}>
-        <View style={styles.blackLine} />
-        <TouchableOpacity onPress={() => handlePasswordReset()}>
-          <LinearGradient
-            style={styles.button}
-            colors={["#373843", "#2e2f39", "#24252d"]}
-            locations={[0.3, 0.5, 0.8]}
-          >
-            <Text style={styles.text}>Create My Channel</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-        </View>
-
       </ImageBackground>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-
   imageBackground: {
     width: "100%",
     height: "100%",
@@ -252,7 +358,7 @@ const styles = StyleSheet.create({
   circleInnerImage: {
     transform: [{ rotate: "45deg" }],
     width: 175,
-    height: 175,
+    height: 175
   },
   login: {
     color: "#abaed0",
@@ -286,7 +392,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#4d4f5e",
     height: 39,
     width: 240,
-      marginRight: 15
+    marginRight: 15
   },
   inputWrapperLong: {
     display: "flex",
@@ -304,7 +410,7 @@ const styles = StyleSheet.create({
     marginRight: 15
   },
   inputWrapperButton: {
-    flexDirection: "row",
+    flexDirection: "row"
   },
   inputShort: {
     borderWidth: 0,
@@ -387,6 +493,35 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 2
+  },
+  modalWindow: {
+    borderWidth: 1,
+    backgroundColor: "rgba(0,0,0, .8)",
+    borderColor: "#202024",
+    borderRadius: 3,
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+
+    position: "absolute"
+  },
+  modalText: {
+    color: "#abaed0",
+    padding: 10,
+    fontSize: 16,
+    width: "100%"
+  },
+  modalTextCancel: {
+    color: "#abaed0",
+    padding: 20,
+    fontSize: 24,
+    borderRadius: 3,
+    borderColor: "#abaed0"
   }
 });
 

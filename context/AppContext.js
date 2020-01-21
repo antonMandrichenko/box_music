@@ -13,10 +13,15 @@ const AppProvider = ({ children }, props) => {
   const [filter, setFilter] = useState("");
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState({ start: 0, end: 9 });
+  const [pickerDisplayed, setPickerDisplayed] = useState(false);
+  const [typeDisplayed, setTypeDisplayed] = useState(false);
+  const [pickerSelection, setPickerSelection] = useState("");
+  const [typeSelection, setTypeSelection] = useState("");
 
   const handleChangeCountNext = () =>
     setCounter({ start: counter.start + 9, end: counter.end + 9 });
-  const handleChangeCountPrev = () => setCounter({ start: counter.start - 9, end: counter.end - 9 });
+  const handleChangeCountPrev = () =>
+    setCounter({ start: counter.start - 9, end: counter.end - 9 });
   const validateEmail = email => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -101,6 +106,25 @@ const AppProvider = ({ children }, props) => {
   useEffect(() => {
     loadData();
   }, []);
+
+  const togglePicker = () => {
+    setPickerDisplayed(!pickerDisplayed);
+  };
+    const toggleType = () => {
+        setTypeDisplayed(!typeDisplayed);
+    };
+  const setPickerValue = newValue =>{
+    setPickerSelection(
+      newValue
+    );
+  togglePicker()
+  };
+    const setTypeValue = newValue =>{
+        setTypeSelection(
+            newValue
+        );
+        toggleType()
+    };
   return (
     <AppContext.Provider
       value={{
@@ -112,8 +136,12 @@ const AppProvider = ({ children }, props) => {
         nav,
         checkBoxIn,
         loadData,
-          handleChangeCountNext,
-          handleChangeCountPrev,
+        handleChangeCountNext,
+        handleChangeCountPrev,
+        togglePicker,
+        setPickerValue,
+          setTypeValue,
+          toggleType,
         setFilter,
         email,
         error,
@@ -123,6 +151,10 @@ const AppProvider = ({ children }, props) => {
         filter,
         data,
         counter,
+        pickerDisplayed,
+        pickerSelection,
+          typeSelection,
+          typeDisplayed
       }}
     >
       {children}
