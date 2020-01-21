@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
-import { Text, View, ImageBackground } from "react-native";
+import { Text, View, ImageBackground, TouchableOpacity } from "react-native";
 import CheckboxComponent from "./CheckboxComponent";
 import AppContext from "../context/AppContext";
-import TouchableOpacity from "react-native-web/dist/exports/TouchableOpacity";
 import PropTypes from 'prop-types';
 
 const Channel = ({ styles, data }) => {
@@ -13,11 +12,11 @@ const Channel = ({ styles, data }) => {
         data.filter(item => item.title.slice(0, 10).includes(filter))
           .map((song, i) => (
             <TouchableOpacity
-              key={i}
+                key={i}
               style={styles.circleWrapper}
               onPress={checkBoxIn}
             >
-              <View style={styles.circle}>
+              <View style={styles.circle} onPress={checkBoxIn}>
                 <View style={styles.circleInner}>
                   <ImageBackground
                     style={styles.imageBackground}

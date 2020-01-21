@@ -178,7 +178,18 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     width: 12,
-    height: 12
+    height: 12,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  searchButton: {
+    width: 35,
+    height: 35,
+    borderWidth: 1,
+    borderColor: "#202024",
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center"
   },
   inputChannel: {
     height: 39,
@@ -236,35 +247,21 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius: 5
   },
-  searchButton: {
-    width: 35,
-    height: 35,
-    borderWidth: 1,
-    borderColor: "#202024",
-    display: "flex",
+  circleWrapper: {
+    position: 'relative',
+    width: 80,
+    marginBottom: 10,
+    marginHorizontal: 5,
+    flexBasis: '30%',
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 5
-  },
-  circleWrapper: {
-    display: "flex",
-    width: 85,
-    marginBottom: 10,
-    marginHorizontal: 5
   },
   circle: {
-    width: 80,
-    height: 80,
     borderRadius: 50,
     borderColor: "#1f1a26",
     borderWidth: 4,
-    alignItems: "center",
-    justifyContent: "center"
   },
   circleInner: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
     width: 72,
     height: 72,
     borderRadius: 50,
