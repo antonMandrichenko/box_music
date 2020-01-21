@@ -153,10 +153,10 @@ const CreateChannel = props => {
                         </Text>
                       </TouchableHighlight>
                     );
-                  })}
+                  }).slice(0, 10)}
 
                   <TouchableHighlight
-                    onPress={toggleType}
+                    onPress={togglePicker}
                     style={{ paddingTop: 4, paddingBottom: 4 }}
                   >
                     <Text style={styles.modalTextCancel}>Cancel</Text>
@@ -228,7 +228,7 @@ const CreateChannel = props => {
                   })}
 
                   <TouchableHighlight
-                    onPress={togglePicker}
+                    onPress={toggleType}
                     style={{ paddingTop: 4, paddingBottom: 4 }}
                   >
                     <Text style={styles.modalTextCancel}>Cancel</Text>
