@@ -118,15 +118,7 @@ const ChooseChannel = props => {
           handleChange={() =>  props.navigation.navigate("CreateChannel")}
         />
         <TouchableOpacity
-          onPress={() =>
-            firebase
-              .auth()
-              .signOut()
-              .then(function() {
-                props.navigation.navigate("Login");
-              })
-              .catch(function(error) {})
-          }
+          onPress={() => props.navigation.navigate("Login")}
         >
           <Text>sign out</Text>
         </TouchableOpacity>

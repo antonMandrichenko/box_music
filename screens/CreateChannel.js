@@ -251,7 +251,7 @@ const CreateChannel = props => {
         </View>
         <View style={styles.footerContainer}>
           <View style={styles.blackLine} />
-          <TouchableOpacity onPress={() => true}>
+          <TouchableOpacity onPress={() => props.navigation.navigate("TabNavigator")} >
             <LinearGradient
               style={styles.button}
               colors={["#373843", "#2e2f39", "#24252d"]}

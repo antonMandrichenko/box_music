@@ -10,6 +10,7 @@ import ForgotPassword from "../screens/ForgotPassword";
 import ForgotPasswordConfirm from "../screens/ForgotPasswordConfirm";
 import ChooseChannel from "../screens/ChooseChannel";
 import CreateChannel from "../screens/CreateChannel";
+import TabNavigator from "./TabNavigator";
 
 const switchNavigator = createSwitchNavigator({
   Load: {
@@ -64,6 +65,12 @@ const switchNavigator = createSwitchNavigator({
     screen: ChooseChannel,
     navigationOptions: {
       title: "ChooseChannel"
+    }
+  },
+  TabNavigator: {
+    screen: TabNavigator,
+    navigationOptions: {
+      title: "TabNavigator"
     }
   }
 });
