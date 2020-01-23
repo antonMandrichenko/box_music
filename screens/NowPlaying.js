@@ -1,6 +1,7 @@
 import React from 'react';
 import View from "react-native-web/src/exports/View";
 import {
+    Image,
     ImageBackground,
     Modal,
     Platform,
@@ -11,6 +12,7 @@ import {
 } from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 import {vw} from "react-native-expo-viewport-units";
+import SliderArtists from "../components/SliderArtists";
 
 const NowPlaying = () => {
     return (
@@ -28,7 +30,7 @@ const NowPlaying = () => {
                         <View style={styles.containerHeaderButtonsLeft}>
                             <View style={styles.buttonPlay}>
                             <TouchableOpacity onPress={()=> console.log('work')}>
-                                <ImageBackground
+                                <Image
                                     source={
                                         __DEV__
                                             ? require("../assets/images/play.png")
@@ -40,7 +42,7 @@ const NowPlaying = () => {
                             </View>
                             <View style={styles.buttonNext} >
                                 <TouchableOpacity onPress={()=> console.log('work')}>
-                                    <ImageBackground
+                                    <Image
                                         source={
                                             __DEV__
                                                 ? require("../assets/images/next.png")
@@ -59,7 +61,7 @@ const NowPlaying = () => {
                                 style={styles.square}
                                 locations={[0.05, 1]}
                             >
-                                <ImageBackground
+                                <Image
                                     source={
                                         __DEV__
                                             ? require("../assets/images/next.png")
@@ -77,7 +79,7 @@ const NowPlaying = () => {
                                 style={styles.square}
                                 locations={[0.05, 1]}
                             >
-                                <ImageBackground
+                                <Image
                                     source={
                                         __DEV__
                                             ? require("../assets/images/next.png")
@@ -95,7 +97,7 @@ const NowPlaying = () => {
                                         style={styles.square}
                                         locations={[0.05, 1]}
                                     >
-                                        <ImageBackground
+                                        <Image
                                             source={
                                                 __DEV__
                                                     ? require("../assets/images/next.png")
@@ -113,7 +115,7 @@ const NowPlaying = () => {
                                         style={styles.square}
                                         locations={[0.05, 1]}
                                     >
-                                        <ImageBackground
+                                        <Image
                                             source={
                                                 __DEV__
                                                     ? require("../assets/images/next.png")
@@ -131,7 +133,7 @@ const NowPlaying = () => {
                                         style={styles.square}
                                         locations={[0.05, 1]}
                                     >
-                                        <ImageBackground
+                                        <Image
                                             source={
                                                 __DEV__
                                                     ? require("../assets/images/next.png")
@@ -181,6 +183,7 @@ const NowPlaying = () => {
                     </View>
                 </View>
                 <View style={styles.containerArtists}>
+                    <SliderArtists/>
                 </View>
             </ImageBackground>
         </View>
@@ -225,7 +228,9 @@ const styles = {
         alignItems: 'center',
         flexDirection: 'row'
     },
-    containerHeaderInputStation: {},
+    containerHeaderInputStation: {
+        paddingBottom: 10
+    },
     buttonPlay: {
         width: 50,
         height: 50,

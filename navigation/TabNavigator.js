@@ -43,6 +43,8 @@ const TabNavigator = createBottomTabNavigator(
               style={styles.button}
               colors={["#ad5dba", "#9958be"]}
               locations={[0, 0.5]}
+              start={[0, 1]}
+              end={[1, 0]}
             >
               <Feather name="play" size={32} style={styles.color} />
             </LinearGradient>
@@ -71,6 +73,8 @@ const TabNavigator = createBottomTabNavigator(
               style={styles.button}
               colors={["#9958be", "#8855c1"]}
               locations={[0, 0, 5]}
+              start={[0, 1]}
+              end={[1, 0]}
             >
               <SimpleLineIcons
                 name="equalizer"
@@ -103,6 +107,8 @@ const TabNavigator = createBottomTabNavigator(
               style={styles.button}
               colors={["#8855c1", "#634cc8"]}
               locations={[0, 0.5]}
+              start={[0, 1]}
+              end={[1, 0]}
             >
               <MaterialCommunityIcons
                 name="message-text-outline"
@@ -135,6 +141,8 @@ const TabNavigator = createBottomTabNavigator(
               style={styles.button}
               colors={["#634cc8", "#4c47cb"]}
               locations={[0, 0.5]}
+              start={[0, 1]}
+              end={[1, 0]}
             >
               <FontAwesome
                 name={"newspaper-o"}

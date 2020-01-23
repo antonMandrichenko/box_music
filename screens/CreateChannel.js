@@ -16,6 +16,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { vw } from "react-native-expo-viewport-units";
 import AppContext from "../context/AppContext";
+import CenterMode from "../components/SliderArtists";
 
 const CreateChannel = props => {
   const {
