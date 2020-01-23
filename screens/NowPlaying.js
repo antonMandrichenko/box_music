@@ -13,6 +13,7 @@ import {
 import {LinearGradient} from "expo-linear-gradient";
 import {vw} from "react-native-expo-viewport-units";
 import SliderArtists from "../components/SliderArtists";
+import ListArtists from "../components/ListArtists";
 
 const NowPlaying = () => {
     return (
@@ -182,7 +183,10 @@ const NowPlaying = () => {
                         </View>
                     </View>
                 </View>
+                <ListArtists/>
+
                 <View style={styles.containerArtists}>
+
                     <SliderArtists/>
                 </View>
             </ImageBackground>
