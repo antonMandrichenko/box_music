@@ -3,11 +3,11 @@ import React from "react";
 import {
   View,
   StyleSheet,
-  Image
+  Image,
+  TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { vw } from "react-native-expo-viewport-units";
-import TouchableOpacity from "react-native-web/src/exports/TouchableOpacity";
 
 const SwitchButtons = () => {
   const [switchValue, setSwitchValue] = React.useState(false);

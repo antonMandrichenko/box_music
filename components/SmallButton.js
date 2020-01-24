@@ -1,7 +1,6 @@
 import React from 'react';
-import {Image, TouchableOpacity} from "react-native";
+import {Image, TouchableOpacity, View} from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
-import View from "react-native-web/src/exports/View";
 
 const SmallButton = ({imagePath}) => {
     return (

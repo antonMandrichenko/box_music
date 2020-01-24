@@ -1,5 +1,4 @@
 import React from 'react';
-import View from "react-native-web/src/exports/View";
 import {
     Image,
     ImageBackground,
@@ -7,7 +6,8 @@ import {
     Text,
     TextInput,
     TouchableNativeFeedback,
-    TouchableOpacity
+    TouchableOpacity,
+    View
 } from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 import {vw} from "react-native-expo-viewport-units";
@@ -16,6 +16,7 @@ import ListArtists from "../components/ListArtists";
 import SmallButton from "../components/SmallButton";
 import EqualizerScreen from "../components/EqualizerScreen";
 import SwitchButtons from "../components/SwitchButtons";
+import MyCustomCarousel from "../components/Carousel";
 
 const NowPlaying = () => {
     return (
@@ -28,6 +29,7 @@ const NowPlaying = () => {
                 }
                 style={styles.imageBackground}
             >
+                <MyCustomCarousel />
                 <View style={styles.containerHeader}>
                     <View style={styles.containerHeaderButtons}>
                         <View style={styles.containerHeaderButtonsLeft}>

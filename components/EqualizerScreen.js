@@ -191,7 +191,7 @@ const styles = {
     justifyContent: "space-around",
     flexDirection: "row",
     width: "100%",
-    transform: [{ scale: "1, -1" }],
+    transform: [{ scaleX: 1}, {scaleY: -1 }],
     position: "absolute",
     bottom: 0, paddingHorizontal: 15
   }
