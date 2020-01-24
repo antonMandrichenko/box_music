@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import { vw } from "react-native-expo-viewport-units";
 import AppContext from "../context/AppContext";
-
+import SmallButton from "./SmallButton";
 
 const SliderArtists = () => {
   const { data } = useContext(AppContext);
@@ -15,28 +15,30 @@ const SliderArtists = () => {
     image.primary_artist.url.slice(27)
   );
   return (
-    <View style={styles.container}>
-      <SliderBox
-        images={dataImages}
-        sliderBoxHeight={200}
-        parentWidth={vw(60)}
-        onCurrentImagePressed={index => setTest(dataText[index])}
-        dotColor="transparent"
-        inactiveDotColor="transparent"
-        paginationBoxVerticalPadding={20}
-        circleLoop
-        resizeMethod={"resize"}
-        resizeMode={"cover"}
-      />
-    </View>
+    <>
+
+      <View style={styles.container}>
+        <SliderBox
+          images={dataImages}
+          sliderBoxHeight={50}
+          parentWidth={50}
+          onCurrentImagePressed={index => setTest(dataText[index])}
+          dotColor="transparent"
+          inactiveDotColor="transparent"
+          paginationBoxVerticalPadding={20}
+          circleLoop
+          resizeMethod={"resize"}
+          resizeMode={"cover"}
+        />
+      </View>
+    </>
   );
 };
 
 const styles = {
   container: {
     width: "100%",
-    borderColor: "#000",
-    borderWidth: 5
+    paddingBottom: 20
   }
 };
 

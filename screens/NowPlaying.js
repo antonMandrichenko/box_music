@@ -3,10 +3,9 @@ import View from "react-native-web/src/exports/View";
 import {
     Image,
     ImageBackground,
-    Modal,
     Platform,
     Text,
-    TextInput, TouchableHighlight,
+    TextInput,
     TouchableNativeFeedback,
     TouchableOpacity
 } from "react-native";
@@ -14,6 +13,9 @@ import {LinearGradient} from "expo-linear-gradient";
 import {vw} from "react-native-expo-viewport-units";
 import SliderArtists from "../components/SliderArtists";
 import ListArtists from "../components/ListArtists";
+import SmallButton from "../components/SmallButton";
+import EqualizerScreen from "../components/EqualizerScreen";
+import SwitchButtons from "../components/SwitchButtons";
 
 const NowPlaying = () => {
     return (
@@ -55,96 +57,11 @@ const NowPlaying = () => {
                             </View>
                         </View>
                         <View style={styles.containerHeaderButtonsRight}>
-                            <View style={styles.headerButtonRight}>
-                            <TouchableOpacity onPress={()=> console.log('work')}>
-                            <LinearGradient
-                                colors={["#08080a", "#1d1e25"]}
-                                style={styles.square}
-                                locations={[0.05, 1]}
-                            >
-                                <Image
-                                    source={
-                                        __DEV__
-                                            ? require("../assets/images/next.png")
-                                            : require("../assets/images/next.png")
-                                    }
-                                    style={styles.iconHeart}
-                                />
-                            </LinearGradient>
-                            </TouchableOpacity>
-                            </View>
-                            <View style={styles.headerButtonRight}>
-                            <TouchableOpacity onPress={()=> console.log('work')}>
-                            <LinearGradient
-                                colors={["#08080a", "#1d1e25"]}
-                                style={styles.square}
-                                locations={[0.05, 1]}
-                            >
-                                <Image
-                                    source={
-                                        __DEV__
-                                            ? require("../assets/images/next.png")
-                                            : require("../assets/images/next.png")
-                                    }
-                                    style={styles.iconHeart}
-                                />
-                            </LinearGradient>
-                            </TouchableOpacity>
-                            </View>
-                            <View style={styles.headerButtonRight}>
-                                <TouchableOpacity onPress={()=> console.log('work')}>
-                                    <LinearGradient
-                                        colors={["#08080a", "#1d1e25"]}
-                                        style={styles.square}
-                                        locations={[0.05, 1]}
-                                    >
-                                        <Image
-                                            source={
-                                                __DEV__
-                                                    ? require("../assets/images/next.png")
-                                                    : require("../assets/images/next.png")
-                                            }
-                                            style={styles.iconHeart}
-                                        />
-                                    </LinearGradient>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.headerButtonRight}>
-                                <TouchableOpacity onPress={()=> console.log('work')}>
-                                    <LinearGradient
-                                        colors={["#08080a", "#1d1e25"]}
-                                        style={styles.square}
-                                        locations={[0.05, 1]}
-                                    >
-                                        <Image
-                                            source={
-                                                __DEV__
-                                                    ? require("../assets/images/next.png")
-                                                    : require("../assets/images/next.png")
-                                            }
-                                            style={styles.iconHeart}
-                                        />
-                                    </LinearGradient>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.headerButtonRight}>
-                                <TouchableOpacity onPress={()=> console.log('work')}>
-                                    <LinearGradient
-                                        colors={["#08080a", "#1d1e25"]}
-                                        style={styles.square}
-                                        locations={[0.05, 1]}
-                                    >
-                                        <Image
-                                            source={
-                                                __DEV__
-                                                    ? require("../assets/images/next.png")
-                                                    : require("../assets/images/next.png")
-                                            }
-                                            style={styles.iconHeart}
-                                        />
-                                    </LinearGradient>
-                                </TouchableOpacity>
-                            </View>
+                            <SmallButton imagePath="../assets/images/next.png"/>
+                            <SmallButton imagePath="../assets/images/next.png"/>
+                            <SmallButton imagePath="../assets/images/next.png"/>
+                            <SmallButton imagePath="../assets/images/next.png"/>
+                            <SmallButton imagePath="../assets/images/next.png"/>
                         </View>
                     </View>
                     <View style={styles.containerHeaderInputStation}>
@@ -184,10 +101,17 @@ const NowPlaying = () => {
                     </View>
                 </View>
                 <ListArtists/>
-
+                <View style={styles.containerBeforeSlider}>
+                    <Text style={styles.textAdditional}>• Up Next</Text>
+                    <SmallButton imagePath="../assets/images/next.png" />
+                </View>
                 <View style={styles.containerArtists}>
-
                     <SliderArtists/>
+                </View>
+                <EqualizerScreen />
+                <View style={styles.containerBeforeSlider}>
+                    <Text style={styles.textAdditional}>• Message Board</Text>
+                    <SwitchButtons/>
                 </View>
             </ImageBackground>
         </View>
@@ -289,9 +213,6 @@ const styles = {
         borderBottomColor: "#4d4f5e",
         borderWidth: 1
     },
-    headerButtonRight: {
-        paddingHorizontal: 5,
-    },
     selectWrapper: {
         flexDirection: "row"
     },
@@ -353,6 +274,14 @@ const styles = {
         borderBottomColor: "#abaed0",
         transform: [{ rotate: "180deg" }]
     },
-    containerArtists: {}
+    containerArtists: {    paddingHorizontal: 10
+    },
+    containerBeforeSlider: {
+        justifyContent: "space-between",
+        flexDirection: "row",
+        paddingVertical: 10,
+        width: "100%"
+    },
+    textAdditional: { color: "#abaed0"},
 }
 export default NowPlaying;

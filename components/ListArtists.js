@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, Text, FlatList } from "react-native";
 import AppContext from "../context/AppContext";
-import { vw } from "react-native-expo-viewport-units";
+import SmallButton from "./SmallButton";
 
 const ListArtists = () => {
   const { data } = React.useContext(AppContext);
@@ -38,7 +38,7 @@ const styles = {
     borderWidth: 3,
     borderRadius: 25,
     marginHorizontal: 20,
-    marginBottom: 10
+    marginBottom: 30
   },
   shadowImage: {
     shadowColor: "#484982",
@@ -58,7 +58,10 @@ const styles = {
   },
   textThumbnail: {
     flex: 1,
-    width: 100,
+    paddingVertical: 10,
+    color: "#abaed0",
+    textAlign: "center",
+
   }
 };
 export default ListArtists;
