@@ -1,12 +1,12 @@
 import React from "react";
 import Carousel from "react-native-snap-carousel";
-import { View, Image, Text } from "react-native";
+import { Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import AppContext from "../context/AppContext";
 import { vw } from "react-native-expo-viewport-units";
 
 const MyCarousel = () => {
   const { data } = React.useContext(AppContext);
-  const styles = {
+  const styles = StyleSheet.create({
     imageContainer: {
       width: 180,
       height: 180,
@@ -21,25 +21,17 @@ const MyCarousel = () => {
       backgroundColor: "transparent",
       borderBottomRightRadius: 20,
       borderBottomLeftRadius: 20,
-      shadowColor: "#484982",
-      shadowOffset: {
-        width: 0,
-        height: 16,
-      },
-      shadowOpacity: 0.44,
-      shadowRadius: 10,
-      elevation: 15,
     }
-  };
+  });
   const _renderItem = ({ item, index }) => {
     return (
-      <View>
+      <TouchableOpacity onPress={() => alert(item.primary_artist.name)}>
         <Image
           style={styles.imageContainer}
           source={{ uri: item.header_image_thumbnail_url }}
         />
         <Text style={styles.textContainer}>{item.title}</Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 

@@ -1,8 +1,9 @@
 import React from 'react';
+import {Text} from "react-native";
 
 const News = (props) => {
     return (
-        <div>News</div>
+        <Text>News</Text>
     );
 }
 

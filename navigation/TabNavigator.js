@@ -36,7 +36,7 @@ const TabNavigator = createBottomTabNavigator(
               colors={["#373843", "#2e2f39", "#24252d"]}
               locations={[0.3, 0.5, 0.8]}
             >
-              <Feather name="play" size={32} style={styles.color} />
+              <Feather name="play" size={16} style={styles.color} />
             </LinearGradient>
           ) : (
             <LinearGradient
@@ -46,7 +46,7 @@ const TabNavigator = createBottomTabNavigator(
               start={[0, 1]}
               end={[1, 0]}
             >
-              <Feather name="play" size={32} style={styles.color} />
+              <Feather name="play" size={16} style={styles.color} />
             </LinearGradient>
           )
       }
@@ -64,7 +64,7 @@ const TabNavigator = createBottomTabNavigator(
             >
               <SimpleLineIcons
                 name="equalizer"
-                size={32}
+                size={16}
                 style={styles.color}
               />
             </LinearGradient>
@@ -78,7 +78,7 @@ const TabNavigator = createBottomTabNavigator(
             >
               <SimpleLineIcons
                 name="equalizer"
-                size={32}
+                size={16}
                 style={styles.color}
               />
             </LinearGradient>
@@ -98,7 +98,7 @@ const TabNavigator = createBottomTabNavigator(
             >
               <MaterialCommunityIcons
                 name="message-text-outline"
-                size={32}
+                size={16}
                 style={styles.color}
               />
             </LinearGradient>
@@ -112,7 +112,7 @@ const TabNavigator = createBottomTabNavigator(
             >
               <MaterialCommunityIcons
                 name="message-text-outline"
-                size={32}
+                size={16}
                 style={styles.color}
               />
             </LinearGradient>
@@ -132,7 +132,7 @@ const TabNavigator = createBottomTabNavigator(
             >
               <FontAwesome
                 name={"newspaper-o"}
-                size={32}
+                size={16}
                 style={styles.color}
               />
             </LinearGradient>
@@ -146,7 +146,7 @@ const TabNavigator = createBottomTabNavigator(
             >
               <FontAwesome
                 name={"newspaper-o"}
-                size={32}
+                size={16}
                 style={styles.color}
               />
             </LinearGradient>
@@ -157,8 +157,7 @@ const TabNavigator = createBottomTabNavigator(
   {
     tabBarOptions: {
       style: {
-        flexDirection: "row",
-        paddingVertical: 10,
+        width: vw(100),
         height: 60
       }
     }

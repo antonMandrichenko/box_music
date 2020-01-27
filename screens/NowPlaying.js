@@ -16,6 +16,12 @@ import SmallButton from "../components/SmallButton";
 import EqualizerScreen from "../components/EqualizerScreen";
 import SwitchButtons from "../components/SwitchButtons";
 import MyCarousel from "../components/Carousel";
+import addSong from "../assets/images/icons/ad-song.png"
+import arrowBottom from "../assets/images/icons/arrow-bot.png"
+import arrowTop from "../assets/images/icons/arrow-top.png"
+import cancel from "../assets/images/icons/cancel.png"
+import heart from "../assets/images/icons/heart.png"
+import MessageBoard from "../components/MessageBoard";
 
 const NowPlaying = () => {
     return (
@@ -28,7 +34,6 @@ const NowPlaying = () => {
                 }
                 style={styles.imageBackground}
             >
-                <View style={styles.containerHeader}>
                     <View style={styles.containerHeaderButtons}>
                         <View style={styles.containerHeaderButtonsLeft}>
                             <View style={styles.buttonPlay}>
@@ -57,11 +62,10 @@ const NowPlaying = () => {
                             </View>
                         </View>
                         <View style={styles.containerHeaderButtonsRight}>
-                            <SmallButton imagePath="../assets/images/next.png"/>
-                            <SmallButton imagePath="../assets/images/next.png"/>
-                            <SmallButton imagePath="../assets/images/next.png"/>
-                            <SmallButton imagePath="../assets/images/next.png"/>
-                            <SmallButton imagePath="../assets/images/next.png"/>
+                            <SmallButton path={heart}/>
+                            <SmallButton path={cancel}/>
+                            <SmallButton path={arrowTop}/>
+                            <SmallButton path={arrowBottom}/>
                         </View>
                     </View>
                     <View style={styles.containerHeaderInputStation}>
@@ -99,22 +103,25 @@ const NowPlaying = () => {
                             </View>
                         </View>
                     </View>
-                </View>
                 <View style={styles.containerCarousel}>
                 <MyCarousel />
                 </View>
                 <View style={styles.containerBeforeSlider}>
-                    <Text style={styles.textAdditional}>• Up Next</Text>
-                    <SmallButton imagePath="../assets/images/next.png" />
+                        <Text style={styles.textAdditional}>• Up Next</Text>
+                    <SmallButton path={addSong} />
                 </View>
-                <View style={styles.containerArtists}>
-                    <SliderArtists/>
-                </View>
-                <EqualizerScreen />
+                {/*<View style={styles.containerArtists}>*/}
+                {/*    <SliderArtists/>*/}
+                {/*</View>*/}
+                {/*<EqualizerScreen />*/}
                 <View style={styles.containerBeforeSlider}>
                     <Text style={styles.textAdditional}>• Message Board</Text>
                     <SwitchButtons/>
                 </View>
+                <View style={styles.containerBeforeSlider}>
+                    <MessageBoard/>
+                </View>
+                <View style={styles.underline}/>
             </ImageBackground>
         </View>
     );
@@ -124,29 +131,25 @@ const styles = {
     container: {
         flex: 1,
         backgroundColor: "#fff",
-        alignItems: "center",
+        alignItems: "flex-start",
         justifyContent: "center"
     },
     imageBackground: {
         flex: 1,
         height: "100%",
         width: "100%",
-        alignItems: "center",
+        alignItems: "flex-start",
+        alignContent: "flex-start",
         justifyContent: "flex-start",
-        padding: 20
     },
-    containerHeader: {
-        width: '100%',
-        flexDirection: 'column',
-        justifyContent: 'space-between'
 
-    },
     containerHeaderButtons: {
         width: '100%',
-        flex: 1,
         flexDirection: 'row',
+        alignItems: "center",
         justifyContent: 'space-between',
-        marginBottom: 20
+        paddingVertical: 20,
+        paddingHorizontal: 10
     },
     containerHeaderButtonsLeft: {
         justifyContent: 'flex-start',
@@ -159,7 +162,11 @@ const styles = {
         flexDirection: 'row'
     },
     containerHeaderInputStation: {
-        paddingBottom: 10
+        paddingHorizontal: 10,
+        paddingBottom: 40,
+        alignItems: "flex-start",
+        alignContent: "flex-start",
+        justifyContent: "space-between",
     },
     buttonPlay: {
         width: 50,
@@ -189,7 +196,7 @@ const styles = {
         alignItems: 'center',
         position: 'relative',
         left: -4,
-        zIndex: -1
+        zIndex: 0
     },
     iconPlay: {
         width: 30,
@@ -230,24 +237,15 @@ const styles = {
         borderRightColor: "#202024",
         borderBottomColor: "#4d4f5e",
         height: 39,
-        width: 240,
-        marginRight: 15,
-        shadowColor: "#484982",
-        shadowOffset: {
-            width: 0,
-            height: 16,
-        },
-        shadowOpacity: 0.44,
-        shadowRadius: 10,
-
-        elevation: 15,
+        width: vw(80),
+        marginRight: 15
     },
     inputShort: {
         borderWidth: 0,
         height: 39,
         color: "#abaed0",
         paddingLeft: 15,
-        width: 240
+        width: vw(80)
     },
     inputChannelButton: {
         height: 39,
@@ -282,6 +280,7 @@ const styles = {
         justifyContent: "space-between",
         flexDirection: "row",
         paddingVertical: 10,
+        paddingHorizontal: 10,
         width: "100%"
     },
     textAdditional: { color: "#abaed0"},

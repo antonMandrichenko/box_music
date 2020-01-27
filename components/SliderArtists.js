@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import AppContext from "../context/AppContext";
 
@@ -19,7 +19,6 @@ const SliderArtists = () => {
         <SliderBox
           images={dataImages}
           sliderBoxHeight={150}
-          parentWidth={150}
           onCurrentImagePressed={index => setTest(dataText[index])}
           dotColor="transparent"
           inactiveDotColor="transparent"
@@ -33,12 +32,12 @@ const SliderArtists = () => {
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     width: "100%",
     paddingBottom: 20,
 
   }
-};
+});
 
 export default SliderArtists;

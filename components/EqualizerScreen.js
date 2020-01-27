@@ -1,5 +1,5 @@
 import React from "react";
-import {Image, View} from "react-native";
+import { Image, View, StyleSheet } from "react-native";
 
 class EqualizerScreen extends React.Component {
   constructor(props) {
@@ -8,9 +8,7 @@ class EqualizerScreen extends React.Component {
   }
 
   render() {
-    let colors = [
-      "#e75f92"
-    ];
+    let colors = ["#e75f92"];
     return (
       <View>
         <Image
@@ -21,9 +19,9 @@ class EqualizerScreen extends React.Component {
               : require("../assets/images/backgroundEqualizer.png")
           }
         />
-          <View style={{ display: "flex", flexDirection: "column" }}>
-            <Equalizer colors={colors} />
-          </View>
+        <View style={{ display: "flex", flexDirection: "column" }}>
+          <Equalizer colors={colors} />
+        </View>
       </View>
     );
   }
@@ -41,12 +39,12 @@ class Unit extends React.Component {
           shadowColor: "#e75f92",
           shadowOffset: {
             width: 0,
-            height: 12,
+            height: 12
           },
           shadowOpacity: 0.58,
-          shadowRadius: 16.00,
+          shadowRadius: 16.0,
 
-          elevation: 24,
+          elevation: 24
         }}
       />
     );
@@ -166,34 +164,33 @@ class Equalizer extends React.Component {
     var bars = this.state.bars || [];
     return (
       <View>
-        <View
-          style={styles.bars}
-        >
-          {bars}
-        </View>
+        <View style={styles.bars}>{bars}</View>
       </View>
     );
   }
 }
-const styles = {
+const styles = StyleSheet.create({
   equalizer: { width: 300, height: 100, borderRadius: 20 },
-  equalizerInner: {            shadowColor: "#403ec6",
+  equalizerInner: {
+    shadowColor: "#403ec6",
     shadowOffset: {
       width: 0,
-      height: 12,
+      height: 12
     },
     shadowOpacity: 0.58,
-    shadowRadius: 16.00,
+    shadowRadius: 16.0,
 
-    elevation: 24, },
+    elevation: 24
+  },
   bars: {
     flex: 1,
     justifyContent: "space-around",
     flexDirection: "row",
     width: "100%",
-    transform: [{ scaleX: 1}, {scaleY: -1 }],
+    transform: [{ scaleX: 1 }, { scaleY: -1 }],
     position: "absolute",
-    bottom: 0, paddingHorizontal: 15
+    bottom: 0,
+    paddingHorizontal: 15
   }
-};
+});
 export default EqualizerScreen;

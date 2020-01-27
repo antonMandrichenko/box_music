@@ -1,8 +1,8 @@
 import React from 'react';
-import {Image, TouchableOpacity, View} from "react-native";
+import {Image, TouchableOpacity, View, StyleSheet} from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 
-const SmallButton = ({imagePath}) => {
+const SmallButton = ({path}) => {
     return (
         <View style={styles.headerButtonRight}>
             <TouchableOpacity onPress={()=> console.log('work')}>
@@ -12,11 +12,7 @@ const SmallButton = ({imagePath}) => {
                     locations={[0.05, 1]}
                 >
                     <Image
-                        source={
-                            __DEV__
-                                ? require("../assets/images/next.png")
-                                : require("../assets/images/next.png")
-                        }
+                        source={path}
                         style={styles.iconHeart}
                     />
                 </LinearGradient>
@@ -25,7 +21,7 @@ const SmallButton = ({imagePath}) => {
     );
 }
 
-const styles = {
+const styles = StyleSheet.create({
     headerButtonRight: {
         paddingHorizontal: 5,
     },
@@ -45,5 +41,5 @@ const styles = {
         width: 15,
         height: 15
     },
-}
+})
 export default SmallButton;

@@ -1,8 +1,9 @@
 import React from 'react';
+import {Text} from "react-native";
 
 const TrackLevels = (props) => {
     return (
-        <div>TrackLevels</div>
+        <Text>TrackLevels</Text>
     );
 }
 

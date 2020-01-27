@@ -13,7 +13,7 @@ const SwitchButtons = () => {
   const [switchValue, setSwitchValue] = React.useState(false);
 
   const darkColors = ["#373843", "#2e2f39", "#24252d"];
-  const colorColors = ["#8855c1", "#8855c1", "#634cc8"];
+  const lightColors = ["#8855c1", "#8855c1", "#634cc8"];
   const toggleSwitch = () => {
     setSwitchValue(!switchValue);
   };
@@ -22,7 +22,7 @@ const SwitchButtons = () => {
       <TouchableOpacity onPress={toggleSwitch}>
         <LinearGradient
           style={styles.inputChannelButton}
-          colors={ switchValue ? darkColors : colorColors}
+          colors={ switchValue ? darkColors : lightColors}
           locations={[0.3, 0.5, 0.8]}
         >
             <Image
@@ -38,7 +38,7 @@ const SwitchButtons = () => {
       <TouchableOpacity onPress={toggleSwitch}>
         <LinearGradient
           style={styles.inputChannelButton}
-          colors={ switchValue ? colorColors : darkColors}
+          colors={ switchValue ? lightColors : darkColors}
           locations={[0.3, 0.5, 0.8]}
         >
             <Image
@@ -59,12 +59,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    borderRadius: 3,
-    borderTopColor: "#202024",
-    borderLeftColor: "#202024",
-    borderRightColor: "#202024",
-    borderBottomColor: "#4d4f5e",
-    borderWidth: 1
   },
   inputChannelButton: {
     height: 39,
