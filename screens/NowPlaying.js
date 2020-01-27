@@ -12,11 +12,10 @@ import {
 import {LinearGradient} from "expo-linear-gradient";
 import {vw} from "react-native-expo-viewport-units";
 import SliderArtists from "../components/SliderArtists";
-import ListArtists from "../components/ListArtists";
 import SmallButton from "../components/SmallButton";
 import EqualizerScreen from "../components/EqualizerScreen";
 import SwitchButtons from "../components/SwitchButtons";
-import MyCustomCarousel from "../components/Carousel";
+import MyCarousel from "../components/Carousel";
 
 const NowPlaying = () => {
     return (
@@ -29,7 +28,6 @@ const NowPlaying = () => {
                 }
                 style={styles.imageBackground}
             >
-                <MyCustomCarousel />
                 <View style={styles.containerHeader}>
                     <View style={styles.containerHeaderButtons}>
                         <View style={styles.containerHeaderButtonsLeft}>
@@ -102,7 +100,9 @@ const NowPlaying = () => {
                         </View>
                     </View>
                 </View>
-                <ListArtists/>
+                <View style={styles.containerCarousel}>
+                <MyCarousel />
+                </View>
                 <View style={styles.containerBeforeSlider}>
                     <Text style={styles.textAdditional}>• Up Next</Text>
                     <SmallButton imagePath="../assets/images/next.png" />
@@ -285,5 +285,10 @@ const styles = {
         width: "100%"
     },
     textAdditional: { color: "#abaed0"},
+    containerCarousel: {
+        flexDirection: "row",
+        alignItems: "center",
+
+    }
 }
 export default NowPlaying;

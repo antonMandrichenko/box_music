@@ -66,7 +66,7 @@ export default createAppContainer(
       screen: ChooseChannel,
       navigationOptions: {
         title: "ChooseChannel"
-      }
+      }``
     },
     TabNavigator: {
       screen: TabNavigator,

@@ -18,8 +18,8 @@ const SliderArtists = () => {
       <View style={styles.container}>
         <SliderBox
           images={dataImages}
-          sliderBoxHeight={50}
-          parentWidth={350}
+          sliderBoxHeight={150}
+          parentWidth={150}
           onCurrentImagePressed={index => setTest(dataText[index])}
           dotColor="transparent"
           inactiveDotColor="transparent"
@@ -36,7 +36,8 @@ const SliderArtists = () => {
 const styles = {
   container: {
     width: "100%",
-    paddingBottom: 20
+    paddingBottom: 20,
+
   }
 };
 
