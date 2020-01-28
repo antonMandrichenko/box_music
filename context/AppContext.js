@@ -21,6 +21,7 @@ const AppProvider = ({ children }, props) => {
   const [authorName, setAuthorName] = useState("");
   const [uid, setUid] = useState("");
   const [comments, setComments] = useState({});
+  const [read, setRead] = useState("Read more");
 
   const handleChangeCountNext = () =>
     setCounter({ start: counter.start + 9, end: counter.end + 9 });
@@ -143,7 +144,7 @@ const AppProvider = ({ children }, props) => {
         const obj = snapshot.val();
         const newArr = [];
         for (let i in obj) {
-          newArr.push({ review: obj[i].reviews});
+          newArr.push({ review: obj[i].reviews });
           setUid(i);
         }
         return newArr;
@@ -155,8 +156,7 @@ const AppProvider = ({ children }, props) => {
   useEffect(() => {
     loadData();
     loadDataReview();
-
-  }, [comments]);
+  }, []);
 
   let userRef = firebase.database().ref("user/userId/" + uid);
   const remove = () => userRef.remove();
@@ -179,7 +179,7 @@ const AppProvider = ({ children }, props) => {
         toggleType,
         sendReview,
         loadDataReview,
-          remove,
+        remove,
         setFilter,
         email,
         error,
@@ -195,7 +195,9 @@ const AppProvider = ({ children }, props) => {
         typeDisplayed,
         setReview,
         review,
-        comments
+        comments,
+        read,
+        setRead
         // reviewRef
       }}
     >

@@ -15,6 +15,7 @@ import PlayButtons from "../components/PlayButtons";
 
 const NowPlaying = () => {
 
+
   return (
     <View style={styles.container}>
       <ImageBackground
