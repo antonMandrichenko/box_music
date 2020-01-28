@@ -1,41 +1,58 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Image, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import user from "../assets/images/user.jpg";
 import triangleBottom from "../assets/images/icons/triangleBottom.png";
 import answer from "../assets/images/icons/answer.png";
+import cancel from "../assets/images/icons/cancel.png";
 import { vw } from "react-native-expo-viewport-units";
+import AppContext from "../context/AppContext";
 
 const MessageAnswer = props => {
+  const { comments, remove } = React.useContext(AppContext);
+
   return (
     <View style={styles.wrapper}>
-      <View style={styles.lineBefore}></View>
-      <View style={styles.container}>
-        <Image style={styles.image} source={user} />
-        <Text style={styles.text}>Adam Lambert</Text>
-      </View>
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.flex}
-          onPress={() => console.log("work")}
-        >
-          <Text style={styles.textReplies}>151 Replies</Text>
-          <Image style={styles.triangleBottom} source={triangleBottom} />
-        </TouchableOpacity>
-        <View style={styles.line} />
-        <TouchableOpacity
-          style={styles.flex}
-          onPress={() => console.log("work")}
-        >
-          <Image style={styles.iconReview} source={answer} />
-        </TouchableOpacity>
-      </View>
+      {comments && comments.map(comment => (
+        <View key={Math.random() * 2}>
+          <View style={styles.lineBefore}/>
+          <View style={styles.container}>
+            <Image style={styles.image} source={user} />
+            <View>
+            <Text style={styles.text}>Adam Lambert</Text>
+            <Text style={styles.text}>{comment.review}</Text>
+            </View>
+          </View>
+          <View style={styles.container}>
+            <TouchableOpacity
+              style={styles.flex}
+              onPress={() => console.log("work")}
+            >
+              <Text style={styles.textReplies}>1 Replies</Text>
+              <Image style={styles.triangleBottom} source={triangleBottom} />
+            </TouchableOpacity>
+            <View style={styles.line} />
+            <TouchableOpacity
+              style={styles.flex}
+              onPress={() => console.log("work")}
+            >
+              <Image style={styles.iconReview} source={answer} />
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.flex}
+                onPress={remove}
+            >
+              <Image style={styles.iconReview} source={cancel} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      ))}
     </View>
   );
 };
 const styles = StyleSheet.create({
   wrapper: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "flex-start",
     justifyContent: "space-between",
     width: vw(90)
   },
@@ -52,6 +69,7 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   text: { color: "#abaed0", fontSize: 14 },
+  textComment: { color: "#abaed0", fontSize: 14 },
   textReplies: { color: "#e75f92", fontSize: 12 },
   line: {
     marginHorizontal: 6,

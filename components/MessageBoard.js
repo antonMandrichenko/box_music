@@ -5,11 +5,15 @@ import triangleBottom from "../assets/images/icons/triangleBottom.png";
 import answer from "../assets/images/icons/answer.png";
 import { vw } from "react-native-expo-viewport-units";
 import MessageAnswer from "./MessageAnswer";
+import AddComment from "./AddComment";
+import AppContext from "../context/AppContext";
 
 const MessageBoard = () => {
   const [show, setShow] = React.useState(false);
-
-  const toggle = () => setShow(!show);
+  const [showReview, setShowReview] = React.useState(false);
+  const { comments } = React.useContext(AppContext);
+  const toggleAnswer = () => setShow(!show);
+  const toggleReview = () => setShowReview(!showReview);
   return (
     <View style={{ flexDirection: "column" }}>
       <View style={styles.wrapper}>
@@ -18,7 +22,7 @@ const MessageBoard = () => {
           <Text style={styles.text}>Adam Lambert</Text>
         </View>
         <View style={styles.container}>
-          <TouchableOpacity style={styles.flex} onPress={toggle}>
+          <TouchableOpacity style={styles.flex} onPress={toggleAnswer}>
             <Text style={styles.textReplies}>151 Replies</Text>
             <Image
               style={show ? styles.triangleTop : styles.triangleBottom}
@@ -28,13 +32,14 @@ const MessageBoard = () => {
           <View style={styles.line} />
           <TouchableOpacity
             style={styles.flex}
-            onPress={() => console.log("work")}
+            onPress={toggleReview}
           >
             <Image style={styles.iconReview} source={answer} />
           </TouchableOpacity>
         </View>
       </View>
-      {show && <MessageAnswer />}
+      {comments && show && <MessageAnswer />}
+      {showReview && <AddComment />}
     </View>
   );
 };

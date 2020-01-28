@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, memo } from "react";
 import firebase from "../config/firebase";
 
 const AppContext = React.createContext();
@@ -17,6 +17,10 @@ const AppProvider = ({ children }, props) => {
   const [typeDisplayed, setTypeDisplayed] = useState(false);
   const [pickerSelection, setPickerSelection] = useState("");
   const [typeSelection, setTypeSelection] = useState("");
+  const [review, setReview] = useState("");
+  const [authorName, setAuthorName] = useState("");
+  const [uid, setUid] = useState("");
+  const [comments, setComments] = useState({});
 
   const handleChangeCountNext = () =>
     setCounter({ start: counter.start + 9, end: counter.end + 9 });
@@ -103,10 +107,6 @@ const AppProvider = ({ children }, props) => {
     }
   };
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
   const togglePicker = () => {
     setPickerDisplayed(!pickerDisplayed);
   };
@@ -121,7 +121,46 @@ const AppProvider = ({ children }, props) => {
     setTypeSelection(newValue);
     toggleType();
   };
-  return (ch
+
+  const sendReview = () =>
+    firebase
+      .database()
+      .ref("user/userId/")
+      .push()
+      .set({
+        reviews: review,
+        authorName: authorName
+      })
+      .then(setReview(""));
+
+  const getReview = () =>
+    firebase
+      .database()
+      .ref()
+      .child("user/userId/")
+      .once("value")
+      .then(function(snapshot) {
+        const obj = snapshot.val();
+        const newArr = [];
+        for (let i in obj) {
+          newArr.push({ review: obj[i].reviews});
+          setUid(i);
+        }
+        return newArr;
+      });
+  const loadDataReview = async () => {
+    const data = await getReview();
+    setComments(data);
+  };
+  useEffect(() => {
+    loadData();
+    loadDataReview();
+
+  }, [comments]);
+
+  let userRef = firebase.database().ref("user/userId/" + uid);
+  const remove = () => userRef.remove();
+  return (
     <AppContext.Provider
       value={{
         onSubmitEmail,
@@ -138,6 +177,9 @@ const AppProvider = ({ children }, props) => {
         setPickerValue,
         setTypeValue,
         toggleType,
+        sendReview,
+        loadDataReview,
+          remove,
         setFilter,
         email,
         error,
@@ -150,7 +192,11 @@ const AppProvider = ({ children }, props) => {
         pickerDisplayed,
         pickerSelection,
         typeSelection,
-        typeDisplayed
+        typeDisplayed,
+        setReview,
+        review,
+        comments
+        // reviewRef
       }}
     >
       {children}
