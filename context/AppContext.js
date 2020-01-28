@@ -121,7 +121,7 @@ const AppProvider = ({ children }, props) => {
     setTypeSelection(newValue);
     toggleType();
   };
-  return (
+  return (ch
     <AppContext.Provider
       value={{
         onSubmitEmail,
