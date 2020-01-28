@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   containerHeaderInputStation: {
     paddingHorizontal: 10,
-    paddingBottom: 40,
+    paddingBottom: 20,
     alignItems: "flex-start",
     alignContent: "flex-start",
     justifyContent: "space-between"
