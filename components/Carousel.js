@@ -5,7 +5,7 @@ import AppContext from "../context/AppContext";
 import { vw } from "react-native-expo-viewport-units";
 
 const MyCarousel = () => {
-  const { data } = React.useContext(AppContext);
+  const { preparedSongs } = React.useContext(AppContext);
 
   const styles = StyleSheet.create({
     imageContainer: {
@@ -36,10 +36,9 @@ const MyCarousel = () => {
       </TouchableOpacity>
     );
   };
-
   return (
     <Carousel
-      data={data}
+      data={preparedSongs}
       renderItem={_renderItem}
       sliderWidth={vw(100)}
       itemWidth={180}

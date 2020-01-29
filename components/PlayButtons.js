@@ -16,8 +16,11 @@ import arrowTop from "../assets/images/icons/arrow-top.png";
 import arrowBottom from "../assets/images/icons/arrow-bot.png";
 import { LinearGradient } from "expo-linear-gradient";
 import { vw } from "react-native-expo-viewport-units";
+import AppContext from "../context/AppContext";
 
 const PlayButtons = props => {
+
+  const {preparedSongs} = React.useContext(AppContext)
   return (
     <>
       <View style={styles.containerHeaderButtons}>
@@ -63,7 +66,7 @@ const PlayButtons = props => {
           >
             <TextInput
               style={styles.inputShort}
-              placeholder="My Vybn Station (3253 track)"
+              placeholder={`My Vybn Station (${preparedSongs.length} track)`}
               placeholderTextColor="#abaed0"
             />
           </LinearGradient>

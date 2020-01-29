@@ -5,11 +5,9 @@ import AppContext from "../context/AppContext";
 import PropTypes from "prop-types";
 
 const Channel = ({ styles, data }) => {
-  const { checkBoxIn, checked, filter, counter, checkedSongs } = useContext(
+  const { checkBoxIn, checked, filter, counter } = useContext(
     AppContext
   );
-
-
 
   return (
     <>

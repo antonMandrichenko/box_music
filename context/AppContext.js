@@ -101,21 +101,22 @@ const AppProvider = ({ children }, props) => {
       Object.keys(item).reduce(
         (resultObject, value) =>
           item[value] === true
-            ? { ...resultObject, [value]:item[value] }
+            ? { ...resultObject, [value]: item[value] }
             : resultObject,
         {}
       )
     ];
   }, []);
 
-    let arr = [];
-    checkedSongs.map(item => {
-        for(let i in item) {
-            arr.push(data.filter(item => item.title === i))
-        }
-    });
+  const checkedSongsKeysArr = checkedSongs
+    .map(song => Object.keys(song))
+    .join("")
+    .split(",");
 
-console.log(arr)
+  const preparedSongs = checkedSongsKeysArr
+    .map(item => data.filter(song => song.title === item))
+    .flat(1);
+
   const loadData = async () => {
     try {
       fetch("https://genius.p.rapidapi.com/artists/16775/songs", {
@@ -225,7 +226,8 @@ console.log(arr)
         setRead,
         chooseChannel,
         setChooseChannel,
-      checkedSongs,arr
+        checkedSongs,
+        preparedSongs
       }}
     >
       {children}
