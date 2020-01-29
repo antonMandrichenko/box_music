@@ -108,7 +108,7 @@ const SplashLoading = (props) => {
                   prefill={0}
                   fill={100}
                   duration={0}
-                  onAnimationComplete={() => props.navigation.navigate('NowPlaying')}
+                  onAnimationComplete={() => props.navigation.navigate('ChooseChannel')}
                   backgroundColor="#3a2e42"
                   tintColor="#7a5dd5"
                   style={{

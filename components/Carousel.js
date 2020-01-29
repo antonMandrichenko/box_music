@@ -5,7 +5,8 @@ import AppContext from "../context/AppContext";
 import { vw } from "react-native-expo-viewport-units";
 
 const MyCarousel = () => {
-  const { data } = React.useContext(AppContext);
+  const { data, checked, chooseChannel,
+    setChooseChannel } = React.useContext(AppContext);
   const styles = StyleSheet.create({
     imageContainer: {
       width: 180,
@@ -23,6 +24,13 @@ const MyCarousel = () => {
       borderBottomLeftRadius: 20,
     }
   });
+
+  // const preparedData = data.filter(item => item.title === checked);
+  for(let i in checked) {
+    setChooseChannel(i);
+  }
+  console.log(checked);
+  console.log(chooseChannel);
   const _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity onPress={() => alert(item.primary_artist.name)}>

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 const Channel = ({ styles, data }) => {
   const { checkBoxIn, checked, filter, counter } = useContext(AppContext);
+
   return (
     <>
       {data &&
@@ -16,7 +17,7 @@ const Channel = ({ styles, data }) => {
               style={styles.circleWrapper}
               onPress={checkBoxIn}
             >
-              <View style={styles.circle} onPress={checkBoxIn}>
+              <View style={styles.circle} >
                 <View style={styles.circleInner}>
                   <ImageBackground
                     style={styles.imageBackground}

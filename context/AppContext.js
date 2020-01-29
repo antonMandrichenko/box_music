@@ -22,6 +22,7 @@ const AppProvider = ({ children }, props) => {
   const [uid, setUid] = useState("");
   const [comments, setComments] = useState({});
   const [read, setRead] = useState("Read more");
+  const [chooseChannel, setChooseChannel] = useState([]);
 
   const handleChangeCountNext = () =>
     setCounter({ start: counter.start + 9, end: counter.end + 9 });
@@ -197,8 +198,9 @@ const AppProvider = ({ children }, props) => {
         review,
         comments,
         read,
-        setRead
-        // reviewRef
+        setRead,
+          chooseChannel,
+          setChooseChannel
       }}
     >
       {children}
