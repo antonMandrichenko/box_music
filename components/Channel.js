@@ -2,28 +2,35 @@ import React, { useContext } from "react";
 import { Text, View, ImageBackground, TouchableOpacity } from "react-native";
 import CheckboxComponent from "./CheckboxComponent";
 import AppContext from "../context/AppContext";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const Channel = ({ styles, data }) => {
-  const { checkBoxIn, checked, filter, counter } = useContext(AppContext);
+  const { checkBoxIn, checked, filter, counter, checkedSongs } = useContext(
+    AppContext
+  );
+
+
 
   return (
     <>
       {data &&
-        data.filter(item => item.title.slice(0, 10).includes(filter))
+        data
+          .filter(item => item.title.slice(0, 10).includes(filter))
           .map((song, i) => (
             <TouchableOpacity
-                key={i}
+              key={i}
               style={styles.circleWrapper}
               onPress={checkBoxIn}
             >
-              <View style={styles.circle} >
+              <View style={styles.circle}>
                 <View style={styles.circleInner}>
                   <ImageBackground
                     style={styles.imageBackground}
                     source={{ uri: `${song.header_image_thumbnail_url}` }}
                   >
-                    <CheckboxComponent checked={checked[song.title.slice(0, 10)]} />
+                    <CheckboxComponent
+                      checked={checked[song.title.slice(0, 10)]}
+                    />
                   </ImageBackground>
                 </View>
               </View>
@@ -37,6 +44,6 @@ const Channel = ({ styles, data }) => {
 
 Channel.propTypes = {
   styles: PropTypes.object.isRequired,
-  data: PropTypes.array,
+  data: PropTypes.array
 };
 export default Channel;

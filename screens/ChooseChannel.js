@@ -73,7 +73,7 @@ const ChooseChannel = props => {
 
         <View style={styles.containerFooter}>
         <View style={styles.containerFooterWrapper}>
-          <TouchableOpacity onPress={() => true}>
+          <TouchableOpacity onPress={() => props.navigation.navigate('NowPlaying')}>
             <LinearGradient
               style={styles.inputChannel}
               colors={["#373843", "#2e2f39", "#24252d"]}

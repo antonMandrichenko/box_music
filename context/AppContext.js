@@ -87,12 +87,35 @@ const AppProvider = ({ children }, props) => {
     }
   };
 
-  const checkBoxIn = e =>
+  const checkBoxIn = e => {
     setChecked({
       ...checked,
       [e.target.innerText]: !checked[e.target.innerText]
     });
+    setChooseChannel(prevArray => [...prevArray, checked]);
+  };
 
+  const checkedSongs = [checked].reduce((resultArr, item) => {
+    return [
+      ...resultArr,
+      Object.keys(item).reduce(
+        (resultObject, value) =>
+          item[value] === true
+            ? { ...resultObject, [value]:item[value] }
+            : resultObject,
+        {}
+      )
+    ];
+  }, []);
+
+    let arr = [];
+    checkedSongs.map(item => {
+        for(let i in item) {
+            arr.push(data.filter(item => item.title === i))
+        }
+    });
+
+console.log(arr)
   const loadData = async () => {
     try {
       fetch("https://genius.p.rapidapi.com/artists/16775/songs", {
@@ -161,6 +184,7 @@ const AppProvider = ({ children }, props) => {
 
   let userRef = firebase.database().ref("user/userId/" + uid);
   const remove = () => userRef.remove();
+
   return (
     <AppContext.Provider
       value={{
@@ -199,8 +223,9 @@ const AppProvider = ({ children }, props) => {
         comments,
         read,
         setRead,
-          chooseChannel,
-          setChooseChannel
+        chooseChannel,
+        setChooseChannel,
+      checkedSongs,arr
       }}
     >
       {children}
