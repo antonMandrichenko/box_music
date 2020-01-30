@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  ImageBackground,
-  Text,
-  View
-} from "react-native";
+import { ImageBackground, Text, View } from "react-native";
 import { vw } from "react-native-expo-viewport-units";
 import SmallButton from "../components/SmallButton";
 import EqualizerScreen from "../components/EqualizerScreen";
@@ -12,13 +8,11 @@ import MyCarousel from "../components/Carousel";
 import addSong from "../assets/images/icons/ad-song.png";
 import MessageBoard from "../components/MessageBoard";
 import PlayButtons from "../components/PlayButtons";
-import Player from "../components/Player";
 import AppContext from "../context/AppContext";
 import TrackPlayerComponent from "../components/TrackPlayerComponent";
 
 const NowPlaying = () => {
-
-  const {switchValue} = React.useContext(AppContext);
+  const { switchValue } = React.useContext(AppContext);
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -29,7 +23,7 @@ const NowPlaying = () => {
         }
         style={styles.imageBackground}
       >
-        <PlayButtons/>
+        <PlayButtons />
         <View style={styles.containerCarousel}>
           <MyCarousel />
         </View>
@@ -45,13 +39,13 @@ const NowPlaying = () => {
           <Text style={styles.textAdditional}>• Message Board</Text>
           <SwitchButtons />
         </View>
-        {switchValue  ?
-        <View style={styles.containerBeforeSlider}>
-          <MessageBoard />
-        </View>
-            :
-        <Player />}
-        <TrackPlayerComponent />
+        {switchValue ? (
+          <View style={styles.containerBeforeSlider}>
+            <MessageBoard />
+          </View>
+        ) : (
+          <TrackPlayerComponent />
+        )}
       </ImageBackground>
     </View>
   );
@@ -72,7 +66,6 @@ const styles = {
     alignContent: "flex-start",
     justifyContent: "flex-start"
   },
-
 
   square: {
     justifyContent: "center",

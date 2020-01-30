@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import {FontAwesome5} from '@expo/vector-icons'
 import { Audio } from 'expo-av'
 
 const audioBookPlaylist = [
@@ -18,14 +18,12 @@ const audioBookPlaylist = [
         source: 'Librivox',
         uri:
             'https://ia600204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act2_shakespeare.mp3',
-        imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
     },
     {
         title: 'Hamlet - Act III',
         author: 'William Shakespeare',
         source: 'Librivox',
         uri: 'http://www.archive.org/download/hamlet_0911_librivox/hamlet_act3_shakespeare.mp3',
-        imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
     },
     {
         title: 'Hamlet - Act IV',
@@ -33,7 +31,6 @@ const audioBookPlaylist = [
         source: 'Librivox',
         uri:
             'https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act4_shakespeare.mp3',
-        imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
     },
     {
         title: 'Hamlet - Act V',
@@ -41,7 +38,6 @@ const audioBookPlaylist = [
         source: 'Librivox',
         uri:
             'https://ia600204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act5_shakespeare.mp3',
-        imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
     }
 ]
 
@@ -149,19 +145,37 @@ export default class App extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.controls}>
-                    <TouchableOpacity style={styles.control} onPress={this.handlePreviousTrack}>
-                        <Ionicons name='ios-skip-backward' size={48} color='#444' />
+                <View
+                    style={{
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                        alignItems: "center",
+                        marginTop: 5,
+                      width: '100%'
+                    }}
+                >
+                    <TouchableOpacity onPress={this.handlePreviousTrack}>
+                        <FontAwesome5 name="backward" size={16} color="#93A8B3"/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.control} onPress={this.handlePlayPause}>
+                    <TouchableOpacity style={styles.playButtonContainer} onPress={this.handlePlayPause}>
                         {this.state.isPlaying ? (
-                            <Ionicons name='ios-pause' size={48} color='#444' />
+                            <FontAwesome5
+                                name="pause"
+                                size={16}
+                                color="#3D425C"
+                                style={{marginLeft: 3}}
+                            />
                         ) : (
-                            <Ionicons name='ios-play-circle' size={48} color='#444' />
+                            <FontAwesome5
+                                name="play"
+                                size={16}
+                                color="#3D425C"
+                                style={{marginLeft: 3}}
+                            />
                         )}
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.control} onPress={this.handleNextTrack}>
-                        <Ionicons name='ios-skip-forward' size={48} color='#444' />
+                    <TouchableOpacity onPress={this.handleNextTrack}>
+                        <FontAwesome5 name="forward" size={16} color="#93A8B3"/>
                     </TouchableOpacity>
                 </View>
                 {this.renderFileInfo()}
@@ -171,19 +185,31 @@ export default class App extends React.Component {
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
+        width: '100%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'space-between'
+    },
+    playButtonContainer: {
+        backgroundColor: "#FFF",
+        borderColor: "rgba(93, 63, 106, 0.2)",
+        borderWidth: 8,
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        alignItems: "center",
+        justifyContent: "center",
+        marginHorizontal: 10,
+        shadowColor: "#5D3F6A",
+        shadowRadius: 30,
+        shadowOpacity: 0.5
     },
     trackInfo: {
-        padding: 40,
-        backgroundColor: '#fff'
+        padding: 10,
     },
     trackInfoText: {
         textAlign: 'center',
         flexWrap: 'wrap',
-        color: '#550088'
+        color: 'rgb(171, 174, 208)'
     },
     largeText: {
         fontSize: 22

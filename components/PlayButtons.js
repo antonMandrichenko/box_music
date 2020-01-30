@@ -66,7 +66,7 @@ const PlayButtons = props => {
           >
             <TextInput
               style={styles.inputShort}
-              placeholder={`My Vybn Station (${preparedSongs.length} track)`}
+              placeholder={`My Vybn Station (${preparedSongs.length} tracks)`}
               placeholderTextColor="#abaed0"
             />
           </LinearGradient>
