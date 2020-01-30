@@ -8,15 +8,15 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { vw } from "react-native-expo-viewport-units";
+import AppContext from "../context/AppContext";
 
 const SwitchButtons = () => {
-  const [switchValue, setSwitchValue] = React.useState(false);
+
+  const {switchValue, toggleSwitch} = React.useContext(AppContext);
 
   const darkColors = ["#373843", "#2e2f39", "#24252d"];
   const lightColors = ["#8855c1", "#8855c1", "#634cc8"];
-  const toggleSwitch = () => {
-    setSwitchValue(!switchValue);
-  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleSwitch}>

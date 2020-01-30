@@ -23,6 +23,7 @@ const AppProvider = ({ children }, props) => {
   const [comments, setComments] = useState({});
   const [read, setRead] = useState("Read more");
   const [chooseChannel, setChooseChannel] = useState([]);
+  const [switchValue, setSwitchValue] = useState(false);
 
   const handleChangeCountNext = () =>
     setCounter({ start: counter.start + 9, end: counter.end + 9 });
@@ -186,6 +187,10 @@ const AppProvider = ({ children }, props) => {
   let userRef = firebase.database().ref("user/userId/" + uid);
   const remove = () => userRef.remove();
 
+  const toggleSwitch = () => {
+    setSwitchValue(!switchValue);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -206,6 +211,7 @@ const AppProvider = ({ children }, props) => {
         sendReview,
         loadDataReview,
         remove,
+        toggleSwitch,
         setFilter,
         email,
         error,
@@ -227,7 +233,8 @@ const AppProvider = ({ children }, props) => {
         chooseChannel,
         setChooseChannel,
         checkedSongs,
-        preparedSongs
+        preparedSongs,
+        switchValue
       }}
     >
       {children}
