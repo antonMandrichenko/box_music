@@ -1,73 +1,88 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 import {FontAwesome5} from '@expo/vector-icons'
 import { Audio } from 'expo-av'
+import Play from "./Play";
+import {setIsEnabledAsync} from "expo-av/build/Audio/AudioAvailability";
 
 const audioBookPlaylist = [
     {
-        title: 'Hamlet - Act I',
-        author: 'William Shakespeare',
-        source: 'Librivox',
+        title: 'Majestic Jukebox Radio',
         uri:
-            'https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act1_shakespeare.mp3',
-        imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
+            'http://uk3.internet-radio.com:8405/live',
     },
     {
-        title: 'Hamlet - Act II',
-        author: 'William Shakespeare',
-        source: 'Librivox',
+        title: 'SOUL CENTRAL RADIO',
         uri:
-            'https://ia600204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act2_shakespeare.mp3',
+            'http://uk6.internet-radio.com:8179/;stream',
     },
     {
-        title: 'Hamlet - Act III',
-        author: 'William Shakespeare',
-        source: 'Librivox',
-        uri: 'http://www.archive.org/download/hamlet_0911_librivox/hamlet_act3_shakespeare.mp3',
+        title: 'Smooth Jazz Global HD',
+        uri: 'http://uk3.internet-radio.com:8021/;stream',
     },
     {
-        title: 'Hamlet - Act IV',
-        author: 'William Shakespeare',
-        source: 'Librivox',
+        title: 'Smooth Jazz Florida',
         uri:
-            'https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act4_shakespeare.mp3',
+            'http://us4.internet-radio.com:8266/;stream',
     },
-    {
-        title: 'Hamlet - Act V',
-        author: 'William Shakespeare',
-        source: 'Librivox',
-        uri:
-            'https://ia600204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act5_shakespeare.mp3',
-    }
+
 ]
 
-export default class App extends React.Component {
-    state = {
-        isPlaying: false,
-        playbackInstance: null,
-        currentIndex: 0,
-        volume: 1.0,
-        isBuffering: false
-    }
-    async componentDidMount() {
-        try {
-            await Audio.setAudioModeAsync({
-                allowsRecordingIOS: false,
-                interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-                playsInSilentModeIOS: true,
-                interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
-                shouldDuckAndroid: true,
-                staysActiveInBackground: true,
-                playThroughEarpieceAndroid: true
-            })
+const TrackPlayerComponent = () => {
 
-            this.loadAudio()
-        } catch (e) {
-            console.log(e)
-        }
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [playbackInstance, setPlaybackInstance] = useState(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [volume, setVolume] = useState(1.0);
+    const [isBuffering, setIsBuffering] = useState(false);
+    // state = {
+    //     isPlaying: false,
+    //     playbackInstance: null,
+    //     currentIndex: 0,
+    //     volume: 1.0,
+    //     isBuffering: false
+    // }
+
+    const setAudio = async () => {
+            try {
+                await Audio.setAudioModeAsync({
+                    allowsRecordingIOS: false,
+                    interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+                    playsInSilentModeIOS: true,
+                    interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+                    shouldDuckAndroid: true,
+                    staysActiveInBackground: true,
+                    playThroughEarpieceAndroid: true
+                })
+
+                loadAudio()
+            } catch (e) {
+                console.log(e)
+            }
     }
-    async loadAudio() {
-        const {currentIndex, isPlaying, volume} = this.state
+    useEffect(() => {
+        setAudio();
+    } ,[]);
+
+    // async componentDidMount() {
+    //     try {
+    //         await Audio.setAudioModeAsync({
+    //             allowsRecordingIOS: false,
+    //             interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+    //             playsInSilentModeIOS: true,
+    //             interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+    //             shouldDuckAndroid: true,
+    //             staysActiveInBackground: true,
+    //             playThroughEarpieceAndroid: true
+    //         })
+    //
+    //         this.loadAudio()
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
+
+    const loadAudio = async () => {
 
         try {
             const playbackInstance = new Audio.Sound()
@@ -80,69 +95,105 @@ export default class App extends React.Component {
                 volume
             }
 
-            playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate)
+            playbackInstance.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate)
             await playbackInstance.loadAsync(source, status, false)
-            this.setState({playbackInstance})
+            setPlaybackInstance(playbackInstance)
         } catch (e) {
             console.log(e)
         }
     }
+    // async loadAudio() {
+    //     const {currentIndex, isPlaying, volume} = this.state
+    //
+    //     try {
+    //         const playbackInstance = new Audio.Sound()
+    //         const source = {
+    //             uri: audioBookPlaylist[currentIndex].uri
+    //         }
+    //
+    //         const status = {
+    //             shouldPlay: isPlaying,
+    //             volume
+    //         }
+    //
+    //         playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate)
+    //         await playbackInstance.loadAsync(source, status, false)
+    //         this.setState({playbackInstance})
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
-    onPlaybackStatusUpdate = status => {
-        this.setState({
-            isBuffering: status.isBuffering
-        })
+    const onPlaybackStatusUpdate = (status) => {
+        setIsBuffering(status.isBuffering)
     }
+    // onPlaybackStatusUpdate = status => {
+    //     this.setState({
+    //         isBuffering: status.isBuffering
+    //     })
+    // }
 
-    handlePlayPause = async () => {
-        const { isPlaying, playbackInstance } = this.state
+
+    const handlePlayPause = async () => {
         isPlaying ? await playbackInstance.pauseAsync() : await playbackInstance.playAsync()
 
-        this.setState({
-            isPlaying: !isPlaying
-        })
+        setIsPlaying(!isPlaying)
     }
 
-    handlePreviousTrack = async () => {
-        let { playbackInstance, currentIndex } = this.state
+    // handlePlayPause = async () => {
+    //     const { isPlaying, playbackInstance } = this.state
+    //     isPlaying ? await playbackInstance.pauseAsync() : await playbackInstance.playAsync()
+    //
+    //     this.setState({
+    //         isPlaying: !isPlaying
+    //     })
+    // }
+    const handlePreviousTrack = async () => {
         if (playbackInstance) {
             await playbackInstance.unloadAsync()
-            currentIndex < audioBookPlaylist.length - 1 ? (currentIndex -= 1) : (currentIndex = 0)
-            this.setState({
-                currentIndex
-            })
-            this.loadAudio()
+            currentIndex < audioBookPlaylist.length - 1 && currentIndex !== 0 ? setCurrentIndex(currentIndex - 1) : setCurrentIndex(audioBookPlaylist.length - 1)
+            await loadAudio()
         }
     }
+    // handlePreviousTrack = async () => {
+    //     let { playbackInstance, currentIndex } = this.state
+    //     if (playbackInstance) {
+    //         await playbackInstance.unloadAsync()
+    //         currentIndex < audioBookPlaylist.length - 1 && currentIndex !== 0 ? (currentIndex -= 1) : (currentIndex = audioBookPlaylist.length - 1)
+    //         this.setState({
+    //             currentIndex
+    //         })
+    //         this.loadAudio()
+    //     }
+    // }
+    const handleNextTrack = async () => {
+        if (playbackInstance) {
+            await playbackInstance.unloadAsync()
+            currentIndex < audioBookPlaylist.length - 1 ? setCurrentIndex(currentIndex + 1) : setCurrentIndex(0)
 
-    handleNextTrack = async () => {
-        let { playbackInstance, currentIndex } = this.state
-        if (playbackInstance) {
-            await playbackInstance.unloadAsync()
-            currentIndex < audioBookPlaylist.length - 1 ? (currentIndex += 1) : (currentIndex = 0)
-            this.setState({
-                currentIndex
-            })
-            this.loadAudio()
+            await loadAudio()
         }
     }
-    renderFileInfo() {
-        const { playbackInstance, currentIndex } = this.state
+    // handleNextTrack = async () => {
+    //     let { playbackInstance, currentIndex } = this.state
+    //     if (playbackInstance) {
+    //         await playbackInstance.unloadAsync()
+    //         currentIndex < audioBookPlaylist.length - 1 ? (currentIndex += 1) : (currentIndex = 0)
+    //         this.setState({
+    //             currentIndex
+    //         })
+    //         this.loadAudio()
+    //     }
+    // }
+    const renderFileInfo = () => {
         return playbackInstance ? (
             <View style={styles.trackInfo}>
                 <Text style={[styles.trackInfoText, styles.largeText]}>
                     {audioBookPlaylist[currentIndex].title}
                 </Text>
-                <Text style={[styles.trackInfoText, styles.smallText]}>
-                    {audioBookPlaylist[currentIndex].author}
-                </Text>
-                <Text style={[styles.trackInfoText, styles.smallText]}>
-                    {audioBookPlaylist[currentIndex].source}
-                </Text>
             </View>
         ) : null
     }
-    render() {
         return (
             <View style={styles.container}>
                 <View
@@ -154,34 +205,17 @@ export default class App extends React.Component {
                       width: '100%'
                     }}
                 >
-                    <TouchableOpacity onPress={this.handlePreviousTrack}>
+                    <TouchableOpacity onPress={handlePreviousTrack}>
                         <FontAwesome5 name="backward" size={16} color="#93A8B3"/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.playButtonContainer} onPress={this.handlePlayPause}>
-                        {this.state.isPlaying ? (
-                            <FontAwesome5
-                                name="pause"
-                                size={16}
-                                color="#3D425C"
-                                style={{marginLeft: 3}}
-                            />
-                        ) : (
-                            <FontAwesome5
-                                name="play"
-                                size={16}
-                                color="#3D425C"
-                                style={{marginLeft: 3}}
-                            />
-                        )}
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={this.handleNextTrack}>
+                    <Play isPlaying={isPlaying} handlePlayPause={handlePlayPause} styles={styles}/>
+                    <TouchableOpacity onPress={handleNextTrack}>
                         <FontAwesome5 name="forward" size={16} color="#93A8B3"/>
                     </TouchableOpacity>
                 </View>
-                {this.renderFileInfo()}
+                {renderFileInfo()}
             </View>
         )
-    }
 }
 const styles = StyleSheet.create({
     container: {
@@ -224,3 +258,5 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     }
 })
+
+export default TrackPlayerComponent;

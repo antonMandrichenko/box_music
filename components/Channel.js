@@ -8,7 +8,7 @@ const Channel = ({ styles, data }) => {
   const { checkBoxIn, checked, filter, counter } = useContext(
     AppContext
   );
-
+  console.log(data);
   return (
     <>
       {data &&
