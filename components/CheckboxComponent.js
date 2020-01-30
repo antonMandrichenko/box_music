@@ -1,6 +1,7 @@
 import React from "react";
 import { CheckBox } from "react-native-elements";
 import {ImageBackground, Text} from "react-native";
+import PropTypes from "prop-types";
 
 const CheckboxComponent = ({checked}) => {
 
@@ -11,6 +12,10 @@ const CheckboxComponent = ({checked}) => {
           checked={checked}
       />
   );
+};
+
+CheckboxComponent.propTypes = {
+    checked: PropTypes.bool,
 };
 
 export default CheckboxComponent;

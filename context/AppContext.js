@@ -108,13 +108,13 @@ const AppProvider = ({ children }, props) => {
     ];
   }, []);
 
+  let log = console.log;
   const checkedSongsKeysArr = checkedSongs
     .map(song => Object.keys(song))
     .join("")
     .split(",");
-
   const preparedSongs = checkedSongsKeysArr
-    .map(item => data.filter(song => song.title === item))
+    .map(item => data.filter(song => song.title.slice(0, 10) === item))
     .flat(1);
 
   const loadData = async () => {

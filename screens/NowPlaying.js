@@ -12,6 +12,7 @@ import MyCarousel from "../components/Carousel";
 import addSong from "../assets/images/icons/ad-song.png";
 import MessageBoard from "../components/MessageBoard";
 import PlayButtons from "../components/PlayButtons";
+import Player from "../components/Player";
 
 const NowPlaying = () => {
 
@@ -45,7 +46,7 @@ const NowPlaying = () => {
         <View style={styles.containerBeforeSlider}>
           <MessageBoard />
         </View>
-        <View style={styles.underline} />
+        <Player />
       </ImageBackground>
     </View>
   );
