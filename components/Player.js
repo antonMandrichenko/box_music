@@ -1,60 +1,78 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from "react-native";
+import React, {useState} from "react";
+import {
+    StyleSheet,
+    Text,
+    View,
+    SafeAreaView,
+    TouchableOpacity
+} from "react-native";
 import Slider from "react-native-slider";
 import Moment from "moment";
-import { FontAwesome5 } from "@expo/vector-icons";
+import {FontAwesome5} from "@expo/vector-icons";
 
-export default class App extends React.Component {
-    state = {
-        trackLength: 300,
-        timeElapsed: "0:00",
-        timeRemaining: "5:00"
+const Player = () => {
+    const [trackLength, setTrackLength] = useState(300);
+    const [timeElapsed, setTimeElapsed] = useState("0:00");
+    const [timeRemaining, setTimeRemaining] = useState("5:00");
+
+    const changeTime = seconds => {
+        setTimeElapsed(Moment.utc(seconds * 1000).format("m:ss"));
+        setTimeRemaining(Moment.utc((trackLength - seconds) * 1000).format("m:ss"));
     };
 
-    changeTime = seconds => {
-        this.setState({ timeElapsed: Moment.utc(seconds * 1000).format("m:ss") });
-        this.setState({ timeRemaining: Moment.utc((this.state.trackLength - seconds) * 1000).format("m:ss") });
-    };
+    return (
+        <SafeAreaView style={styles.container}>
+            <View style={{margin: 32}}>
+                <Slider
+                    minimumValue={0}
+                    maximumValue={trackLength}
+                    trackStyle={styles.track}
+                    thumbStyle={styles.thumb}
+                    minimumTrackTintColor="#93A8B3"
+                    onValueChange={seconds => changeTime(seconds)}
+                />
+                <View
+                    style={{
+                        marginTop: -12,
+                        flexDirection: "row",
+                        justifyContent: "space-between"
+                    }}
+                >
+                    <Text style={[styles.textLight, styles.timeStamp]}>
+                        {timeElapsed}
+                    </Text>
+                    <Text style={[styles.textLight, styles.timeStamp]}>
+                        {timeRemaining}
+                    </Text>
+                </View>
+            </View>
 
-    render() {
-        return (
-            <SafeAreaView style={styles.container}>
-
-                <View style={{ margin: 32 }}>
-                    <Slider
-                        minimumValue={0}
-                        maximumValue={this.state.trackLength}
-                        trackStyle={styles.track}
-                        thumbStyle={styles.thumb}
-                        minimumTrackTintColor="#93A8B3"
-                        onValueChange={seconds => this.changeTime(seconds)}
+            <View
+                style={{
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                    marginTop: 5
+                }}
+            >
+                <TouchableOpacity>
+                    <FontAwesome5 name="backward" size={16} color="#93A8B3"/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.playButtonContainer}>
+                    <FontAwesome5
+                        name="play"
+                        size={16}
+                        color="#3D425C"
+                        style={{marginLeft: 8}}
                     />
-                    <View style={{ marginTop: -12, flexDirection: "row", justifyContent: "space-between" }}>
-                        <Text style={[styles.textLight, styles.timeStamp]}>{this.state.timeElapsed}</Text>
-                        <Text style={[styles.textLight, styles.timeStamp]}>{this.state.timeRemaining}</Text>
-                    </View>
-                </View>
-
-                <View style={{ flexDirection: "row", justifyContent: "space-around", alignItems: "center", marginTop: 5 }}>
-                    <TouchableOpacity>
-                        <FontAwesome5 name="backward" size={16} color="#93A8B3"/>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.playButtonContainer}>
-                        <FontAwesome5
-                            name="play"
-                            size={16}
-                            color="#3D425C"
-                            style={{ marginLeft: 8 }}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <FontAwesome5 name="forward" size={16} color="#93A8B3"/>
-                    </TouchableOpacity>
-                </View>
-            </SafeAreaView>
-        );
-    }
-}
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <FontAwesome5 name="forward" size={16} color="#93A8B3"/>
+                </TouchableOpacity>
+            </View>
+        </SafeAreaView>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -74,7 +92,7 @@ const styles = StyleSheet.create({
         width: 250,
         height: 250,
         shadowColor: "#5D3F6A",
-        shadowOffset: { height: 15 },
+        shadowOffset: {height: 15},
         shadowRadius: 8,
         shadowOpacity: 0.3
     },
@@ -112,3 +130,5 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5
     }
 });
+
+export default Player;
