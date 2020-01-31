@@ -30,7 +30,7 @@ const MyCarousel = () => {
       <TouchableOpacity onPress={() => alert(item.primary_artist.name)}>
         <Image
           style={styles.imageContainer}
-          source={{ uri: item.header_image_thumbnail_url }}
+          source={{ uri: item.image }}
         />
         <Text style={styles.textContainer}>{item.title}</Text>
       </TouchableOpacity>

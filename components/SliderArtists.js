@@ -7,7 +7,7 @@ const SliderArtists = () => {
   const { data } = useContext(AppContext);
   const [test, setTest] = React.useState("");
   const dataImages = data.map(
-    (image, index) => image.header_image_thumbnail_url
+    (image, index) => image.image
   );
   const dataText = data.map((image, index) =>
     image.primary_artist.url.slice(27)

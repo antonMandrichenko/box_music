@@ -3,6 +3,7 @@ import firebase from "../config/firebase";
 
 const AppContext = React.createContext();
 import { AsyncStorage } from "react-native";
+import {radioPlaylist} from "../api/RadioPlaylist";
 
 const AppProvider = ({ children }, props) => {
   const [email, setEmail] = useState("");
@@ -109,31 +110,32 @@ const AppProvider = ({ children }, props) => {
     ];
   }, []);
 
-  let log = console.log;
   const checkedSongsKeysArr = checkedSongs
     .map(song => Object.keys(song))
     .join("")
     .split(",");
   const preparedSongs = checkedSongsKeysArr
-    .map(item => data.filter(song => song.title.slice(0, 10) === item))
+    .map(item => data.filter(song => song.title === item))
     .flat(1);
 
-  const loadData = async () => {
-    try {
-      fetch("https://genius.p.rapidapi.com/artists/16775/songs", {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "genius.p.rapidapi.com",
-          "x-rapidapi-key": "309479cf94mshb9bec2e785880d9p149c01jsn2e869001ab9f"
-        }
-      })
-        .then(response => response.json())
-        .then(json => setData(json.response.songs));
-    } catch (error) {
-    } finally {
+  // const loadData = async () => {
+  //   try {
+  //     fetch("https://genius.p.rapidapi.com/artists/16775/songs", {
+  //       method: "GET",
+  //       headers: {
+  //         "x-rapidapi-host": "genius.p.rapidapi.com",
+  //         "x-rapidapi-key": "309479cf94mshb9bec2e785880d9p149c01jsn2e869001ab9f"
+  //       }
+  //     })
+  //       .then(response => response.json())
+  //       .then(json => setData(json.response.songs));
+  //   } catch (error) {
+  //   } finally {
+  //   }
+  // };
+    const loadData = async () => {
+        setData(radioPlaylist);
     }
-  };
-
   const togglePicker = () => {
     setPickerDisplayed(!pickerDisplayed);
   };

@@ -8,12 +8,11 @@ const Channel = ({ styles, data }) => {
   const { checkBoxIn, checked, filter, counter } = useContext(
     AppContext
   );
-  console.log(data);
   return (
     <>
-      {data &&
-        data
-          .filter(item => item.title.slice(0, 10).includes(filter))
+      { data &&
+      data
+          .filter(item => item.title.includes(filter))
           .map((song, i) => (
             <TouchableOpacity
               key={i}
@@ -24,15 +23,15 @@ const Channel = ({ styles, data }) => {
                 <View style={styles.circleInner}>
                   <ImageBackground
                     style={styles.imageBackground}
-                    source={{ uri: `${song.header_image_thumbnail_url}` }}
+                    source={song.image}
                   >
                     <CheckboxComponent
-                      checked={checked[song.title.slice(0, 10)]}
+                      checked={checked[song.title]}
                     />
                   </ImageBackground>
                 </View>
               </View>
-              <Text style={styles.radioStation}>{song.title.slice(0, 10)}</Text>
+              <Text style={styles.radioStation}>{song.title}</Text>
             </TouchableOpacity>
           ))
           .slice(counter.start, counter.end)}

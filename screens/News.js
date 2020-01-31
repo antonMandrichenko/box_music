@@ -63,7 +63,7 @@ const TrackLevels = props => {
               data={data}
               renderItem={({ item }) => (
                 <News
-                  title={item.title.slice(0, 10)}
+                  title={item.title}
                   text={
                     totalWords > 35
                       ? loremIpsum
@@ -75,7 +75,7 @@ const TrackLevels = props => {
                           .slice(0)
                           .join(" ")
                   }
-                  image={item.header_image_thumbnail_url}
+                  image={item.image}
                 />
               )}
               keyExtractor={item => (Math.random() * 2).toString()}
