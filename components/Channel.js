@@ -5,13 +5,11 @@ import AppContext from "../context/AppContext";
 import PropTypes from "prop-types";
 
 const Channel = ({ styles, data }) => {
-  const { checkBoxIn, checked, filter, counter } = useContext(
-    AppContext
-  );
+  const { checkBoxIn, checked, filter, counter } = useContext(AppContext);
   return (
     <>
-      { data &&
-      data
+      {data &&
+        data
           .filter(item => item.title.includes(filter))
           .map((song, i) => (
             <TouchableOpacity
@@ -25,9 +23,7 @@ const Channel = ({ styles, data }) => {
                     style={styles.imageBackground}
                     source={song.image}
                   >
-                    <CheckboxComponent
-                      checked={checked[song.title]}
-                    />
+                    <CheckboxComponent checked={checked[song.title]} />
                   </ImageBackground>
                 </View>
               </View>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
   Image,
   StyleSheet,
@@ -17,28 +17,39 @@ import arrowBottom from "../assets/images/icons/arrow-bot.png";
 import { LinearGradient } from "expo-linear-gradient";
 import { vw } from "react-native-expo-viewport-units";
 import AppContext from "../context/AppContext";
+import PlayerContext from "../context/PlayerContext";
 
 const PlayButtons = props => {
 
+  const {
+    handlePlayPause,
+    handleNextTrack,
+    isPlaying,
+  } = useContext(PlayerContext);
   const {preparedSongs} = React.useContext(AppContext)
   return (
     <>
       <View style={styles.containerHeaderButtons}>
         <View style={styles.containerHeaderButtonsLeft}>
           <View style={styles.buttonPlay}>
-            <TouchableOpacity onPress={() => console.log("work")}>
+            <TouchableOpacity onPress={handlePlayPause}>
               <Image
                 source={
+                  isPlaying ?
                   __DEV__
                     ? require("../assets/images/play.png")
                     : require("../assets/images/play.png")
+                      :
+                      __DEV__
+                          ? require("../assets/images/play.png")
+                          : require("../assets/images/play.png")
                 }
                 style={styles.iconPlay}
               />
             </TouchableOpacity>
           </View>
           <View style={styles.buttonNext}>
-            <TouchableOpacity onPress={() => console.log("work")}>
+            <TouchableOpacity onPress={handleNextTrack}>
               <Image
                 source={
                   __DEV__
@@ -72,7 +83,6 @@ const PlayButtons = props => {
           </LinearGradient>
           <View>
             <TouchableNativeFeedback
-              onPress={() => console.log("w")}
               background={
                 Platform.OS === "android"
                   ? TouchableNativeFeedback.SelectableBackground()

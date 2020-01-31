@@ -25,7 +25,6 @@ const MessageAnswer = props => {
           <View style={styles.container}>
             <TouchableOpacity
               style={styles.flex}
-              onPress={() => console.log("work")}
             >
               <Text style={styles.textReplies}>1 Replies</Text>
               <Image style={styles.triangleBottom} source={triangleBottom} />
@@ -33,7 +32,6 @@ const MessageAnswer = props => {
             <View style={styles.line} />
             <TouchableOpacity
               style={styles.flex}
-              onPress={() => console.log("work")}
             >
               <Image style={styles.iconReview} source={answer} />
             </TouchableOpacity>

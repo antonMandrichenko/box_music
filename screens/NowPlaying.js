@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ImageBackground, Text, View } from "react-native";
 import { vw } from "react-native-expo-viewport-units";
 import SmallButton from "../components/SmallButton";
 import EqualizerScreen from "../components/EqualizerScreen";
 import SwitchButtons from "../components/SwitchButtons";
-import MyCarousel from "../components/Carousel";
+import ListOfRadioStation from "../components/ListOfRadioStation";
 import addSong from "../assets/images/icons/ad-song.png";
 import MessageBoard from "../components/MessageBoard";
 import PlayButtons from "../components/PlayButtons";
 import AppContext from "../context/AppContext";
 import TrackPlayerComponent from "../components/TrackPlayerComponent";
+import SubListOfRadioStation from "../components/SubListOfRadioStation";
+import PlayerContext from "../context/PlayerContext";
 
 const NowPlaying = () => {
   const { switchValue } = React.useContext(AppContext);
+  const { isPlaying } = React.useContext(PlayerContext);
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -25,18 +29,24 @@ const NowPlaying = () => {
       >
         <PlayButtons />
         <View style={styles.containerCarousel}>
-          <MyCarousel />
+          <ListOfRadioStation />
         </View>
         <View style={styles.containerBeforeSlider}>
           <Text style={styles.textAdditional}>• Up Next</Text>
           <SmallButton path={addSong} />
         </View>
-        {/*<View style={styles.containerArtists}>*/}
-        {/*    <SliderArtists/>*/}
-        {/*</View>*/}
-        {/*<EqualizerScreen />*/}
+        <View style={styles.containerSubCarousel}>
+          <SubListOfRadioStation />
+        </View>
+        <View style={styles.containerEqualizer}>
+          <EqualizerScreen playing={isPlaying} />
+        </View>
         <View style={styles.containerBeforeSlider}>
-          <Text style={styles.textAdditional}>• Message Board</Text>
+          {switchValue ? (
+            <Text style={styles.textAdditional}>• Message Board</Text>
+          ) : (
+            <Text style={styles.textAdditional}>• Player Board</Text>
+          )}
           <SwitchButtons />
         </View>
         {switchValue ? (
@@ -108,6 +118,7 @@ const styles = {
   containerBeforeSlider: {
     justifyContent: "space-between",
     flexDirection: "row",
+    alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 10,
     width: "100%"
@@ -116,6 +127,17 @@ const styles = {
   containerCarousel: {
     flexDirection: "row",
     alignItems: "center"
+  },
+  containerSubCarousel: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 10,
+    paddingBottom: 10
+  },
+  containerEqualizer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: vw(100)
   }
 };
 export default NowPlaying;

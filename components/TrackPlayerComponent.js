@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Play from "./Play";
 import PlayerContext from "../context/PlayerContext";
-import {radioPlaylist} from "../api/RadioPlaylist";
+import AppContext from "../context/AppContext";
 
 const TrackPlayerComponent = () => {
   const {
@@ -15,11 +15,12 @@ const TrackPlayerComponent = () => {
     playbackInstance
   } = useContext(PlayerContext);
 
+  const {preparedSongs} = useContext(AppContext);
   const renderFileInfo = () => {
     return playbackInstance ? (
         <View style={styles.trackInfo}>
           <Text style={[styles.trackInfoText, styles.largeText]}>
-            {radioPlaylist[currentIndex].title}
+            { preparedSongs[currentIndex].title}
           </Text>
         </View>
     ) : null;
@@ -41,7 +42,7 @@ const TrackPlayerComponent = () => {
           <FontAwesome5 name="forward" size={16} color="#93A8B3" />
         </TouchableOpacity>
       </View>
-      {renderFileInfo()}
+      {/*{renderFileInfo()}*/}
     </View>
   );
 };

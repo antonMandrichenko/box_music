@@ -5,7 +5,7 @@ import {LinearGradient} from "expo-linear-gradient";
 const SmallButton = ({path}) => {
     return (
         <View style={styles.headerButtonRight}>
-            <TouchableOpacity onPress={()=> console.log('work')}>
+            <TouchableOpacity >
                 <LinearGradient
                     colors={["#08080a", "#1d1e25"]}
                     style={styles.square}

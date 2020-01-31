@@ -21,7 +21,8 @@ const ChooseChannel = props => {
         data,
         handleChangeCountPrev,
         handleChangeCountNext,
-        counter
+        counter,
+        preparedSongs
     } = useContext(AppContext);
 
     return data.length === 0 ? (
@@ -75,6 +76,7 @@ const ChooseChannel = props => {
                     <View style={styles.containerFooterWrapper}>
                         <TouchableOpacity
                             onPress={() => props.navigation.navigate("NowPlaying")}
+                            disabled={preparedSongs && preparedSongs.length === 0}
                         >
                             <LinearGradient
                                 style={styles.inputChannel}

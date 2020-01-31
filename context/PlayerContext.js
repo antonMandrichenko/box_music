@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 
 const PlayerContext = React.createContext();
 import {Audio} from "expo-av";
 import {radioPlaylist} from "../api/RadioPlaylist";
-import {Text, View} from "react-native";
 
 const PlayerProvider = ({children}) => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -11,7 +10,6 @@ const PlayerProvider = ({children}) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [volume, setVolume] = useState(1.0);
     const [isBuffering, setIsBuffering] = useState(false);
-
     const setAudio = async () => {
         try {
             await Audio.setAudioModeAsync({

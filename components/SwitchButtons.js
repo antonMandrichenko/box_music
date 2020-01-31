@@ -7,7 +7,6 @@ import {
   TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { vw } from "react-native-expo-viewport-units";
 import AppContext from "../context/AppContext";
 
 const SwitchButtons = () => {
@@ -58,12 +57,11 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    flexDirection: "row",
+    flexDirection: "row"
   },
   inputChannelButton: {
     height: 39,
-    width: vw(12),
-    margin: 9,
+    width: 39,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

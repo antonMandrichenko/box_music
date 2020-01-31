@@ -13,7 +13,7 @@ import user from "../assets/images/user.jpg";
 import { LinearGradient } from "expo-linear-gradient";
 import PlayButtons from "../components/PlayButtons";
 import TrackLevel from "../components/TrackLevel";
-import MyCarousel from "../components/Carousel";
+import MyCarousel from "../components/ListOfRadioStation";
 
 const TrackLevels = props => {
   const [switchValue, setSwitchValue] = React.useState(false);

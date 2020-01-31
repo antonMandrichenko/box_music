@@ -4,13 +4,13 @@ import { Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import AppContext from "../context/AppContext";
 import { vw } from "react-native-expo-viewport-units";
 
-const MyCarousel = () => {
+const ListOfRadioStation = () => {
   const { preparedSongs } = React.useContext(AppContext);
 
   const styles = StyleSheet.create({
     imageContainer: {
-      width: 180,
-      height: 180,
+      width: 150,
+      height: 150,
       borderWidth: 2,
       borderColor: "#000",
       borderRadius: 20
@@ -27,7 +27,7 @@ const MyCarousel = () => {
 
   const _renderItem = ({ item, index }) => {
     return (
-      <TouchableOpacity onPress={() => alert(item.primary_artist.name)}>
+      <TouchableOpacity onPress={() => alert(item.title)}>
         <Image
           style={styles.imageContainer}
           source={{ uri: item.image }}
@@ -41,12 +41,9 @@ const MyCarousel = () => {
       data={preparedSongs}
       renderItem={_renderItem}
       sliderWidth={vw(100)}
-      itemWidth={180}
+      itemWidth={150}
       inactiveSlideScale={0.94}
-      inactiveSlideOpacity={0.7}
-      autoplay={true}
-      autoplayDelay={500}
-      autoplayInterval={3000}
+      inactiveSlideOpacity={0.3}
       layoutCardOffset={9}
       activeAnimationType={'spring'}
       activeAnimationOptions={{
@@ -58,4 +55,4 @@ const MyCarousel = () => {
   );
 };
 
-export default MyCarousel;
+export default ListOfRadioStation;
