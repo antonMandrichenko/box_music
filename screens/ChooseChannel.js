@@ -22,9 +22,10 @@ const ChooseChannel = props => {
         handleChangeCountPrev,
         handleChangeCountNext,
         counter,
-        preparedSongs
+        preparedSongs,
+        playSelected
     } = useContext(AppContext);
-
+    console.log(preparedSongs);
     return data.length === 0 ? (
         <View style={[styles.containerLoader, styles.horizontal]}>
             <ActivityIndicator size="large" color="#0000ff"/>
@@ -75,8 +76,11 @@ const ChooseChannel = props => {
                 <View style={styles.containerFooter}>
                     <View style={styles.containerFooterWrapper}>
                         <TouchableOpacity
-                            onPress={() => props.navigation.navigate("NowPlaying")}
-                            disabled={preparedSongs && preparedSongs.length === 0}
+                            onPress={() => {
+                                playSelected();
+                                props.navigation.navigate("NowPlaying")
+                            }}
+                            // disabled={preparedSongs && preparedSongs.length === 0}
                         >
                             <LinearGradient
                                 style={styles.inputChannel}

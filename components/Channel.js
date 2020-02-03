@@ -8,7 +8,7 @@ const Channel = ({ styles, data }) => {
   const { checkBoxIn, checked, filter, counter } = useContext(AppContext);
   return (
     <>
-      {data &&
+      {
         data
           .filter(item => item.title.includes(filter))
           .map((song, i) => (

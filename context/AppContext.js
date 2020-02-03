@@ -3,7 +3,7 @@ import firebase from "../config/firebase";
 
 const AppContext = React.createContext();
 import { AsyncStorage } from "react-native";
-import {radioPlaylist} from "../api/RadioPlaylist";
+import { radioPlaylist } from "../api/RadioPlaylist";
 
 const AppProvider = ({ children }, props) => {
   const [email, setEmail] = useState("");
@@ -23,7 +23,6 @@ const AppProvider = ({ children }, props) => {
   const [uid, setUid] = useState("");
   const [comments, setComments] = useState({});
   const [read, setRead] = useState("Read more");
-  const [chooseChannel, setChooseChannel] = useState([]);
   const [switchValue, setSwitchValue] = useState(false);
   const [preparedSongs, setPreparedSongs] = useState([]);
 
@@ -90,36 +89,38 @@ const AppProvider = ({ children }, props) => {
     }
   };
 
+
   const checkBoxIn = e => {
-    setChecked({
-      ...checked,
-      [e.target.innerText]: !checked[e.target.innerText]
-    });
-    setChooseChannel(prevArray => [...prevArray, checked]);
-      const checkedSongs = [checked].reduce((resultArr, item) => {
-          return [
-              ...resultArr,
-              Object.keys(item).reduce(
-                  (resultObject, value) =>
-                      item[value] === true
-                          ? { ...resultObject, [value]: item[value] }
-                          : resultObject,
-                  {}
-              )
-          ];
-      }, []);
-
-      const checkedSongsKeysArr = checkedSongs
-          .map(song => Object.keys(song))
-          .join("")
-          .split(",");
-
-      const selectedSongs = checkedSongsKeysArr
-          .map(item => data.filter(song => song.title === item))
-          .flat(1);
-      setPreparedSongs( [...selectedSongs] )
-  };
-
+      setChecked({
+          ...checked,
+          [e.target.innerText]: !checked[e.target.innerText]
+      });
+    };
+  const playSelected = () => {
+      if(Object.keys(checked).length !== 0) {
+          const checkedSongs = [checked].reduce((resultArr, item) => {
+              return [
+                  ...resultArr,
+                  Object.keys(item).reduce(
+                      (resultObject, value) =>
+                          item[value] === true
+                              ? { ...resultObject, [value]: item[value] }
+                              : resultObject,
+                      {}
+                  )
+              ];
+          }, []);
+          setPreparedSongs([
+              ...checkedSongs
+                  .map(song => Object.keys(song))
+                  .join("")
+                  .split(",")
+                  .map(item => data.filter(song => song.title === item))
+                  .flat(1)
+          ]);
+          console.log(checkedSongs);
+      }
+  }
 
   // const loadData = async () => {
   //   try {
@@ -136,9 +137,9 @@ const AppProvider = ({ children }, props) => {
   //   } finally {
   //   }
   // };
-    const loadData = async () => {
-        setData(radioPlaylist);
-    }
+  const loadData = async () => {
+    setData(radioPlaylist);
+  };
   const togglePicker = () => {
     setPickerDisplayed(!pickerDisplayed);
   };
@@ -186,7 +187,6 @@ const AppProvider = ({ children }, props) => {
   };
   useEffect(() => {
     loadData();
-    loadDataReview();
   }, [comments]);
 
   let userRef = firebase.database().ref("user/userId/" + uid);
@@ -217,6 +217,7 @@ const AppProvider = ({ children }, props) => {
         loadDataReview,
         remove,
         toggleSwitch,
+          playSelected,
         setFilter,
         email,
         error,
@@ -235,8 +236,6 @@ const AppProvider = ({ children }, props) => {
         comments,
         read,
         setRead,
-        chooseChannel,
-        setChooseChannel,
         preparedSongs,
         switchValue
       }}
