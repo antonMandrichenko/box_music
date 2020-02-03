@@ -25,6 +25,7 @@ const AppProvider = ({ children }, props) => {
   const [read, setRead] = useState("Read more");
   const [switchValue, setSwitchValue] = useState(false);
   const [preparedSongs, setPreparedSongs] = useState([]);
+  const [user, setUser] = useState('');
 
   const handleChangeCountNext = () =>
     setCounter({ start: counter.start + 9, end: counter.end + 9 });
@@ -89,12 +90,12 @@ const AppProvider = ({ children }, props) => {
     }
   };
 
-
   const checkBoxIn = e => {
       setChecked({
           ...checked,
           [e.target.innerText]: !checked[e.target.innerText]
       });
+
     };
   const playSelected = () => {
       if(Object.keys(checked).length !== 0) {
@@ -117,11 +118,28 @@ const AppProvider = ({ children }, props) => {
                   .split(",")
                   .map(item => data.filter(song => song.title === item))
                   .flat(1)
-          ]);
-          console.log(checkedSongs);
-      }
-  }
 
+          ]);
+      }
+  };
+
+firebase.auth().onAuthStateChanged(user => setUser(user.email));
+        firebase
+        .database()
+        .ref("songs/" )
+        .push()
+        .set(preparedSongs.map(item => ({
+                user: user,
+                songId: item.id,
+                songImage: item.image,
+                songImageSigner: item.imageSigner,
+                songSong: item.song,
+                songTitle: item.title,
+                songTitleSong: item.titleSong,
+                songUri: item.uri
+            }) )
+            )
+        .then(r => console.log('success'))
   // const loadData = async () => {
   //   try {
   //     fetch("https://genius.p.rapidapi.com/artists/16775/songs", {

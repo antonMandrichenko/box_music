@@ -22,10 +22,9 @@ const ChooseChannel = props => {
         handleChangeCountPrev,
         handleChangeCountNext,
         counter,
-        preparedSongs,
         playSelected
     } = useContext(AppContext);
-    console.log(preparedSongs);
+
     return data.length === 0 ? (
         <View style={[styles.containerLoader, styles.horizontal]}>
             <ActivityIndicator size="large" color="#0000ff"/>
