@@ -15,12 +15,7 @@ import AppContext from "../context/AppContext";
 
 const AddComment = () => {
   const { review, setReview, sendReview } = React.useContext(AppContext);
-  const [inputValue, setInputValue] = React.useState("");
 
-  const handleChangeInput = (input) => {
-    setInputValue(input);
-    setReview(input);
-  }
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
@@ -34,8 +29,8 @@ const AddComment = () => {
         >
           <TextInput
             style={styles.input}
-            onChangeText={handleChangeInput}
-            value={inputValue}
+            onChangeText={input => setReview(input)}
+            value={review}
             placeholder="Add your comment..."
             placeholderTextColor="#abaed0"
           />

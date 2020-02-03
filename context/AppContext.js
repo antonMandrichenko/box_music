@@ -89,7 +89,20 @@ const AppProvider = ({ children }, props) => {
         });
     }
   };
-
+    const getPreparedSongs = () =>
+        firebase
+            .database()
+            .ref()
+            .child("songs/")
+            .once("value")
+            .then(function(snapshot) {
+                const obj = snapshot.val();
+                const newArr = [];
+                for (let i in obj) {
+                    newArr.push({ user: obj[i].user });
+                }
+                return newArr;
+            });
   const checkBoxIn = e => {
       setChecked({
           ...checked,
@@ -123,8 +136,9 @@ const AppProvider = ({ children }, props) => {
       }
   };
 
-firebase.auth().onAuthStateChanged(user => setUser(user.email));
-        firebase
+const setSongs = () => {firebase.auth().onAuthStateChanged(user => setUser(user.email))
+
+    firebase
         .database()
         .ref("songs/" )
         .push()
@@ -138,8 +152,11 @@ firebase.auth().onAuthStateChanged(user => setUser(user.email));
                 songTitleSong: item.titleSong,
                 songUri: item.uri
             }) )
-            )
-        .then(r => console.log('success'))
+        )
+        .then(r => console.log('success2'));
+};
+
+
   // const loadData = async () => {
   //   try {
   //     fetch("https://genius.p.rapidapi.com/artists/16775/songs", {
@@ -172,7 +189,6 @@ firebase.auth().onAuthStateChanged(user => setUser(user.email));
     setTypeSelection(newValue);
     toggleType();
   };
-
   const sendReview = () =>
     firebase
       .database()
@@ -204,6 +220,7 @@ firebase.auth().onAuthStateChanged(user => setUser(user.email));
     setComments(data);
   };
   useEffect(() => {
+    loadDataReview()
     loadData();
   }, [comments]);
 
