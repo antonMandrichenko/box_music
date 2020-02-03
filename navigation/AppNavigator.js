@@ -10,6 +10,7 @@ import ForgotPassword from "../screens/ForgotPassword";
 import ChooseChannel from "../screens/ChooseChannel";
 import ForgotPasswordConfirm from "../screens/ForgotPasswordConfirm";
 import CreateChannel from "../screens/CreateChannel";
+import EditProfile from "../screens/EditProfile";
 import TabNavigator from "./TabNavigator";
 
 export default createAppContainer(
@@ -66,6 +67,12 @@ export default createAppContainer(
       screen: ChooseChannel,
       navigationOptions: {
         title: "ChooseChannel"
+      }
+    },
+      EditProfile: {
+      screen: EditProfile,
+      navigationOptions: {
+        title: "EditProfile"
       }
     },
     TabNavigator: {

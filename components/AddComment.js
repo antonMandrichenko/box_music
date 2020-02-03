@@ -4,17 +4,23 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
-  TextInput
+  TextInput, Text, TouchableNativeFeedback
 } from "react-native";
 import user from "../assets/images/user.jpg";
 import answer from "../assets/images/icons/answer.png";
+import send from "../assets/images/iconsSvg/send.svg";
 import { vw } from "react-native-expo-viewport-units";
 import { LinearGradient } from "expo-linear-gradient";
 import AppContext from "../context/AppContext";
 
 const AddComment = () => {
   const { review, setReview, sendReview } = React.useContext(AppContext);
+  const [inputValue, setInputValue] = React.useState("");
 
+  const handleChangeInput = (input) => {
+    setInputValue(input);
+    setReview(input);
+  }
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
@@ -28,15 +34,22 @@ const AddComment = () => {
         >
           <TextInput
             style={styles.input}
-            onChangeText={input => setReview(input)}
-            value={review}
+            onChangeText={handleChangeInput}
+            value={inputValue}
             placeholder="Add your comment..."
             placeholderTextColor="#abaed0"
           />
         </LinearGradient>
-        <TouchableOpacity style={styles.flex} onPress={sendReview}>
-          <Image style={styles.iconReview} source={answer} />
-        </TouchableOpacity>
+        <LinearGradient
+            style={styles.inputChannelButton}
+            colors={["#373843", "#2e2f39", "#24252d"]}
+            locations={[0.3, 0.5, 0.8]}
+        >
+          <TouchableOpacity style={styles.flex} onPress={sendReview}>
+            <Image style={styles.iconReview} source={send} />
+          </TouchableOpacity>
+        </LinearGradient>
+
       </View>
     </View>
   );
@@ -85,10 +98,24 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 0,
     height: 39,
-    width: vw(70),
+    width: vw(65),
     color: "#abaed0",
     paddingVertical: 5,
     paddingHorizontal: 5,
   },
+  inputChannelButton: {
+    height: 39,
+    width: vw(12),
+    marginLeft: 9,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 4,
+    borderWidth: 1,
+    borderTopColor: "#202024",
+    borderLeftColor: "#202024",
+    borderRightColor: "#202024",
+    borderBottomColor: "#4d4f5e"
+  }
 });
 export default AddComment;

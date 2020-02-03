@@ -137,24 +137,31 @@ class Equalizer extends React.Component {
     this.state = {
       size: size,
       bars: null,
-      colors: colors,
+      colors: colors
     };
   }
 
-  componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
-    if(prevProps.playing !== this.props.playing) {
-      let bars = [];
-      for (let i = 0; i < this.state.size; i++) {
-        let color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-        if (this.props.colors) {
-          color = this.state.colors[i % this.state.colors.length];
+  componentDidUpdate(
+    prevProps: Readonly<P>,
+    prevState: Readonly<S>,
+    snapshot: SS
+  ): void {
+    if (prevProps.playing !== this.props.playing) {
+      if (this.props.playing) {
+        let bars = [];
+        for (let i = 0; i < this.state.size; i++) {
+          let color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+          if (this.props.colors) {
+            color = this.state.colors[i % this.state.colors.length];
+          }
+          bars.push(<Bar key={i} color={color} maxHeight={7} />);
         }
-        bars.push(<Bar key={i} color={color} maxHeight={7} />);
+        this.setState({ bars: bars });
+      } else {
+        this.setState({ bars: [] });
       }
-      this.setState({ bars: bars });
     }
   }
-
 
   render() {
     let bars = this.state.bars || [];

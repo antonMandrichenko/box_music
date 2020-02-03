@@ -11,15 +11,15 @@ const MessageAnswer = props => {
   const { comments, remove } = React.useContext(AppContext);
 
   return (
-    <View style={styles.wrapper}>
+    <>
       {comments && comments.map(comment => (
-        <View key={Math.random() * 2}>
-          <View style={styles.lineBefore}/>
+        <View style={styles.wrapper} key={Math.random() * 2}>
           <View style={styles.container}>
+            <View style={styles.lineBefore}/>
             <Image style={styles.image} source={user} />
             <View>
             <Text style={styles.text}>Adam Lambert</Text>
-            <Text style={styles.text}>{comment.review}</Text>
+            <Text style={styles.textAnswer}>{comment.review}</Text>
             </View>
           </View>
           <View style={styles.container}>
@@ -44,15 +44,16 @@ const MessageAnswer = props => {
           </View>
         </View>
       ))}
-    </View>
+    </>
   );
 };
 const styles = StyleSheet.create({
   wrapper: {
-    flexDirection: "column",
-    alignItems: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
-    width: vw(90)
+    width: vw(90),
+    marginBottom: 10
   },
   container: {
     flexDirection: "row",
@@ -67,6 +68,7 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   text: { color: "#abaed0", fontSize: 14 },
+  textAnswer: { color: "#fff", fontSize: 12 },
   textComment: { color: "#abaed0", fontSize: 14 },
   textReplies: { color: "#e75f92", fontSize: 12 },
   line: {
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   lineBefore: {
-    width: 30,
+    width: 20,
     height: 1,
     backgroundColor: "#4c47cb",
     marginRight: 10

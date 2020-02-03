@@ -10,6 +10,7 @@ import ForgotPassword from "../screens/ForgotPassword";
 import ForgotPasswordConfirm from "../screens/ForgotPasswordConfirm";
 import ChooseChannel from "../screens/ChooseChannel";
 import CreateChannel from "../screens/CreateChannel";
+import EditProfile from "../screens/EditProfile";
 import TabNavigator from "./TabNavigator";
 
 const switchNavigator = createSwitchNavigator({
@@ -65,6 +66,12 @@ const switchNavigator = createSwitchNavigator({
     screen: ChooseChannel,
     navigationOptions: {
       title: "ChooseChannel"
+    }
+  },
+  EditProfile: {
+    screen: EditProfile,
+    navigationOptions: {
+      title: "EditProfile"
     }
   },
   TabNavigator: {

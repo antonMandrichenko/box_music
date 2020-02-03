@@ -20,7 +20,6 @@ import AppContext from "../context/AppContext";
 import PlayerContext from "../context/PlayerContext";
 
 const PlayButtons = props => {
-
   const {
     handlePlayPause,
     handleNextTrack,

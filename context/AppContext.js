@@ -25,6 +25,7 @@ const AppProvider = ({ children }, props) => {
   const [read, setRead] = useState("Read more");
   const [chooseChannel, setChooseChannel] = useState([]);
   const [switchValue, setSwitchValue] = useState(false);
+  const [preparedSongs, setPreparedSongs] = useState([]);
 
   const handleChangeCountNext = () =>
     setCounter({ start: counter.start + 9, end: counter.end + 9 });
@@ -95,28 +96,30 @@ const AppProvider = ({ children }, props) => {
       [e.target.innerText]: !checked[e.target.innerText]
     });
     setChooseChannel(prevArray => [...prevArray, checked]);
+      const checkedSongs = [checked].reduce((resultArr, item) => {
+          return [
+              ...resultArr,
+              Object.keys(item).reduce(
+                  (resultObject, value) =>
+                      item[value] === true
+                          ? { ...resultObject, [value]: item[value] }
+                          : resultObject,
+                  {}
+              )
+          ];
+      }, []);
+
+      const checkedSongsKeysArr = checkedSongs
+          .map(song => Object.keys(song))
+          .join("")
+          .split(",");
+
+      const selectedSongs = checkedSongsKeysArr
+          .map(item => data.filter(song => song.title === item))
+          .flat(1);
+      setPreparedSongs( [...selectedSongs] )
   };
 
-  const checkedSongs = [checked].reduce((resultArr, item) => {
-    return [
-      ...resultArr,
-      Object.keys(item).reduce(
-        (resultObject, value) =>
-          item[value] === true
-            ? { ...resultObject, [value]: item[value] }
-            : resultObject,
-        {}
-      )
-    ];
-  }, []);
-
-  const checkedSongsKeysArr = checkedSongs
-    .map(song => Object.keys(song))
-    .join("")
-    .split(",");
-  const preparedSongs = checkedSongsKeysArr
-    .map(item => data.filter(song => song.title === item))
-    .flat(1);
 
   // const loadData = async () => {
   //   try {
@@ -184,7 +187,7 @@ const AppProvider = ({ children }, props) => {
   useEffect(() => {
     loadData();
     loadDataReview();
-  }, []);
+  }, [comments]);
 
   let userRef = firebase.database().ref("user/userId/" + uid);
   const remove = () => userRef.remove();
@@ -234,7 +237,6 @@ const AppProvider = ({ children }, props) => {
         setRead,
         chooseChannel,
         setChooseChannel,
-        checkedSongs,
         preparedSongs,
         switchValue
       }}

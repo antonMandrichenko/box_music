@@ -7,6 +7,7 @@ import { vw } from "react-native-expo-viewport-units";
 import MessageAnswer from "./MessageAnswer";
 import AddComment from "./AddComment";
 import AppContext from "../context/AppContext";
+import cancel from "../assets/images/icons/cancel.png";
 
 const MessageBoard = () => {
   const [show, setShow] = React.useState(false);
@@ -33,10 +34,16 @@ const MessageBoard = () => {
           <View style={styles.line} />
           <TouchableOpacity
             style={styles.flex}
-            onPress={toggleReview}
+            onPress={showReview ? () => false : toggleReview}
           >
-            <Image style={styles.iconReview} source={answer} />
-          </TouchableOpacity>
+            <Image style={showReview ? styles.iconReviewWrapper : styles.iconReview } source={answer} />
+          </TouchableOpacity >
+          {showReview && <TouchableOpacity
+              style={styles.flex}
+              onPress={showReview ?  toggleReview : () => false}
+          >
+            <Image style={styles.iconReview} source={cancel} />
+          </TouchableOpacity> }
         </View>
       </View>
       {comments && show && <MessageAnswer />}
@@ -88,7 +95,19 @@ const styles = StyleSheet.create({
   },
   iconReview: {
     width: 17,
-    height: 15
+    height: 15,
+    marginLeft: 5
+  },
+  iconReviewWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 25,
+    height: 25,
+    borderRadius: 3,
+    borderColor: "#1d1e25",
+    borderWidth: 5,
+    backgroundColor: "#1d1e25",
+    padding: 10
   },
   flex: {
     flexDirection: "row",
