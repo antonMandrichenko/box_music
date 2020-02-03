@@ -19,13 +19,14 @@ const AppProvider = ({ children }, props) => {
   const [pickerSelection, setPickerSelection] = useState("");
   const [typeSelection, setTypeSelection] = useState("");
   const [review, setReview] = useState("");
-  const [authorName, setAuthorName] = useState("");
   const [uid, setUid] = useState("");
+  const [songUid, setSongUid] = useState("");
   const [comments, setComments] = useState({});
+  const [songs, setSongs] = useState([]);
   const [read, setRead] = useState("Read more");
   const [switchValue, setSwitchValue] = useState(false);
   const [preparedSongs, setPreparedSongs] = useState([]);
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState("");
 
   const handleChangeCountNext = () =>
     setCounter({ start: counter.start + 9, end: counter.end + 9 });
@@ -89,73 +90,79 @@ const AppProvider = ({ children }, props) => {
         });
     }
   };
-    const getPreparedSongs = () =>
-        firebase
-            .database()
-            .ref()
-            .child("songs/")
-            .once("value")
-            .then(function(snapshot) {
-                const obj = snapshot.val();
-                const newArr = [];
-                for (let i in obj) {
-                    newArr.push({ user: obj[i].user });
-                }
-                return newArr;
-            });
+
   const checkBoxIn = e => {
-      setChecked({
-          ...checked,
-          [e.target.innerText]: !checked[e.target.innerText]
+    setChecked({
+      ...checked,
+      [e.target.innerText]: !checked[e.target.innerText]
+    });
+  };
+  const setDataFirebase = () =>
+    firebase
+      .database()
+      .ref("songs/")
+      .push()
+      .set(preparedSongs.map( item => ({
+          id: item.id,
+          title: item.title,
+          uri: item.uri,
+          image: item.image,
+          imageSigner: item.imageSigner,
+          song: item.song,
+          titleSong: item.titleSong,
+      })));
+      // console.log(setDataFirebase());
+  const getDataFirebase = () =>
+    firebase
+      .database()
+      .ref()
+      .child("songs")
+      .once("value")
+      .then(function(snapshot) {
+        const obj = snapshot.val();
+        // const keys = Object.keys(obj);
+        // const lastKey = keys[keys.length - 1];
+        //   console.log(obj);
+        setSongs(obj);
+        // const newArr = [];
+        // const keys = Object.keys(obj);
+        // const lastKey = keys[keys.length - 1]
+        // for (let i in obj) {
+        //     if (i === lastKey) {
+        //         newArr.push(obj[i])
+        //     }
+        //     setSongUid(i);
+        // }
+        // setSongs([newArr.flat(1).map(item => item)]);
       });
 
-    };
   const playSelected = () => {
-      if(Object.keys(checked).length !== 0) {
-          const checkedSongs = [checked].reduce((resultArr, item) => {
-              return [
-                  ...resultArr,
-                  Object.keys(item).reduce(
-                      (resultObject, value) =>
-                          item[value] === true
-                              ? { ...resultObject, [value]: item[value] }
-                              : resultObject,
-                      {}
-                  )
-              ];
-          }, []);
-          setPreparedSongs([
-              ...checkedSongs
-                  .map(song => Object.keys(song))
-                  .join("")
-                  .split(",")
-                  .map(item => data.filter(song => song.title === item))
-                  .flat(1)
-
-          ]);
-      }
+    if (Object.keys(checked).length !== 0) {
+      const checkedSongs = [checked].reduce((resultArr, item) => {
+        return [
+          ...resultArr,
+          Object.keys(item).reduce(
+            (resultObject, value) =>
+              item[value] === true
+                ? { ...resultObject, [value]: item[value] }
+                : resultObject,
+            {}
+          )
+        ];
+      }, []);
+      setPreparedSongs([
+        ...checkedSongs
+          .map(song => Object.keys(song))
+          .join("")
+          .split(",")
+          .map(item => data.filter(song => song.title === item))
+          .flat(1)
+      ]);
+    }
+    getDataFirebase();
   };
 
-const setSongs = () => {firebase.auth().onAuthStateChanged(user => setUser(user.email))
-
-    firebase
-        .database()
-        .ref("songs/" )
-        .push()
-        .set(preparedSongs.map(item => ({
-                user: user,
-                songId: item.id,
-                songImage: item.image,
-                songImageSigner: item.imageSigner,
-                songSong: item.song,
-                songTitle: item.title,
-                songTitleSong: item.titleSong,
-                songUri: item.uri
-            }) )
-        )
-        .then(r => console.log('success2'));
-};
-
+  firebase.auth().onAuthStateChanged(user => setUser(user.email));
 
   // const loadData = async () => {
   //   try {
@@ -196,7 +203,7 @@ const setSongs = () => {firebase.auth().onAuthStateChanged(user => setUser(user.
       .push()
       .set({
         reviews: review,
-        authorName: authorName
+        authorName: user
       })
       .then(setReview(""));
 
@@ -217,13 +224,21 @@ const setSongs = () => {firebase.auth().onAuthStateChanged(user => setUser(user.
       });
   const loadDataReview = async () => {
     const data = await getReview();
+    const dataSongs = await getDataFirebase();
     setComments(data);
+    setSongs(dataSongs);
   };
+
   useEffect(() => {
-    loadDataReview()
+    loadDataReview();
     loadData();
+    getDataFirebase();
   }, [comments]);
 
+  useEffect(() => {
+      if (Object.keys(checked).length !== 0) {
+      setDataFirebase()};
+  }, [preparedSongs])
   let userRef = firebase.database().ref("user/userId/" + uid);
   const remove = () => userRef.remove();
 
@@ -252,7 +267,7 @@ const setSongs = () => {firebase.auth().onAuthStateChanged(user => setUser(user.
         loadDataReview,
         remove,
         toggleSwitch,
-          playSelected,
+        playSelected,
         setFilter,
         email,
         error,
@@ -272,7 +287,8 @@ const setSongs = () => {firebase.auth().onAuthStateChanged(user => setUser(user.
         read,
         setRead,
         preparedSongs,
-        switchValue
+        switchValue,
+        songs
       }}
     >
       {children}

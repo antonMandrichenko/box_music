@@ -5,8 +5,7 @@ import AppContext from "../context/AppContext";
 import { vw } from "react-native-expo-viewport-units";
 
 const ListOfRadioStation = () => {
-  const { preparedSongs } = React.useContext(AppContext);
-
+  const { preparedSongs, songs } = React.useContext(AppContext);
   const styles = StyleSheet.create({
     imageContainer: {
       width: 150,
@@ -27,7 +26,7 @@ const ListOfRadioStation = () => {
 
   const _renderItem = ({ item, index }) => {
     return (
-      <TouchableOpacity onPress={() => alert(item.title)}>
+      <TouchableOpacity onPress={() => alert(item.titleSong)}>
         <Image
           style={styles.imageContainer}
           source={{ uri: item.image }}
@@ -38,7 +37,7 @@ const ListOfRadioStation = () => {
   };
   return (
     <Carousel
-      data={preparedSongs}
+      data={[]}
       renderItem={_renderItem}
       sliderWidth={vw(100)}
       itemWidth={150}
