@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import {
   Text,
   View,
@@ -57,31 +57,22 @@ const EditProfile = props => {
             <Image
               source={
                 __DEV__
-                  ? require("../assets/images/user.jpg")
-                  : require("../assets/images/user.jpg")
+                  ? require("../assets/images/freddie.png")
+                  : require("../assets/images/freddie.png")
               }
               style={styles.circleInnerImage}
             />
           </LinearGradient>
-          <LinearGradient
-            colors={[
-              "rgba(151,232,243,1)",
-              "rgba(50,149,182,1)",
-              "rgba(204,63,223,1)",
-              "rgba(255,127,136,1)"
-            ]}
-            style={styles.circleSmall}
-            locations={[0, 0.2, 0.8, 1]}
-          >
+
             <Image
               source={
                 __DEV__
-                  ? require("../assets/images/iconsSvg/user.svg")
-                  : require("../assets/images/iconsSvg/user.svg")
+                  ? require("../assets/images/icons/user.png")
+                  : require("../assets/images/icons/user.png")
               }
-              style={styles.circleInnerImageSmall}
+              style={styles.circleSmall}
             />
-          </LinearGradient>
+
         </View>
 
         <Text style={styles.login}>Adam Lambert</Text>
@@ -138,8 +129,6 @@ const EditProfile = props => {
             </View>
           </LinearGradient>
         </View>
-        {/*/////////////////////*/}
-
         <TouchableOpacity onPress={() => props.navigation.navigate('ChooseChannel')}>
           <LinearGradient
             style={styles.button}

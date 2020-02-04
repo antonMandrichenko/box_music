@@ -9,11 +9,16 @@ import {
   StyleSheet
 } from "react-native";
 import { vw } from "react-native-expo-viewport-units";
-import user from "../assets/images/user.jpg";
+import user from "../assets/images/freddie.png";
 import { LinearGradient } from "expo-linear-gradient";
 import PlayButtons from "../components/PlayButtons";
 import TrackLevel from "../components/TrackLevel";
-import MyCarousel from "../components/ListOfRadioStation";
+import heart from "../assets/images/icons/heart.png";
+import single from "../assets/images/icons/single.png";
+import double from "../assets/images/icons/double.png";
+import binoculars from "../assets/images/icons/binoculars.png"
+import SubListOfRadioStation from "../components/SubListOfRadioStation";
+import {FontAwesome5} from "@expo/vector-icons";
 
 const TrackLevels = props => {
   const [switchValue, setSwitchValue] = React.useState(false);
@@ -22,6 +27,12 @@ const TrackLevels = props => {
   const toggleSwitch = () => {
     setSwitchValue(!switchValue);
   };
+  const pause =            <FontAwesome5
+      name="pause"
+      size={16}
+      color="#E55FA3"
+      style={{marginLeft: 3}}
+  />
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -71,13 +82,15 @@ const TrackLevels = props => {
         </View>
         <PlayButtons/>
         <View style={styles.containerHeader}>
-          <TrackLevel />
-          <TrackLevel />
-          <TrackLevel />
-          <TrackLevel />
+          <TrackLevel path={heart} count={36} preFill={45} w={20} h={20}/>
+          <TrackLevel path={single} count={245} preFill={25} w={10} h={20}/>
+          <TrackLevel path={double} count={1375} preFill={15} w={10} h={20}/>
+          <TrackLevel path={binoculars} count={3731} preFill={15} w={25} h={15}/>
         </View>
         <Text style={styles.textAdditional}>• More Albums</Text>
-        <MyCarousel />
+        <View style={styles.containerSubCarousel}>
+        <SubListOfRadioStation />
+        </View>
       </ImageBackground>
     </View>
   );
@@ -195,6 +208,12 @@ const styles = StyleSheet.create({
   containerCarousel: {
     flexDirection: "row",
     alignItems: "center"
-  }
+  },
+  containerSubCarousel: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 10,
+    paddingVertical: 10
+  },
 });
 export default TrackLevels;

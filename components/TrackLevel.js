@@ -1,14 +1,15 @@
 import React from "react";
-import { Image, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {Image, StyleSheet, View, Text, TouchableOpacity, ImageBackground} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { vw } from "react-native-expo-viewport-units";
-import heart from "../assets/images/icons/heart.png";
-import plus from "../assets/images/icons/ad-song.png";
+import plus from "../assets/images/iconsSvg/plus-rose.svg";
+import minus from "../assets/images/iconsSvg/minus.svg";
 import AnimatedCircularProgress from "./AnimatedCircularProgress";
 import Slider from "react-native-slider/lib/Slider";
+import PropTypes from 'prop-types';
 
-const TrackLevel = () => {
-  const [val, setVal] = React.useState(0);
+const TrackLevel = ({count, path, preFill, w, h}) => {
+  const [val, setVal] = React.useState(preFill);
 
   const change = value => {
     setVal(value);
@@ -37,8 +38,8 @@ const TrackLevel = () => {
           colors={["#373843", "#2e2f39", "#24252d"]}
           locations={[0.3, 0.5, 0.8]}
         >
-          <Image source={heart} style={styles.icon} />
-          <Text style={styles.number}>36</Text>
+          <ImageBackground source={path} style={{width: w, height: h}} />
+          <Text style={styles.number}>{count}</Text>
         </LinearGradient>
       </View>
       <View>
@@ -128,7 +129,7 @@ const TrackLevel = () => {
               <Image source={plus} style={styles.iconInner} />
             </TouchableOpacity>
             <TouchableOpacity onPress={decrease}>
-              <Image source={plus} style={styles.iconInner} />
+              <Image source={minus} style={styles.iconInner} />
             </TouchableOpacity>
           </LinearGradient>
           <View>
@@ -166,7 +167,6 @@ const styles = StyleSheet.create({
   },
   explore: {
     width: vw(20),
-    display: "flex",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
@@ -186,16 +186,14 @@ const styles = StyleSheet.create({
     alignContent: "flex-start",
     justifyContent: "flex-start"
   },
-  icon: {
-    width: 30,
-    height: 30
-  },
+
   iconInner: {
     width: 20,
     height: 20
   },
   number: {
-    fontSize: 24,
+    fontSize: 22,
+    fontWeight: "700",
     color: "#abaed0"
   },
   text: {
@@ -218,4 +216,10 @@ const styles = StyleSheet.create({
     padding: 5
   }
 });
+
+TrackLevel.propTypes = {
+  count: PropTypes.number,
+  path: PropTypes.string,
+  preFill: PropTypes.number
+};
 export default TrackLevel;

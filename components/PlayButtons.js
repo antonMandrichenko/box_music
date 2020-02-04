@@ -14,11 +14,13 @@ import heart from "../assets/images/icons/heart.png";
 import cancel from "../assets/images/icons/cancel.png";
 import arrowTop from "../assets/images/icons/arrow-top.png";
 import arrowBottom from "../assets/images/icons/arrow-bot.png";
+import user from "../assets/images/freddie.png";
 import { LinearGradient } from "expo-linear-gradient";
 import { vw } from "react-native-expo-viewport-units";
 import AppContext from "../context/AppContext";
 import PlayerContext from "../context/PlayerContext";
 import {FontAwesome5} from "@expo/vector-icons";
+import UserProfileButton from "./UserProfileButton";
 
 const PlayButtons = props => {
   const {
@@ -68,6 +70,7 @@ const PlayButtons = props => {
           <SmallButton path={cancel} />
           <SmallButton path={arrowTop} />
           <SmallButton path={arrowBottom} />
+          <UserProfileButton path={user}/>
         </View>
       </View>
       <View style={styles.containerHeaderInputStation}>

@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TextInput, Text, TouchableNativeFeedback
 } from "react-native";
-import user from "../assets/images/user.jpg";
+import user from "../assets/images/freddie.png";
 import answer from "../assets/images/icons/answer.png";
 import send from "../assets/images/iconsSvg/send.svg";
 import { vw } from "react-native-expo-viewport-units";

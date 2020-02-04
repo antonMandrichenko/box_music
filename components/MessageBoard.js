@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, Text, TouchableOpacity, View, StyleSheet } from "react-native";
-import user from "../assets/images/user.jpg";
+import user from "../assets/images/freddie.png";
 import triangleBottom from "../assets/images/icons/triangleBottom.png";
 import answer from "../assets/images/icons/answer.png";
 import { vw } from "react-native-expo-viewport-units";
