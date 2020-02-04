@@ -105,7 +105,7 @@ const EditProfile = props => {
               colors={switchPlan ? lightColors : darkColors}
               locations={[0.05, 1]}
             >
-              <Text style={styles.buttonColor}>Upgrade</Text>
+              <Text style={styles.buttonColor}>Upgraded</Text>
             </LinearGradient>
           </TouchableOpacity>
         </View>
@@ -140,7 +140,7 @@ const EditProfile = props => {
         </View>
         {/*/////////////////////*/}
 
-        <TouchableOpacity onPress={() => console.log("w")}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('ChooseChannel')}>
           <LinearGradient
             style={styles.button}
             colors={["#373843", "#2e2f39", "#24252d"]}
@@ -150,7 +150,7 @@ const EditProfile = props => {
           </LinearGradient>
         </TouchableOpacity>
         <View style={styles.blackLine} />
-        <TouchableOpacity onPress={() => console.log("w")}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('NowPlaying')}>
           <LinearGradient
             style={styles.button}
             colors={["#373843", "#2e2f39", "#24252d"]}

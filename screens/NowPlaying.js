@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ImageBackground, ScrollView, Text, View } from "react-native";
-import { vw } from "react-native-expo-viewport-units";
+import {vh, vw} from "react-native-expo-viewport-units";
 import SmallButton from "../components/SmallButton";
 import EqualizerScreen from "../components/EqualizerScreen";
 import SwitchButtons from "../components/SwitchButtons";
@@ -72,7 +72,7 @@ const styles = {
   },
   imageBackground: {
     flex: 1,
-    height: "100%",
+    height: vh(100),
     width: "100%",
     alignItems: "flex-start",
     alignContent: "flex-start",

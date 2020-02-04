@@ -22,7 +22,8 @@ const ChooseChannel = props => {
         handleChangeCountPrev,
         handleChangeCountNext,
         counter,
-        playSelected
+        playSelected,
+        songs
     } = useContext(AppContext);
 
     return data.length === 0 ? (
