@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { ImageBackground, Text, View } from "react-native";
+import { ImageBackground, ScrollView, Text, View } from "react-native";
 import { vw } from "react-native-expo-viewport-units";
 import SmallButton from "../components/SmallButton";
 import EqualizerScreen from "../components/EqualizerScreen";
@@ -18,46 +18,48 @@ const NowPlaying = () => {
   const { isPlaying } = React.useContext(PlayerContext);
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={
-          __DEV__
-            ? require("../assets/images/background.jpg")
-            : require("../assets/images/background.jpg")
-        }
-        style={styles.imageBackground}
-      >
-        <PlayButtons />
-        <View style={styles.containerCarousel}>
-          <ListOfRadioStation />
-        </View>
-        <View style={styles.containerBeforeSlider}>
-          <Text style={styles.textAdditional}>• Up Next</Text>
-          <SmallButton path={addSong} />
-        </View>
-        <View style={styles.containerSubCarousel}>
-          <SubListOfRadioStation />
-        </View>
-        <View style={styles.containerEqualizer}>
-          <EqualizerScreen playing={isPlaying} />
-        </View>
-        <View style={styles.containerBeforeSlider}>
-          {switchValue ? (
-            <Text style={styles.textAdditional}>• Message Board</Text>
-          ) : (
-            <Text style={styles.textAdditional}>• Player Board</Text>
-          )}
-          <SwitchButtons />
-        </View>
-        {switchValue ? (
-          <View style={styles.containerBeforeSlider}>
-            <MessageBoard />
+    <ScrollView>
+      <View style={styles.container}>
+        <ImageBackground
+          source={
+            __DEV__
+              ? require("../assets/images/background.jpg")
+              : require("../assets/images/background.jpg")
+          }
+          style={styles.imageBackground}
+        >
+          <PlayButtons />
+          <View style={styles.containerCarousel}>
+            <ListOfRadioStation />
           </View>
-        ) : (
-          <TrackPlayerComponent />
-        )}
-      </ImageBackground>
-    </View>
+          <View style={styles.containerBeforeSlider}>
+            <Text style={styles.textAdditional}>• Up Next</Text>
+            <SmallButton path={addSong} />
+          </View>
+          <View style={styles.containerSubCarousel}>
+            <SubListOfRadioStation />
+          </View>
+          <View style={styles.containerEqualizer}>
+            <EqualizerScreen playing={isPlaying} />
+          </View>
+          <View style={styles.containerBeforeSlider}>
+            {switchValue ? (
+              <Text style={styles.textAdditional}>• Message Board</Text>
+            ) : (
+              <Text style={styles.textAdditional}>• Player Board</Text>
+            )}
+            <SwitchButtons />
+          </View>
+          {switchValue ? (
+            <View style={styles.containerBeforeSlider}>
+              <MessageBoard />
+            </View>
+          ) : (
+            <TrackPlayerComponent />
+          )}
+        </ImageBackground>
+      </View>
+    </ScrollView>
   );
 };
 

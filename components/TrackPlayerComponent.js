@@ -11,25 +11,25 @@ const TrackPlayerComponent = () => {
     handlePreviousTrack,
     handleNextTrack,
     isPlaying,
-    currentIndex,
     playbackInstance
   } = useContext(PlayerContext);
 
-  const {preparedSongs} = useContext(AppContext);
+  const { songs } = useContext(AppContext);
+
   const renderFileInfo = () => {
-    return playbackInstance ? (
-        <View style={styles.trackInfo}>
-          <Text style={[styles.trackInfoText, styles.largeText]}>
-            { preparedSongs[currentIndex].title}
-          </Text>
-        </View>
-    ) : null;
+    return playbackInstance
+      ? songs.map((song, i) => (
+          <View key={song.id} style={styles.trackInfo}>
+            <Text style={[styles.trackInfoText, styles.largeText]}>
+              {song.title}
+            </Text>
+          </View>
+        ))
+      : null;
   };
   return (
     <View style={styles.container}>
-      <View
-        style={styles.containerWrapper}
-      >
+      <View style={styles.containerWrapper}>
         <TouchableOpacity onPress={handlePreviousTrack}>
           <FontAwesome5 name="backward" size={16} color="#93A8B3" />
         </TouchableOpacity>
@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    paddingBottom: 20
   },
   containerWrapper: {
     flexDirection: "row",

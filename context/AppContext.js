@@ -120,9 +120,8 @@ const AppProvider = ({ children }, props) => {
             }
             setSongUid(i);
         }
-        setSongs([newArr.map(item => item)].flat(2));
+        setSongs(...newArr);
       });
-
   const playSelected = () => {
     if (Object.keys(checked).length !== 0) {
       const checkedSongs = [checked].reduce((resultArr, item) => {

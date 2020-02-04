@@ -79,7 +79,7 @@ const ChooseChannel = props => {
                                 playSelected();
                                 props.navigation.navigate("NowPlaying")
                             }}
-                            // disabled={preparedSongs && preparedSongs.length === 0}
+                            disabled={songs && songs.length === 0}
                         >
                             <LinearGradient
                                 style={styles.inputChannel}

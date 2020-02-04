@@ -18,6 +18,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { vw } from "react-native-expo-viewport-units";
 import AppContext from "../context/AppContext";
 import PlayerContext from "../context/PlayerContext";
+import {FontAwesome5} from "@expo/vector-icons";
 
 const PlayButtons = props => {
   const {
@@ -25,26 +26,28 @@ const PlayButtons = props => {
     handleNextTrack,
     isPlaying,
   } = useContext(PlayerContext);
-  const {preparedSongs} = React.useContext(AppContext)
+  const {songs} = React.useContext(AppContext)
   return (
     <>
       <View style={styles.containerHeaderButtons}>
         <View style={styles.containerHeaderButtonsLeft}>
           <View style={styles.buttonPlay}>
             <TouchableOpacity onPress={handlePlayPause}>
-              <Image
-                source={
-                  isPlaying ?
-                  __DEV__
-                    ? require("../assets/images/play.png")
-                    : require("../assets/images/play.png")
-                      :
-                      __DEV__
-                          ? require("../assets/images/play.png")
-                          : require("../assets/images/play.png")
-                }
-                style={styles.iconPlay}
-              />
+              {isPlaying ? (
+                  <FontAwesome5
+                      name="pause"
+                      size={16}
+                      color="#E55FA3"
+                      style={{marginLeft: 3}}
+                  />
+              ) : (
+                  <FontAwesome5
+                      name="play"
+                      size={16}
+                      color="#E55FA3"
+                      style={{marginLeft: 3}}
+                  />
+              )}
             </TouchableOpacity>
           </View>
           <View style={styles.buttonNext}>
@@ -76,7 +79,7 @@ const PlayButtons = props => {
           >
             <TextInput
               style={styles.inputShort}
-              placeholder={`My Vybn Station (${preparedSongs.length} tracks)`}
+              placeholder={`My Vybn Station (${songs.length} tracks)`}
               placeholderTextColor="#abaed0"
             />
           </LinearGradient>
