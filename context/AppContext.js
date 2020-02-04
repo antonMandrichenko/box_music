@@ -25,6 +25,7 @@ const AppProvider = ({ children }, props) => {
   const [songs, setSongs] = useState([]);
   const [read, setRead] = useState("Read more");
   const [switchValue, setSwitchValue] = useState(false);
+  const [switchPlan, setSwitchPlan] = useState(true);
   const [preparedSongs, setPreparedSongs] = useState([]);
   const [user, setUser] = useState("");
 
@@ -115,10 +116,10 @@ const AppProvider = ({ children }, props) => {
         const lastKey = keys[keys.length - 1];
         const newArr = [];
         for (let i in obj) {
-            if (i === lastKey) {
-                newArr.push(obj[i])
-            }
-            setSongUid(i);
+          if (i === lastKey) {
+            newArr.push(obj[i]);
+          }
+          setSongUid(i);
         }
         setSongs(...newArr);
       });
@@ -220,16 +221,19 @@ const AppProvider = ({ children }, props) => {
   }, [comments]);
 
   useEffect(() => {
-      if (Object.keys(checked).length !== 0) {
-      setDataFirebase()};
-  }, [preparedSongs])
+    if (Object.keys(checked).length !== 0) {
+      setDataFirebase();
+    }
+  }, [preparedSongs]);
   let userRef = firebase.database().ref("user/userId/" + uid);
   const remove = () => userRef.remove();
 
   const toggleSwitch = () => {
     setSwitchValue(!switchValue);
   };
-
+  const toggleSwitchPlan = () => {
+    setSwitchPlan(!switchPlan);
+  };
   return (
     <AppContext.Provider
       value={{
@@ -252,6 +256,7 @@ const AppProvider = ({ children }, props) => {
         remove,
         toggleSwitch,
         playSelected,
+        toggleSwitchPlan,
         setFilter,
         email,
         error,
@@ -272,7 +277,8 @@ const AppProvider = ({ children }, props) => {
         setRead,
         preparedSongs,
         switchValue,
-        songs
+        songs,
+        switchPlan
       }}
     >
       {children}

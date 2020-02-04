@@ -10,3 +10,13 @@ export default {
   },
   isSmallDevice: width < 375,
 };
+export const freePlan = [
+  { key: "Trial 7 days" },
+  { key: "Main Kits Included" },
+  { key: "Support" }
+];
+export const upgradePlan = [
+  { key: "Unlimited Access" },
+  { key: "All Kits Included" },
+  { key: "IOS Support" }
+];
