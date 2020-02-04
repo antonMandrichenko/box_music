@@ -224,9 +224,7 @@ const AppProvider = ({ children }, props) => {
       });
   const loadDataReview = async () => {
     const data = await getReview();
-    const dataSongs = await getDataFirebase();
     setComments(data);
-    setSongs(dataSongs);
   };
 
   useEffect(() => {
