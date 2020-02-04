@@ -150,11 +150,7 @@ class Equalizer extends React.Component {
       if (this.props.playing) {
         let bars = [];
         for (let i = 0; i < this.state.size; i++) {
-          let color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-          if (this.props.colors) {
-            color = this.state.colors[i % this.state.colors.length];
-          }
-          bars.push(<Bar key={i} color={color} maxHeight={7} />);
+          bars.push(<Bar key={i} color={'#e75f92'} maxHeight={7} />);
         }
         this.setState({ bars: bars });
       } else {
