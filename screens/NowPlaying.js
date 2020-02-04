@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import { ImageBackground, ScrollView, Text, View } from "react-native";
-import {vh, vw} from "react-native-expo-viewport-units";
+import React from "react";
+import {ActivityIndicator, ImageBackground, ScrollView, Text, View} from "react-native";
+import {vw} from "react-native-expo-viewport-units";
 import SmallButton from "../components/SmallButton";
 import EqualizerScreen from "../components/EqualizerScreen";
 import SwitchButtons from "../components/SwitchButtons";
@@ -12,12 +12,17 @@ import AppContext from "../context/AppContext";
 import TrackPlayerComponent from "../components/TrackPlayerComponent";
 import SubListOfRadioStation from "../components/SubListOfRadioStation";
 import PlayerContext from "../context/PlayerContext";
+import PropTypes from 'prop-types';
 
-const NowPlaying = () => {
-  const { switchValue } = React.useContext(AppContext);
+const NowPlaying = ({navigation}) => {
+  const { switchValue, songs } = React.useContext(AppContext);
   const { isPlaying } = React.useContext(PlayerContext);
-
-  return (
+  const nav = () => navigation.navigate('EditProfile');
+  return songs.length === 0 ? (
+      <View style={[styles.containerLoader, styles.horizontal]}>
+        <ActivityIndicator size="large" color="#0000ff"/>
+      </View>
+  ) : (
     <ScrollView>
       <View style={styles.container}>
         <ImageBackground
@@ -28,7 +33,8 @@ const NowPlaying = () => {
           }
           style={styles.imageBackground}
         >
-          <PlayButtons />
+
+          <PlayButtons nav={nav}/>
           <View style={styles.containerCarousel}>
             <ListOfRadioStation />
           </View>
@@ -72,11 +78,12 @@ const styles = {
   },
   imageBackground: {
     flex: 1,
-    height: vh(100),
+    height: "100%",
     width: "100%",
     alignItems: "flex-start",
     alignContent: "flex-start",
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
+    paddingBottom: 20
   },
 
   square: {
@@ -140,6 +147,21 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     width: vw(100)
+  },
+  containerLoader: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10
   }
+};
+
+NowPlaying.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 export default NowPlaying;

@@ -2,10 +2,11 @@ import React from 'react';
 import {Image, TouchableOpacity, View, StyleSheet} from "react-native";
 import PropTypes from 'prop-types';
 
-const UserProfileButton = ({path}, props) => {
+const UserProfileButton = ({path, nav}) => {
+
     return (
         <View style={styles.headerButtonRight}>
-            <TouchableOpacity onPress={() => props.navigation.navigate("ChooseChannel")}>
+            <TouchableOpacity onPress={nav}>
                     <Image
                         source={path}
                         style={styles.square}

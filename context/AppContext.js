@@ -234,6 +234,7 @@ const AppProvider = ({ children }, props) => {
   const toggleSwitchPlan = () => {
     setSwitchPlan(!switchPlan);
   };
+
   return (
     <AppContext.Provider
       value={{

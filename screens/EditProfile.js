@@ -177,13 +177,13 @@ const styles = StyleSheet.create({
   },
   circleSmall: {
     position: "absolute",
-    width: 30,
-    height: 30,
+    width: 50,
+    height: 50,
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
-    transform: [{ translateX: "-50%" }, { rotate: "-45deg" }],
-    bottom: -15,
+    transform: [{ translateX: "-50%" }],
+    bottom: -25,
     left: "50%"
   },
   circleBlackSmall: {

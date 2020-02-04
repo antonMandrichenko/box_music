@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Image, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import user from "../assets/images/freddie.png";
 import triangleBottom from "../assets/images/icons/triangleBottom.png";
@@ -12,38 +12,34 @@ const MessageAnswer = props => {
 
   return (
     <>
-      {comments && comments.map(comment => (
-        <View style={styles.wrapper} key={Math.random() * 2}>
-          <View style={styles.container}>
-            <View style={styles.lineBefore}/>
-            <Image style={styles.image} source={user} />
-            <View>
-            <Text style={styles.text}>Adam Lambert</Text>
-            <Text style={styles.textAnswer}>{comment.review}</Text>
+      {comments &&
+        comments.map(comment => (
+          <View style={styles.wrapper} key={Math.random() * 2}>
+            <View style={styles.container}>
+              <View style={styles.lineBefore} />
+              <Image style={styles.image} source={user} />
+              <View>
+                <Text style={styles.text}>Adam Lambert</Text>
+                <View style={styles.textAnswerWrapper}>
+                  <Text style={styles.textAnswer}>{comment.review}</Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.container}>
+              <TouchableOpacity style={styles.flex}>
+                <Text style={styles.textReplies}>1 Replies</Text>
+                <Image style={styles.triangleBottom} source={triangleBottom} />
+              </TouchableOpacity>
+              <View style={styles.line} />
+              <TouchableOpacity style={styles.flex}>
+                <Image style={styles.iconReview} source={answer} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.flex} onPress={remove}>
+                <Image style={styles.iconReview} source={cancel} />
+              </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.container}>
-            <TouchableOpacity
-              style={styles.flex}
-            >
-              <Text style={styles.textReplies}>1 Replies</Text>
-              <Image style={styles.triangleBottom} source={triangleBottom} />
-            </TouchableOpacity>
-            <View style={styles.line} />
-            <TouchableOpacity
-              style={styles.flex}
-            >
-              <Image style={styles.iconReview} source={answer} />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.flex}
-                onPress={remove}
-            >
-              <Image style={styles.iconReview} source={cancel} />
-            </TouchableOpacity>
-          </View>
-        </View>
-      ))}
+        ))}
     </>
   );
 };
@@ -68,7 +64,13 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   text: { color: "#abaed0", fontSize: 14 },
-  textAnswer: { color: "#fff", fontSize: 12 },
+  textAnswer: {
+    color: "#fff",
+    fontSize: 12,
+    width: vw(35),
+    textAlign: "justify"
+  },
+  textAnswerWrapper: { flex: 1, flexDirection: "row", flexWrap: "wrap" },
   textComment: { color: "#abaed0", fontSize: 14 },
   textReplies: { color: "#e75f92", fontSize: 12 },
   line: {

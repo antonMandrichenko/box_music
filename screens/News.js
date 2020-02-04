@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
   ImageBackground,
   View,
@@ -7,7 +7,7 @@ import {
   FlatList,
   Text,
   Image,
-  SafeAreaView
+  SafeAreaView, ActivityIndicator
 } from "react-native";
 import { vh, vw } from "react-native-expo-viewport-units";
 import PlayButtons from "../components/PlayButtons";
@@ -18,7 +18,7 @@ const loremIpsum =
   "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. ";
 const totalWords = loremIpsum.split(" ").length;
 
-const News = ({ title, text, image }) => {
+const NewsRead = ({ title, text, image }) => {
   const { read, setRead } = React.useContext(AppContext);
   const readMore = () => {
       setRead("Show less")
@@ -44,9 +44,16 @@ const News = ({ title, text, image }) => {
     </View>
   );
 };
-const TrackLevels = props => {
+const News = ({navigation}) => {
   const { data } = React.useContext(AppContext);
-  return (
+  const nav = () => navigation.navigate("EditProfile");
+  const {songs} = useContext(AppContext);
+
+  return songs.length === 0 ? (
+      <View style={[styles.containerLoader, styles.horizontal]}>
+        <ActivityIndicator size="large" color="#0000ff"/>
+      </View>
+  ) : (
     <View style={styles.container}>
       <ImageBackground
         source={
@@ -56,13 +63,13 @@ const TrackLevels = props => {
         }
         style={styles.imageBackground}
       >
-        <PlayButtons />
+        <PlayButtons nav={nav}/>
         <ScrollView>
           <SafeAreaView style={styles.container}>
             <FlatList
               data={data}
               renderItem={({ item }) => (
-                <News
+                <NewsRead
                   title={item.title}
                   text={
                     totalWords > 35
@@ -136,6 +143,15 @@ const styles = StyleSheet.create({
   },
   title: { color: "#abaed0", paddingLeft: 10, marginBottom: 5 },
   readMore: { color: "#8d00d0" },
-  text: { color: "#fff", width: vw(50), fontSize: 9, paddingHorizontal: 10 }
+  text: { color: "#fff", width: vw(50), fontSize: 9, paddingHorizontal: 10 },
+  containerLoader: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10
+  }
 });
-export default TrackLevels;
+export default News;

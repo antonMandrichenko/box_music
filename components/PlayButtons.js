@@ -22,12 +22,13 @@ import PlayerContext from "../context/PlayerContext";
 import {FontAwesome5} from "@expo/vector-icons";
 import UserProfileButton from "./UserProfileButton";
 
-const PlayButtons = props => {
+const PlayButtons = ({nav}) => {
   const {
     handlePlayPause,
     handleNextTrack,
     isPlaying,
   } = useContext(PlayerContext);
+
   const {songs} = React.useContext(AppContext)
   return (
     <>
@@ -70,7 +71,7 @@ const PlayButtons = props => {
           <SmallButton path={cancel} />
           <SmallButton path={arrowTop} />
           <SmallButton path={arrowBottom} />
-          <UserProfileButton path={user}/>
+          <UserProfileButton path={user} nav={nav}/>
         </View>
       </View>
       <View style={styles.containerHeaderInputStation}>
