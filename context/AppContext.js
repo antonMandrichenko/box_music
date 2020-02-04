@@ -102,38 +102,25 @@ const AppProvider = ({ children }, props) => {
       .database()
       .ref("songs/")
       .push()
-      .set(preparedSongs.map( item => ({
-          id: item.id,
-          title: item.title,
-          uri: item.uri,
-          image: item.image,
-          imageSigner: item.imageSigner,
-          song: item.song,
-          titleSong: item.titleSong,
-      })));
-      // console.log(setDataFirebase());
+      .set(preparedSongs);
   const getDataFirebase = () =>
     firebase
       .database()
       .ref()
-      .child("songs")
+      .child("songs/")
       .once("value")
       .then(function(snapshot) {
         const obj = snapshot.val();
-        // const keys = Object.keys(obj);
-        // const lastKey = keys[keys.length - 1];
-        //   console.log(obj);
-        setSongs(obj);
-        // const newArr = [];
-        // const keys = Object.keys(obj);
-        // const lastKey = keys[keys.length - 1]
-        // for (let i in obj) {
-        //     if (i === lastKey) {
-        //         newArr.push(obj[i])
-        //     }
-        //     setSongUid(i);
-        // }
-        // setSongs([newArr.flat(1).map(item => item)]);
+        const keys = Object.keys(obj);
+        const lastKey = keys[keys.length - 1];
+        const newArr = [];
+        for (let i in obj) {
+            if (i === lastKey) {
+                newArr.push(obj[i])
+            }
+            setSongUid(i);
+        }
+        setSongs([newArr.map(item => item)].flat(2));
       });
 
   const playSelected = () => {
