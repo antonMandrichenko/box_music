@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 
 const NowPlaying = ({navigation}) => {
   const { switchValue, songs } = React.useContext(AppContext);
-  const { isPlaying } = React.useContext(PlayerContext);
+  const { isPlaying, handleCurrentTrack,setCurrentIndex } = React.useContext(PlayerContext);
   const nav = () => navigation.navigate('EditProfile');
   return songs.length === 0 ? (
       <View style={[styles.containerLoader, styles.horizontal]}>
@@ -36,14 +36,14 @@ const NowPlaying = ({navigation}) => {
 
           <PlayButtons nav={nav}/>
           <View style={styles.containerCarousel}>
-            <ListOfRadioStation />
+            <ListOfRadioStation setCurrentIndex={setCurrentIndex} handleCurrentTrack={handleCurrentTrack}/>
           </View>
           <View style={styles.containerBeforeSlider}>
             <Text style={styles.textAdditional}>• Up Next</Text>
             <SmallButton path={addSong} />
           </View>
           <View style={styles.containerSubCarousel}>
-            <SubListOfRadioStation />
+            <SubListOfRadioStation setCurrentIndex={setCurrentIndex} />
           </View>
           <View style={styles.containerEqualizer}>
             <EqualizerScreen playing={isPlaying} />

@@ -28,6 +28,7 @@ const AppProvider = ({ children }) => {
   const [switchPlan, setSwitchPlan] = useState(true);
   const [preparedSongs, setPreparedSongs] = useState([]);
   const [user, setUser] = useState("");
+  const carouselRef = React.useRef(null);
 
   const handleChangeCountNext = () =>
     setCounter({ start: counter.start + 9, end: counter.end + 9 });
@@ -229,7 +230,12 @@ const AppProvider = ({ children }) => {
   const toggleSwitchPlan = () => {
     setSwitchPlan(!switchPlan);
   };
-
+    const goForward = () => {
+        setTimeout(() => carouselRef.current.snapToNext(), 250)
+    }
+    const goBack = () => {
+        setTimeout(() => carouselRef.current.snapToPrev(), 250)
+    }
   const _setTimeout = global.setTimeout;
   const _clearTimeout = global.clearTimeout;
   const MAX_TIMER_DURATION_MS = 60 * 1000;
@@ -293,6 +299,8 @@ const AppProvider = ({ children }) => {
         toggleSwitch,
         playSelected,
         toggleSwitchPlan,
+        goForward,
+        goBack,
         setFilter,
         email,
         error,
@@ -314,7 +322,8 @@ const AppProvider = ({ children }) => {
         preparedSongs,
         switchValue,
         songs,
-        switchPlan
+        switchPlan,
+        carouselRef
       }}
     >
       {children}

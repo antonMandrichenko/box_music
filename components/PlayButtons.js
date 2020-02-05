@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import {
   Image,
   StyleSheet,
@@ -19,17 +19,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import { vw } from "react-native-expo-viewport-units";
 import AppContext from "../context/AppContext";
 import PlayerContext from "../context/PlayerContext";
-import {FontAwesome5} from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import UserProfileButton from "./UserProfileButton";
 
-const PlayButtons = ({nav}) => {
-  const {
-    handlePlayPause,
-    handleNextTrack,
-    isPlaying,
-  } = useContext(PlayerContext);
+const PlayButtons = ({ nav }) => {
+  const { handlePlayPause, handleNextTrack, isPlaying } = useContext(
+    PlayerContext
+  );
 
-  const {songs} = React.useContext(AppContext)
+  const { songs, goForward, goBack } = React.useContext(AppContext);
   return (
     <>
       <View style={styles.containerHeaderButtons}>
@@ -37,19 +35,19 @@ const PlayButtons = ({nav}) => {
           <View style={styles.buttonPlay}>
             <TouchableOpacity onPress={handlePlayPause}>
               {isPlaying ? (
-                  <FontAwesome5
-                      name="pause"
-                      size={16}
-                      color="#E55FA3"
-                      style={{marginLeft: 3}}
-                  />
+                <FontAwesome5
+                  name="pause"
+                  size={16}
+                  color="#E55FA3"
+                  style={{ marginLeft: 3 }}
+                />
               ) : (
-                  <FontAwesome5
-                      name="play"
-                      size={16}
-                      color="#E55FA3"
-                      style={{marginLeft: 3}}
-                  />
+                <FontAwesome5
+                  name="play"
+                  size={16}
+                  color="#E55FA3"
+                  style={{ marginLeft: 3 }}
+                />
               )}
             </TouchableOpacity>
           </View>
@@ -69,9 +67,9 @@ const PlayButtons = ({nav}) => {
         <View style={styles.containerHeaderButtonsRight}>
           <SmallButton path={heart} />
           <SmallButton path={cancel} />
-          <SmallButton path={arrowTop} />
-          <SmallButton path={arrowBottom} />
-          <UserProfileButton path={user} nav={nav}/>
+          <SmallButton path={arrowTop} onPress={goForward} />
+          <SmallButton path={arrowBottom} onPress={goBack} />
+          <UserProfileButton path={user} nav={nav} />
         </View>
       </View>
       <View style={styles.containerHeaderInputStation}>

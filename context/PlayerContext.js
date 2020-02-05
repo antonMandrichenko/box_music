@@ -10,6 +10,7 @@ const PlayerProvider = ({children}) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [volume, setVolume] = useState(1.0);
     const [isBuffering, setIsBuffering] = useState(false);
+
     const setAudio = async () => {
         try {
             await Audio.setAudioModeAsync({
@@ -59,7 +60,6 @@ const PlayerProvider = ({children}) => {
         isPlaying
             ? await playbackInstance.pauseAsync()
             : await playbackInstance.playAsync();
-
         setIsPlaying(!isPlaying);
     };
 
@@ -83,7 +83,21 @@ const PlayerProvider = ({children}) => {
             await loadAudio();
         }
     };
-
+    const handleCurrentTrack = async (index) => {
+        setIsPlaying(!isPlaying);
+        if(isPlaying) {
+            await playbackInstance.pauseAsync()
+            if (await playbackInstance.playAsync()) {
+                await playbackInstance.unloadAsync();
+                setCurrentIndex(index);
+                await loadAudio();
+            }
+        } else {
+            await playbackInstance.unloadAsync();
+            setCurrentIndex(index);
+            await loadAudio();
+        };
+    };
     return (
         <PlayerContext.Provider
             value={{
@@ -93,6 +107,7 @@ const PlayerProvider = ({children}) => {
                 handlePlayPause,
                 handlePreviousTrack,
                 handleNextTrack,
+                handleCurrentTrack,
                 isPlaying,
                 playbackInstance,
                 currentIndex
