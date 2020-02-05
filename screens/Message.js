@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {ImageBackground, View, StyleSheet, Text, ActivityIndicator} from "react-native";
+import {ImageBackground, View, StyleSheet, Text, ActivityIndicator, ScrollView} from "react-native";
 import { vw } from "react-native-expo-viewport-units";
 import PlayButtons from "../components/PlayButtons";
 import MessageBoard from "../components/MessageBoard";
@@ -16,6 +16,7 @@ const Message = ({ navigation }) => {
         <ActivityIndicator size="large" color="#0000ff"/>
       </View>
   ) : (
+      <ScrollView>
     <View style={styles.container}>
       <ImageBackground
         source={
@@ -37,6 +38,7 @@ const Message = ({ navigation }) => {
         </View>
       </ImageBackground>
     </View>
+      </ScrollView>
   );
 };
 
