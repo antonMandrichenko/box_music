@@ -7,11 +7,10 @@ import {
   FlatList,
   Text,
   Image,
-  SafeAreaView, ActivityIndicator
+  SafeAreaView, ActivityIndicator, TouchableOpacity
 } from "react-native";
 import { vh, vw } from "react-native-expo-viewport-units";
 import PlayButtons from "../components/PlayButtons";
-import TouchableOpacity from "react-native-web/dist/exports/TouchableOpacity";
 import AppContext from "../context/AppContext";
 
 const loremIpsum =

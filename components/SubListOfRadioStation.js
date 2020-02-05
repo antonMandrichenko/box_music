@@ -10,7 +10,7 @@ const SubListOfRadioStation = () => {
        const _renderItem = ({ item, index }) => {
         return (
             <View style={styles.imageContainer}>
-            <TouchableOpacity onPress={() => alert(item.title)}>
+            <TouchableOpacity onPress={() =>  console.log('w')}>
                 <ImageBackground
                     style={styles.image}
                     source={item.imageSigner}

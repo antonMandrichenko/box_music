@@ -1,5 +1,5 @@
 import React from "react";
-import {ActivityIndicator, ImageBackground, ScrollView, Text, View} from "react-native";
+import {ActivityIndicator, ImageBackground, ScrollView, Text, View, StyleSheet} from "react-native";
 import {vw} from "react-native-expo-viewport-units";
 import SmallButton from "../components/SmallButton";
 import EqualizerScreen from "../components/EqualizerScreen";
@@ -69,7 +69,7 @@ const NowPlaying = ({navigation}) => {
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
@@ -157,7 +157,7 @@ const styles = {
     justifyContent: "space-around",
     padding: 10
   }
-};
+});
 
 NowPlaying.propTypes = {
   navigation: PropTypes.shape({

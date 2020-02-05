@@ -14,7 +14,7 @@ import Channel from "../components/Channel";
 import Button from "../components/Button";
 import AppContext from "../context/AppContext";
 
-const ChooseChannel = props => {
+const ChooseChannel = ({navigation}) => {
     const {
         setFilter,
         filter,
@@ -25,7 +25,7 @@ const ChooseChannel = props => {
         playSelected,
         songs
     } = useContext(AppContext);
-
+    const nav = () => navigation.navigate("NowPlaying")
     return data.length === 0 ? (
         <View style={[styles.containerLoader, styles.horizontal]}>
             <ActivityIndicator size="large" color="#0000ff"/>
@@ -76,10 +76,8 @@ const ChooseChannel = props => {
                 <View style={styles.containerFooter}>
                     <View style={styles.containerFooterWrapper}>
                         <TouchableOpacity
-                            onPress={() => {
-                                playSelected();
-                                props.navigation.navigate("NowPlaying")
-                            }}
+                            onPress={ nav
+                            }
                             disabled={songs && songs.length === 0}
                         >
                             <LinearGradient

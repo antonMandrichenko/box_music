@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 });
 
 UserProfileButton.propTypes = {
-    path: PropTypes.string,
+    path: PropTypes.number,
 };
 
 export default UserProfileButton;

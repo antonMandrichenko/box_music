@@ -26,7 +26,7 @@ const ListOfRadioStation = () => {
 
   const _renderItem = ({ item, index }) => {
     return (
-      <TouchableOpacity onPress={() => alert(item.titleSong)}>
+      <TouchableOpacity onPress={() => console.log('w')}>
         <Image
           style={styles.imageContainer}
           source={{ uri: item.image }}

@@ -5,7 +5,7 @@ const AppContext = React.createContext();
 import { AsyncStorage, Platform, InteractionManager } from "react-native";
 import { radioPlaylist } from "../api/RadioPlaylist";
 
-const AppProvider = ({ children }, props) => {
+const AppProvider = ({ children }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");

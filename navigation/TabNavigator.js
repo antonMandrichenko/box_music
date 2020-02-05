@@ -1,4 +1,5 @@
 import React from "react";
+import {StyleSheet} from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -11,7 +12,7 @@ import { createBottomTabNavigator, createAppContainer } from "react-navigation";
 import { LinearGradient } from "expo-linear-gradient";
 import { vw } from "react-native-expo-viewport-units";
 
-const styles = {
+const styles = StyleSheet.create({
   button: {
     height: 60,
     display: "flex",
@@ -22,7 +23,7 @@ const styles = {
   color: {
     color: "#fff"
   }
-};
+});
 const TabNavigator = createBottomTabNavigator(
   {
     NowPlaying: {
