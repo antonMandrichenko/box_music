@@ -146,7 +146,6 @@ const AppProvider = ({ children }, props) => {
           .flat(1)
       ]);
     }
-    getDataFirebase();
   };
 
   firebase.auth().onAuthStateChanged(user => setUser(user.email));
@@ -202,23 +201,19 @@ const AppProvider = ({ children }, props) => {
       .once("value")
       .then(function(snapshot) {
         const obj = snapshot.val();
-        const newArr = [];
+        const arr = [];
         for (let i in obj) {
-          newArr.push({ review: obj[i].reviews });
+          arr.push({ review: obj[i].reviews });
           setUid(i);
         }
-        return newArr;
+        setComments(arr);
       });
-  const loadDataReview = async () => {
-    const data = await getReview();
-    setComments(data);
-  };
 
   useEffect(() => {
-    loadDataReview();
+    getReview();
     loadData();
     getDataFirebase();
-  }, [comments]);
+  }, [preparedSongs]);
 
   useEffect(() => {
     if (Object.keys(checked).length !== 0) {
@@ -235,47 +230,47 @@ const AppProvider = ({ children }, props) => {
     setSwitchPlan(!switchPlan);
   };
 
-    const _setTimeout = global.setTimeout;
-    const _clearTimeout = global.clearTimeout;
-    const MAX_TIMER_DURATION_MS = 60 * 1000;
-    if (Platform.OS === 'android') {
-        const timerFix = {};
-        const runTask = (id, fn, ttl, args) => {
-            const waitingTime = ttl - Date.now();
-            if (waitingTime <= 1) {
-                InteractionManager.runAfterInteractions(() => {
-                    if (!timerFix[id]) {
-                        return;
-                    }
-                    delete timerFix[id];
-                    fn(...args);
-                });
-                return;
-            }
+  const _setTimeout = global.setTimeout;
+  const _clearTimeout = global.clearTimeout;
+  const MAX_TIMER_DURATION_MS = 60 * 1000;
+  if (Platform.OS === "android") {
+    const timerFix = {};
+    const runTask = (id, fn, ttl, args) => {
+      const waitingTime = ttl - Date.now();
+      if (waitingTime <= 1) {
+        InteractionManager.runAfterInteractions(() => {
+          if (!timerFix[id]) {
+            return;
+          }
+          delete timerFix[id];
+          fn(...args);
+        });
+        return;
+      }
 
-            const afterTime = Math.min(waitingTime, MAX_TIMER_DURATION_MS);
-            timerFix[id] = _setTimeout(() => runTask(id, fn, ttl, args), afterTime);
-        };
+      const afterTime = Math.min(waitingTime, MAX_TIMER_DURATION_MS);
+      timerFix[id] = _setTimeout(() => runTask(id, fn, ttl, args), afterTime);
+    };
 
-        global.setTimeout = (fn, time, ...args) => {
-            if (MAX_TIMER_DURATION_MS < time) {
-                const ttl = Date.now() + time;
-                const id = '_lt_' + Object.keys(timerFix).length;
-                runTask(id, fn, ttl, args);
-                return id;
-            }
-            return _setTimeout(fn, time, ...args);
-        };
+    global.setTimeout = (fn, time, ...args) => {
+      if (MAX_TIMER_DURATION_MS < time) {
+        const ttl = Date.now() + time;
+        const id = "_lt_" + Object.keys(timerFix).length;
+        runTask(id, fn, ttl, args);
+        return id;
+      }
+      return _setTimeout(fn, time, ...args);
+    };
 
-        global.clearTimeout = id => {
-            if (typeof id === 'string' && id.startWith('_lt_')) {
-                _clearTimeout(timerFix[id]);
-                delete timerFix[id];
-                return;
-            }
-            _clearTimeout(id);
-        };
-    }
+    global.clearTimeout = id => {
+      if (typeof id === "string" && id.startWith("_lt_")) {
+        _clearTimeout(timerFix[id]);
+        delete timerFix[id];
+        return;
+      }
+      _clearTimeout(id);
+    };
+  }
   return (
     <AppContext.Provider
       value={{
@@ -294,7 +289,6 @@ const AppProvider = ({ children }, props) => {
         setTypeValue,
         toggleType,
         sendReview,
-        loadDataReview,
         remove,
         toggleSwitch,
         playSelected,
