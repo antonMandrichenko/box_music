@@ -27,7 +27,7 @@ const PlayButtons = ({ nav }) => {
     PlayerContext
   );
 
-  const { songs, goForward, goBack } = React.useContext(AppContext);
+  const { songs, goForward, goBack, removeSong } = React.useContext(AppContext);
   return (
     <>
       <View style={styles.containerHeaderButtons}>
@@ -66,7 +66,7 @@ const PlayButtons = ({ nav }) => {
         </View>
         <View style={styles.containerHeaderButtonsRight}>
           <SmallButton path={heart} />
-          <SmallButton path={cancel} />
+          <SmallButton path={cancel} onPress={removeSong}/>
           <SmallButton path={arrowTop} onPress={goForward} />
           <SmallButton path={arrowBottom} onPress={goBack} />
           <UserProfileButton path={user} nav={nav} />

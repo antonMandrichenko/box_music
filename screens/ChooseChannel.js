@@ -23,9 +23,11 @@ const ChooseChannel = ({navigation}, props) => {
         handleChangeCountNext,
         counter,
         playSelected,
-        songs
+        checked
     } = useContext(AppContext);
-    const nav = () => navigation.navigate("TabNavigator")
+    const nav = () => navigation.navigate("TabNavigator");
+
+    const checkedLength = Object.keys(checked).length;
     return data.length === 0 ? (
         <View style={[styles.containerLoader, styles.horizontal]}>
             <ActivityIndicator size="large" color="#0000ff"/>
@@ -76,9 +78,8 @@ const ChooseChannel = ({navigation}, props) => {
                 <View style={styles.containerFooter}>
                     <View style={styles.containerFooterWrapper}>
                         <TouchableOpacity
-                            onPress={() => {playSelected(); nav()}
-                            }
-                            disabled={songs && songs.length === 0}
+                            onPress={() => {playSelected(); nav()}}
+                            disabled={checkedLength === 0}
                         >
                             <LinearGradient
                                 style={styles.inputChannel}
@@ -123,9 +124,9 @@ const ChooseChannel = ({navigation}, props) => {
                     title="create your own channel"
                     handleChange={() => props.navigation.navigate("CreateChannel")}
                 />
-                <TouchableOpacity onPress={() => props.navigation.navigate("Login")}>
-                    <Text>sign out</Text>
-                </TouchableOpacity>
+                {/*<TouchableOpacity onPress={() => props.navigation.navigate("Login")}>*/}
+                {/*    <Text>sign out</Text>*/}
+                {/*</TouchableOpacity>*/}
             </LinearGradient>
         </View>
     );

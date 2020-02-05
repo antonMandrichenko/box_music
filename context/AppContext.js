@@ -105,7 +105,7 @@ const AppProvider = ({ children }) => {
       .ref("songs/")
       .push()
       .set(preparedSongs);
-  const getDataFirebase = () =>
+  const getDataFirebase = () => {
     firebase
       .database()
       .ref()
@@ -123,7 +123,7 @@ const AppProvider = ({ children }) => {
           setSongUid(i);
         }
         setSongs(...newArr);
-      });
+      })};
   const playSelected = () => {
     if (Object.keys(checked).length !== 0) {
       const checkedSongs = [checked].reduce((resultArr, item) => {
@@ -214,7 +214,7 @@ const AppProvider = ({ children }) => {
     getReview();
     loadData();
     getDataFirebase();
-  }, [preparedSongs]);
+  }, [songs]);
 
   useEffect(() => {
     if (Object.keys(checked).length !== 0) {
@@ -222,7 +222,9 @@ const AppProvider = ({ children }) => {
     }
   }, [preparedSongs]);
   let userRef = firebase.database().ref("user/userId/" + uid);
+  let songRef = firebase.database().ref("songs/" + songUid);
   const remove = () => userRef.remove();
+  const removeSong = () => songRef.remove();
 
   const toggleSwitch = () => {
     setSwitchValue(!switchValue);
@@ -301,6 +303,7 @@ const AppProvider = ({ children }) => {
         toggleSwitchPlan,
         goForward,
         goBack,
+        removeSong,
         setFilter,
         email,
         error,
