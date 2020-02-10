@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {ActivityIndicator, ImageBackground, ScrollView, Text, View, StyleSheet} from "react-native";
 import {vw} from "react-native-expo-viewport-units";
 import SmallButton from "../components/SmallButton";
@@ -15,14 +15,11 @@ import PlayerContext from "../context/PlayerContext";
 import PropTypes from 'prop-types';
 
 const NowPlaying = ({navigation}) => {
-  const { switchValue, songs } = React.useContext(AppContext);
+  const { switchValue, preparedSongs, songs } = React.useContext(AppContext);
   const { isPlaying, handleCurrentTrack,setCurrentIndex } = React.useContext(PlayerContext);
   const nav = () => navigation.navigate('EditProfile');
-  return songs.length === 0 ? (
-      <View style={[styles.containerLoader, styles.horizontal]}>
-        <ActivityIndicator size="large" color="#0000ff"/>
-      </View>
-  ) : (
+
+  return (
     <ScrollView>
       <View style={styles.container}>
         <ImageBackground

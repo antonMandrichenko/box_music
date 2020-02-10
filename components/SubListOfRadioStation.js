@@ -5,7 +5,7 @@ import AppContext from "../context/AppContext";
 import { vw } from "react-native-expo-viewport-units";
 
 const SubListOfRadioStation = () => {
-    const { songs } = React.useContext(AppContext);
+    const { preparedSongs } = React.useContext(AppContext);
 
        const _renderItem = ({ item, index }) => {
         return (
@@ -28,7 +28,7 @@ const SubListOfRadioStation = () => {
     const SLIDER_WIDTH = vw(100);
     return (
         <Carousel
-            data={songs}
+            data={preparedSongs}
             renderItem={_renderItem}
             sliderWidth={SLIDER_WIDTH}
             itemWidth={ITEM_WIDTH}
@@ -36,7 +36,7 @@ const SubListOfRadioStation = () => {
             inactiveSlideOpacity={0.7}
             layoutCardOffset={9}
             activeAnimationType={'spring'}
-            activeSlideAlignment={songs.length < 3 ? 'center' : 'start'}
+            activeSlideAlignment={preparedSongs.length < 3 ? 'center' : 'start'}
             activeAnimationOptions={{
                 friction: 4,
                 tension: 40

@@ -1,7 +1,6 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {vw} from "react-native-expo-viewport-units";
 import {
-    ImageBackground,
     StyleSheet,
     Text,
     TextInput,
@@ -13,26 +12,23 @@ import {LinearGradient} from "expo-linear-gradient";
 import Channel from "../components/Channel";
 import Button from "../components/Button";
 import AppContext from "../context/AppContext";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const ChooseChannel = ({navigation}, props) => {
     const {
         setFilter,
         filter,
-        data,
         handleChangeCountPrev,
         handleChangeCountNext,
         counter,
         playSelected,
-        checked
+        checked,
+        preparedSongs
     } = useContext(AppContext);
     const nav = () => navigation.navigate("TabNavigator");
 
     const checkedLength = Object.keys(checked).length;
-    return data.length === 0 ? (
-        <View style={[styles.containerLoader, styles.horizontal]}>
-            <ActivityIndicator size="large" color="#0000ff"/>
-        </View>
-    ) : (
+    return  (
         <View style={styles.container}>
             <LinearGradient
                 style={styles.containerWrapper}
@@ -43,36 +39,33 @@ const ChooseChannel = ({navigation}, props) => {
                     <Text style={styles.textTitle}>choose your favorite</Text>
                     <Text style={styles.textMain}>channels</Text>
                     <View style={styles.blackLine}/>
+                    <View style={styles.inputWrapper}>
                     <LinearGradient
                         colors={["#08080a", "#1d1e25"]}
-                        style={styles.inputWrapper}
                         locations={[0.05, 1]}
+                        style={styles.inputWrapperGradient}
                     >
                         <TextInput
                             style={styles.input}
                             value={filter}
                             placeholder="search your favorite channel..."
                             placeholderTextColor="#abaed0"
-                            onChange={e => setFilter(e.target.value)}
+                            onChangeText={e => setFilter(e)}
                         />
-                        <LinearGradient
-                            colors={["#363743", "#25252e"]}
-                            style={styles.searchButton}
-                            locations={[0.05, 1]}
-                        >
-                            <ImageBackground
-                                source={
-                                    __DEV__
-                                        ? require("../assets/images/icons/search.png")
-                                        : require("../assets/images/icons/search.png")
-                                }
-                                style={styles.searchIcon}
-                            />
-                        </LinearGradient>
                     </LinearGradient>
+                        <TouchableOpacity onPress={() => console.log('w')}>
+                    <LinearGradient
+                        colors={["#363743", "#25252e"]}
+                        style={styles.searchButton}
+                        locations={[0.05, 1]}
+                    >
+                        <FontAwesome5 name="search" size={16} color="#93A8B3" />
+                    </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <View style={styles.channelContainer}>
-                    <Channel styles={styles} data={data}/>
+                    <Channel />
                 </View>
 
                 <View style={styles.containerFooter}>
@@ -104,7 +97,7 @@ const ChooseChannel = ({navigation}, props) => {
                             </LinearGradient>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            disabled={counter.start > 0 && counter.end <= data.length}
+                            disabled={counter.start > 0 && counter.end <= preparedSongs.length}
                             onPress={handleChangeCountNext}
                         >
                             <LinearGradient
@@ -138,11 +131,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center"
     },
-    containerHeader: {
-        flex: 2
-    },
+
     containerFooter: {
-        flex: 1,
         justifyContent: "flex-end"
     },
     containerFooterWrapper: {
@@ -150,7 +140,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     channelContainer: {
-        flex: 6,
+        flex: 1,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
@@ -173,18 +163,13 @@ const styles = StyleSheet.create({
         color: "#fff",
         textTransform: "uppercase"
     },
-    searchIcon: {
-        width: 12,
-        height: 12,
-        justifyContent: "center",
-        alignItems: "center"
-    },
     searchButton: {
-        width: 35,
-        height: 35,
+        width: 37,
+        height: 37,
         borderWidth: 1,
         borderColor: "#202024",
-        borderRadius: 5,
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5,
         justifyContent: "center",
         alignItems: "center"
     },
@@ -232,17 +217,20 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: 10,
-        borderRadius: 5
+        marginBottom: 10
     },
     input: {
         borderWidth: 1,
         borderColor: "#202024",
         height: 37,
-        width: 300,
+        width: vw(85),
         color: "#abaed0",
         paddingLeft: 10,
         borderRadius: 5
+    },
+    inputWrapperGradient: {
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5
     },
     circleWrapper: {
         position: "relative",

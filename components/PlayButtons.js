@@ -27,7 +27,7 @@ const PlayButtons = ({ nav }) => {
     PlayerContext
   );
 
-  const { songs, goForward, goBack, removeSong } = React.useContext(AppContext);
+  const { preparedSongs, goForward, goBack, removeSong } = React.useContext(AppContext);
   return (
     <>
       <View style={styles.containerHeaderButtons}>
@@ -81,7 +81,7 @@ const PlayButtons = ({ nav }) => {
           >
             <TextInput
               style={styles.inputShort}
-              placeholder={`My Vybn Station (${songs.length} tracks)`}
+              placeholder={`My Vybn Station (${preparedSongs.length} tracks)`}
               placeholderTextColor="#abaed0"
             />
           </LinearGradient>

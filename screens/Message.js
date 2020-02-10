@@ -9,9 +9,9 @@ import AppContext from "../context/AppContext";
 
 const Message = ({ navigation }) => {
   const nav = () => navigation.navigate("EditProfile");
-  const {songs} = useContext(AppContext);
+  const {preparedSongs} = useContext(AppContext);
 
-  return songs.length === 0 ? (
+  return preparedSongs.length === 0 ? (
       <View style={[styles.containerLoader, styles.horizontal]}>
         <ActivityIndicator size="large" color="#0000ff"/>
       </View>
