@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import {ImageBackground, View, StyleSheet, Text, ActivityIndicator, ScrollView} from "react-native";
-import { vw } from "react-native-expo-viewport-units";
+import {vh, vw} from "react-native-expo-viewport-units";
 import PlayButtons from "../components/PlayButtons";
 import MessageBoard from "../components/MessageBoard";
 import AddComment from "../components/AddComment";
@@ -33,9 +33,9 @@ const Message = ({ navigation }) => {
         <View style={styles.containerBeforeSlider}>
           <MessageBoard />
         </View>
-        <View style={styles.containerBeforeSlider}>
-          <AddComment />
-        </View>
+        {/*<View style={styles.containerBeforeSlider}>*/}
+        {/*  <AddComment />*/}
+        {/*</View>*/}
       </ImageBackground>
     </View>
       </ScrollView>
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     flex: 1,
-    height: "100%",
-    width: "100%",
+    width: vw(100),
+    minHeight: vh(100),
     alignItems: "flex-start",
     alignContent: "flex-start",
     justifyContent: "flex-start"

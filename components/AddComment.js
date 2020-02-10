@@ -4,11 +4,10 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
-  TextInput, Text, TouchableNativeFeedback
+  TextInput
 } from "react-native";
 import user from "../assets/images/freddie.png";
-import answer from "../assets/images/icons/answer.png";
-import send from "../assets/images/iconsSvg/send.svg";
+import send from "../assets/images/icons/send.png";
 import { vw } from "react-native-expo-viewport-units";
 import { LinearGradient } from "expo-linear-gradient";
 import AppContext from "../context/AppContext";
@@ -54,7 +53,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    width: vw(90)
+    width: vw(90),
+    paddingBottom: 50
   },
   container: {
     flexDirection: "row",

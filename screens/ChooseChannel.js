@@ -50,10 +50,9 @@ const ChooseChannel = ({navigation}, props) => {
                             value={filter}
                             placeholder="search your favorite channel..."
                             placeholderTextColor="#abaed0"
-                            onChangeText={e => setFilter(e)}
+                            onChangeText={e => setFilter(e.toLowerCase())}
                         />
                     </LinearGradient>
-                        <TouchableOpacity onPress={() => console.log('w')}>
                     <LinearGradient
                         colors={["#363743", "#25252e"]}
                         style={styles.searchButton}
@@ -61,7 +60,6 @@ const ChooseChannel = ({navigation}, props) => {
                     >
                         <FontAwesome5 name="search" size={16} color="#93A8B3" />
                     </LinearGradient>
-                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.channelContainer}>

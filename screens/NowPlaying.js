@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     alignContent: "flex-start",
     justifyContent: "flex-start",
-    paddingBottom: 20
   },
 
   square: {

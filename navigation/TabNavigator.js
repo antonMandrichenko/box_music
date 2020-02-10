@@ -14,8 +14,7 @@ import { vw } from "react-native-expo-viewport-units";
 
 const styles = StyleSheet.create({
   button: {
-    height: 60,
-    display: "flex",
+    height: 75,
     alignItems: "center",
     justifyContent: "center",
     width: vw(25)
@@ -159,7 +158,7 @@ const TabNavigator = createBottomTabNavigator(
     tabBarOptions: {
       style: {
         width: vw(100),
-        height: 60
+        height: 60,
       }
     }
   }

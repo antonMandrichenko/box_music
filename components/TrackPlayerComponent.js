@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "space-between",
+    paddingBottom: 50
   },
   containerWrapper: {
     flexDirection: "row",
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5
   },
   trackInfo: {
-    padding: 10
+    paddingHorizontal: 10
   },
   trackInfoText: {
     textAlign: "center",
@@ -86,12 +87,6 @@ const styles = StyleSheet.create({
   },
   smallText: {
     fontSize: 16
-  },
-  control: {
-    margin: 20
-  },
-  controls: {
-    flexDirection: "row"
   }
 });
 

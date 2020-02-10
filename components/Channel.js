@@ -15,7 +15,7 @@ const Channel = () => {
   return (
     <>
       {data
-        .filter(item => item.title.includes(filter))
+        .filter(item => item.title.toLowerCase().includes(filter))
         .map((song, i) => (
           <TouchableOpacity
             key={i}

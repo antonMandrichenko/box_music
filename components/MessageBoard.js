@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import {Image, Text, TouchableOpacity, View, StyleSheet, ImageBackground} from "react-native";
 import user from "../assets/images/freddie.png";
 import triangleBottom from "../assets/images/icons/triangleBottom.png";
 import answer from "../assets/images/icons/answer.png";
@@ -11,7 +11,7 @@ import cancel from "../assets/images/icons/cancel.png";
 
 const MessageBoard = () => {
   const [show, setShow] = React.useState(false);
-  const [showReview, setShowReview] = React.useState(false);
+  const [showReview, setShowReview] = React.useState(true);
   const { comments } = React.useContext(AppContext);
 
   const toggleAnswer = () => setShow(!show);
@@ -36,7 +36,10 @@ const MessageBoard = () => {
             style={styles.flex}
             onPress={showReview ? () => false : toggleReview}
           >
-            <Image style={showReview ? styles.iconReviewWrapper : styles.iconReview } source={answer} />
+            {showReview ?
+                <Image style={ styles.iconReview } source={answer} /> :
+                <Image style={ styles.iconReview } source={answer} />
+            }
           </TouchableOpacity >
           {showReview && <TouchableOpacity
               style={styles.flex}
@@ -46,8 +49,8 @@ const MessageBoard = () => {
           </TouchableOpacity> }
         </View>
       </View>
-      {comments && show && <MessageAnswer />}
       {showReview && <AddComment />}
+      {comments && show && <MessageAnswer />}
     </View>
   );
 };
@@ -96,18 +99,8 @@ const styles = StyleSheet.create({
   iconReview: {
     width: 17,
     height: 15,
-    marginLeft: 5
-  },
-  iconReviewWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: 25,
-    height: 25,
     borderRadius: 3,
-    borderColor: "#1d1e25",
-    borderWidth: 5,
-    backgroundColor: "#1d1e25",
-    padding: 10
+    marginLeft: 5
   },
   flex: {
     flexDirection: "row",

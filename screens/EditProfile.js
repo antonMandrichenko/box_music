@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import SmallButton from "../components/SmallButton";
-import leftArrow from "../assets/images/iconsSvg/left-arrow.svg";
+import leftArrow from "../assets/images/icons/left-arrow.png";
 import AppContext from "../context/AppContext";
 import { vw } from "react-native-expo-viewport-units";
 import {freePlan} from "../constants/Layout";
