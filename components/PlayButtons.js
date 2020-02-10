@@ -7,7 +7,7 @@ import {
   TextInput,
   TouchableNativeFeedback,
   TouchableOpacity,
-  View
+  View, Modal, TouchableHighlight
 } from "react-native";
 import SmallButton from "./SmallButton";
 import heart from "../assets/images/icons/heart.png";
@@ -23,11 +23,10 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import UserProfileButton from "./UserProfileButton";
 
 const PlayButtons = ({ nav }) => {
-  const { handlePlayPause, handleNextTrack, isPlaying } = useContext(
+  const { handlePlayPause, handleNextTrack, isPlaying,  } = useContext(
     PlayerContext
   );
-
-  const { preparedSongs, goForward, goBack, removeSong } = React.useContext(AppContext);
+  const { preparedSongs, goForward, goBack, removeSong, pickerSelection, pickerDisplayed, setPickerValue, togglePicker } = React.useContext(AppContext);
   return (
     <>
       <View style={styles.containerHeaderButtons}>
@@ -83,15 +82,18 @@ const PlayButtons = ({ nav }) => {
               style={styles.inputShort}
               placeholder={`My Vybn Station (${preparedSongs.length} tracks)`}
               placeholderTextColor="#abaed0"
+              value={pickerSelection}
             />
           </LinearGradient>
           <View>
+
             <TouchableNativeFeedback
-              background={
-                Platform.OS === "android"
-                  ? TouchableNativeFeedback.SelectableBackground()
-                  : ""
-              }
+                onPress={togglePicker}
+                background={
+                  Platform.OS === "android"
+                      ? TouchableNativeFeedback.SelectableBackground()
+                      : ""
+                }
             >
               <LinearGradient
                 style={styles.inputChannelButton}
@@ -103,6 +105,43 @@ const PlayButtons = ({ nav }) => {
                 </View>
               </LinearGradient>
             </TouchableNativeFeedback>
+            <Modal
+                visible={pickerDisplayed}
+                animationType={"slide"}
+                transparent={true}
+            >
+              <View style={styles.modalWindow}>
+                {preparedSongs.map((value, index) => {
+                  return (
+                      <React.Fragment key={index}>
+                      <Image style={styles.modalImage} source={value.image}/>
+
+                      <TouchableHighlight
+                          key={index}
+                          onPress={() =>
+                              setPickerValue(value.title)
+                          }
+                          style={{ paddingTop: 4, paddingBottom: 4 }}
+                      >
+
+                          <Text style={styles.modalText}>
+                            {value.title}
+                          </Text>
+
+
+                      </TouchableHighlight>
+                      </React.Fragment>
+                  );
+                })}
+
+                <TouchableHighlight
+                    onPress={togglePicker}
+                    style={{ paddingTop: 4, paddingBottom: 4 }}
+                >
+                  <Text style={styles.modalTextCancel}>Cancel</Text>
+                </TouchableHighlight>
+              </View>
+            </Modal>
           </View>
         </View>
       </View>
@@ -229,6 +268,43 @@ const styles = StyleSheet.create({
     borderRightColor: "transparent",
     borderBottomColor: "#abaed0",
     transform: [{ rotate: "180deg" }]
+  },
+  modalWindow: {
+    borderWidth: 1,
+    backgroundColor: "rgba(0,0,0, .8)",
+    borderColor: "#202024",
+    borderRadius: 3,
+    top: 50,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+
+    position: "absolute"
+  },
+    modalText: {
+    color: "#abaed0",
+      padding: 10,
+      fontSize: 16,
+      width: "100%"
+},
+  modalTextCancel: {
+    color: "#abaed0",
+      padding: 20,
+      fontSize: 24,
+      borderRadius: 3,
+      borderColor: "#abaed0"
+},
+  modalImage: {
+    width: 40,
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#000",
+    borderRadius: 20,
+    marginRight: 10
   }
 });
 export default PlayButtons;

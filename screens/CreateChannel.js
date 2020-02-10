@@ -144,16 +144,16 @@ const CreateChannel = props => {
                       <TouchableHighlight
                         key={index}
                         onPress={() =>
-                          setPickerValue(value.primary_artist.url.slice(27))
+                          setPickerValue(value.title)
                         }
                         style={{ paddingTop: 4, paddingBottom: 4 }}
                       >
                         <Text style={styles.modalText}>
-                          {value.primary_artist.url.slice(27)}
+                          {value.title}
                         </Text>
                       </TouchableHighlight>
                     );
-                  }).slice(0, 10)}
+                  })}
 
                   <TouchableHighlight
                     onPress={togglePicker}
