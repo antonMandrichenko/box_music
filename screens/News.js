@@ -30,14 +30,7 @@ const NewsRead = ({ title, text, image }) => {
       <View style={{ flexDirection: "column" }}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.text}>
-          {text}{" "}
-            {totalWords > 35 ? (
-                <TouchableOpacity onPress={readMore}>
-                <Text style={styles.readMore}>{read}</Text>
-                </TouchableOpacity>
-            ) : (
-              <Text />
-            )}
+          {text}
         </Text>
       </View>
     </View>
@@ -102,9 +95,6 @@ const styles = StyleSheet.create({
   },
 
   imageBackground: {
-    flex: 1,
-    height: "100%",
-    width: "100%",
     alignItems: "flex-start",
     alignContent: "flex-start",
     justifyContent: "flex-start"
@@ -133,7 +123,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 10,
     paddingBottom: 10,
-    width: "100%",
     borderBottomColor: "#000",
     borderTopColor: "transparent",
     borderLeftColor: "transparent",

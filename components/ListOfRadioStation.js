@@ -31,7 +31,7 @@ const ListOfRadioStation = ({handleCurrentTrack, setCurrentIndex}) => {
       <TouchableOpacity onPress={handleCurrentTrackFunc}>
         <Image
           style={styles.imageContainer}
-          source={{ uri: item.image }}
+          source={item.image}
         />
         <Text style={styles.textContainer}>{item.title}</Text>
       </TouchableOpacity>

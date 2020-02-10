@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
-    transform: [{ translateX: "-50%" }],
+    transform: [{ translateX: -15 }],
     bottom: -25,
     left: "50%"
   },
@@ -245,7 +245,6 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   containerPlanList: {
-    width: "inherit",
     alignItems: "flex-start",
     justifyContent: "center",
     alignContent: "flex-start",

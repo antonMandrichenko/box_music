@@ -93,10 +93,10 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const checkBoxIn = e => {
+  const checkBoxIn = title => {
     setChecked({
       ...checked,
-      [e.target.innerText]: !checked[e.target.innerText]
+      [title]: !checked[title]
     });
   };
   const setDataFirebase = () =>
@@ -149,7 +149,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  firebase.auth().onAuthStateChanged(user => setUser(user.email));
+  firebase.auth().onAuthStateChanged(user => setUser("anonymous" || user.email));
 
   // const loadData = async () => {
   //   try {
@@ -214,13 +214,13 @@ const AppProvider = ({ children }) => {
     getReview();
     loadData();
     getDataFirebase();
-  }, [songs]);
+  }, []);
 
   useEffect(() => {
     if (Object.keys(checked).length !== 0) {
       setDataFirebase();
     }
-  }, [preparedSongs]);
+  }, []);
   let userRef = firebase.database().ref("user/userId/" + uid);
   let songRef = firebase.database().ref("songs/" + songUid);
   const remove = () => userRef.remove();

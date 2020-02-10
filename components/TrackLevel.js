@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
 
 TrackLevel.propTypes = {
   count: PropTypes.number,
-  path: PropTypes.string,
+  path: PropTypes.any,
   preFill: PropTypes.number
 };
 export default TrackLevel;

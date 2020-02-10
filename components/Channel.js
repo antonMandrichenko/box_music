@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, {useContext, useState} from "react";
 import {
   Text,
   View,
@@ -20,7 +20,7 @@ const Channel = () => {
           <TouchableOpacity
             key={i}
             style={styles.circleWrapper}
-            onPress={checkBoxIn}
+            onPress={() => checkBoxIn(song.title)}
           >
             <View style={styles.circle}>
               <View style={styles.circleInner}>
@@ -43,6 +43,7 @@ const Channel = () => {
           </TouchableOpacity>
         ))
         .slice(counter.start, counter.end)}
+
     </>
   );
 };
@@ -50,6 +51,7 @@ const styles = StyleSheet.create({
   circleWrapper: {
     position: "relative",
     width: 80,
+    height: 80,
     marginHorizontal: 5,
     flexBasis: "30%",
     alignItems: "center",
