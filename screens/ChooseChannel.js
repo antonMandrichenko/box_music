@@ -14,7 +14,7 @@ import Button from "../components/Button";
 import AppContext from "../context/AppContext";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-const ChooseChannel = ({navigation}, props) => {
+const ChooseChannel = ({navigation}) => {
     const {
         setFilter,
         filter,
@@ -113,11 +113,11 @@ const ChooseChannel = ({navigation}, props) => {
                 <Button
                     styles={styles}
                     title="create your own channel"
-                    handleChange={() => props.navigation.navigate("CreateChannel")}
+                    handleChange={() => navigation.navigate("CreateChannel")}
                 />
-                {/*<TouchableOpacity onPress={() => props.navigation.navigate("Login")}>*/}
-                {/*    <Text>sign out</Text>*/}
-                {/*</TouchableOpacity>*/}
+                <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                    <Text>sign out</Text>
+                </TouchableOpacity>
             </LinearGradient>
         </View>
     );

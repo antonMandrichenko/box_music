@@ -142,10 +142,10 @@ class Equalizer extends React.Component {
   }
 
   componentDidUpdate(
-    prevProps: Readonly<P>,
-    prevState: Readonly<S>,
-    snapshot: SS
-  ): void {
+    prevProps,
+    prevState,
+    snapshot
+  ) {
     if (prevProps.playing !== this.props.playing) {
       if (this.props.playing) {
         let bars = [];

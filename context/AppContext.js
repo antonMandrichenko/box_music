@@ -99,33 +99,33 @@ const AppProvider = ({ children }) => {
       [title]: !checked[title]
     });
   };
-  const setDataFirebase = () =>
-    firebase
-      .database()
-      .ref("songs/")
-      .push()
-      .set(preparedSongs);
-  const getDataFirebase = () => {
-    firebase
-      .database()
-      .ref()
-      .child("songs/")
-      .once("value")
-      .then(function(snapshot) {
-        const obj = snapshot.val();
-        const keys = Object.keys(obj);
-        const lastKey = keys[keys.length - 1];
-        const newArr = [];
-        for (let i in obj) {
-          if (i === lastKey) {
-            newArr.push(obj[i]);
-          }
-          setSongUid(i);
-        }
-        setSongs(...newArr);
-      })};
+    const setDataFirebase = () =>
+        firebase
+            .database()
+            .ref("songs/")
+            .push()
+            .set(preparedSongs);
+    const getDataFirebase = () => {
+        firebase
+            .database()
+            .ref()
+            .child("songs/")
+            .once("value")
+            .then(function(snapshot) {
+                const obj = snapshot.val();
+                const keys = Object.keys(obj);
+                const lastKey = keys[keys.length - 1];
+                const newArr = [];
+                for (let i in obj) {
+                    if (i === lastKey) {
+                        newArr.push(obj[i]);
+                    }
+                    setSongUid(i);
+                }
+                setSongs(...newArr);
+            })};
+    useEffect(() => {getDataFirebase()}, []);
   const playSelected = () => {
-    if (Object.keys(checked).length !== 0) {
       const checkedSongs = [checked].reduce((resultArr, item) => {
         return [
           ...resultArr,
@@ -146,9 +146,7 @@ const AppProvider = ({ children }) => {
           .map(item => data.filter(song => song.title === item))
           .flat(1)
       ]);
-    }
   };
-
   firebase.auth().onAuthStateChanged(user => setUser("anonymous" || user.email));
 
   // const loadData = async () => {
@@ -210,17 +208,16 @@ const AppProvider = ({ children }) => {
         setComments(arr);
       });
 
-  useEffect(() => {
-    getReview();
-    loadData();
-    getDataFirebase();
-  }, []);
+    useEffect(() => {
+        getReview();
+        loadData();
+    }, []);
 
-  useEffect(() => {
-    if (Object.keys(checked).length !== 0) {
-      setDataFirebase();
-    }
-  }, []);
+    useEffect(() => {
+        if (Object.keys(checked).length !== 0) {
+            setDataFirebase();
+        }
+    }, [preparedSongs]);
   let userRef = firebase.database().ref("user/userId/" + uid);
   let songRef = firebase.database().ref("songs/" + songUid);
   const remove = () => userRef.remove();
@@ -279,6 +276,8 @@ const AppProvider = ({ children }) => {
       _clearTimeout(id);
     };
   }
+
+  const renderSongs = preparedSongs.length === 0 ? songs : preparedSongs;
   return (
     <AppContext.Provider
       value={{
@@ -326,7 +325,8 @@ const AppProvider = ({ children }) => {
         switchValue,
         songs,
         switchPlan,
-        carouselRef
+        carouselRef,
+        renderSongs
       }}
     >
       {children}

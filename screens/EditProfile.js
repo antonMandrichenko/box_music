@@ -19,7 +19,7 @@ import {upgradePlan} from "../constants/Layout";
 const EditProfile = props => {
   const { goBack } = props.navigation;
   const handleBackButtonClick = () => {
-    goBack(null);
+    goBack("NowPlaying");
   };
 
   const { switchPlan, toggleSwitchPlan } = React.useContext(AppContext);
@@ -116,7 +116,7 @@ const EditProfile = props => {
                 }
                 style={styles.moneyIcon}
               />
-              <Text style={styles.textPrice}>{switchPlan ? 20 : 0}</Text>
+              <Text style={styles.textPrice}>{switchPlan ? 20 : 0}$</Text>
             </View>
             <View style={styles.planList}>
               <FlatList
@@ -182,9 +182,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
-    transform: [{ translateX: -15 }],
     bottom: -25,
-    left: "50%"
+    left: 67
   },
   circleBlackSmall: {
     width: 26,
@@ -248,7 +247,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     alignContent: "flex-start",
-    paddingVertical: 20
+    paddingVertical: 10
   },
   containerButtons: {
     justifyContent: "center",
@@ -440,7 +439,7 @@ const styles = StyleSheet.create({
   },
   textList: {
     color: "#abaed0",
-    marginBottom: 10,
+    marginBottom: 3,
     fontSize: 12
   },
   textTitle: {

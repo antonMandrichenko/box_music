@@ -5,7 +5,7 @@ import AppContext from "../context/AppContext";
 import { vw } from "react-native-expo-viewport-units";
 
 const ListOfRadioStation = ({handleCurrentTrack, setCurrentIndex}) => {
-  const { preparedSongs, carouselRef } = React.useContext(AppContext);
+  const { renderSongs, carouselRef } = React.useContext(AppContext);
   const styles = StyleSheet.create({
     imageContainer: {
       width: 150,
@@ -38,10 +38,9 @@ const ListOfRadioStation = ({handleCurrentTrack, setCurrentIndex}) => {
     );
   };
   return (
-      (preparedSongs.length > 0) &&
     <Carousel
        firstItem={1}
-      data={preparedSongs}
+      data={renderSongs}
       renderItem={_renderItem}
       sliderWidth={vw(100)}
       itemWidth={150}
