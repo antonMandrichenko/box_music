@@ -95,7 +95,7 @@ const ChooseChannel = ({navigation}) => {
                             </LinearGradient>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            disabled={counter.start > 0 && counter.end <= preparedSongs.length}
+                            disabled={counter.start > 0 && counter.end >= preparedSongs.length}
                             onPress={handleChangeCountNext}
                         >
                             <LinearGradient
@@ -115,9 +115,9 @@ const ChooseChannel = ({navigation}) => {
                     title="create your own channel"
                     handleChange={() => navigation.navigate("CreateChannel")}
                 />
-                <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-                    <Text>sign out</Text>
-                </TouchableOpacity>
+                {/*<TouchableOpacity onPress={() => navigation.navigate("Login")}>*/}
+                {/*    <Text>sign out</Text>*/}
+                {/*</TouchableOpacity>*/}
             </LinearGradient>
         </View>
     );

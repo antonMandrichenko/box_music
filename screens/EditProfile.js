@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  FlatList
+  FlatList, ScrollView
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import SmallButton from "../components/SmallButton";
@@ -16,11 +16,7 @@ import { vw } from "react-native-expo-viewport-units";
 import {freePlan} from "../constants/Layout";
 import {upgradePlan} from "../constants/Layout";
 
-const EditProfile = props => {
-  const { goBack } = props.navigation;
-  const handleBackButtonClick = () => {
-    goBack("NowPlaying");
-  };
+const EditProfile = ({navigation}) => {
 
   const { switchPlan, toggleSwitchPlan } = React.useContext(AppContext);
 
@@ -28,6 +24,7 @@ const EditProfile = props => {
   const lightColors = ["#17165a", "#3736bc"];
 
   return (
+      <ScrollView>
     <View style={styles.container}>
       <ImageBackground
         source={
@@ -39,7 +36,7 @@ const EditProfile = props => {
       >
         <View style={styles.textTitleWrapper}>
           <View style={styles.leftArrow}>
-            <SmallButton path={leftArrow} onPress={handleBackButtonClick} />
+            <SmallButton path={leftArrow} onPress={() => navigation.navigate('NowPlaying')} />
           </View>
           <Text style={styles.textTitle}>Edit profile</Text>
         </View>
@@ -129,7 +126,7 @@ const EditProfile = props => {
             </View>
           </LinearGradient>
         </View>
-        <TouchableOpacity onPress={() => props.navigation.navigate('ChooseChannel')}>
+        <TouchableOpacity onPress={() => navigation.navigate('ChooseChannel')}>
           <LinearGradient
             style={styles.button}
             colors={["#373843", "#2e2f39", "#24252d"]}
@@ -139,7 +136,7 @@ const EditProfile = props => {
           </LinearGradient>
         </TouchableOpacity>
         <View style={styles.blackLine} />
-        <TouchableOpacity onPress={() => props.navigation.navigate('NowPlaying')}>
+        <TouchableOpacity onPress={() => navigation.navigate('NowPlaying')}>
           <LinearGradient
             style={styles.button}
             colors={["#373843", "#2e2f39", "#24252d"]}
@@ -150,6 +147,7 @@ const EditProfile = props => {
         </TouchableOpacity>
       </ImageBackground>
     </View>
+      </ScrollView>
   );
 };
 
@@ -290,7 +288,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    padding: 20
+    padding: 10
   },
   buttonColor: {
     color: "#abaed0"

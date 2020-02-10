@@ -13,7 +13,6 @@ const MessageBoard = () => {
   const [show, setShow] = React.useState(false);
   const [showReview, setShowReview] = React.useState(true);
   const { comments } = React.useContext(AppContext);
-
   const toggleAnswer = () => setShow(!show);
   const toggleReview = () => setShowReview(!showReview);
   return (
@@ -25,7 +24,7 @@ const MessageBoard = () => {
         </View>
         <View style={styles.container}>
           <TouchableOpacity style={styles.flex} onPress={toggleAnswer}>
-            <Text style={styles.textReplies}>151 Replies</Text>
+            <Text style={styles.textReplies}>{comments.length} Replies</Text>
             <Image
               style={show ? styles.triangleTop : styles.triangleBottom}
               source={triangleBottom}
