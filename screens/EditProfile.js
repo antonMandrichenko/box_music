@@ -105,14 +105,6 @@ const EditProfile = ({navigation}) => {
             locations={[0.05, 1]}
           >
             <View style={styles.planList}>
-              <ImageBackground
-                source={
-                  __DEV__
-                    ? require("../assets/images/iconsSvg/money.svg")
-                    : require("../assets/images/iconsSvg/money.svg")
-                }
-                style={styles.moneyIcon}
-              />
               <Text style={styles.textPrice}>{switchPlan ? 20 : 0}$</Text>
             </View>
             <View style={styles.planList}>
