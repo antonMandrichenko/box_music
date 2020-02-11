@@ -6,7 +6,7 @@ import {
     TextInput,
     TouchableOpacity,
     View,
-    ActivityIndicator
+    BackHandler,
 } from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 import Channel from "../components/Channel";
@@ -26,6 +26,24 @@ const ChooseChannel = ({navigation}) => {
         preparedSongs
     } = useContext(AppContext);
     const nav = () => navigation.navigate("TabNavigator");
+
+
+    const handleAndroidBackButton = () => {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            navigation.navigate("Login");
+            return true;
+        });
+    };
+    const removeAndroidBackButtonHandler = () => {
+        BackHandler.removeEventListener('hardwareBackPress', () => {});
+    }
+    useEffect(() => {
+        handleAndroidBackButton();
+
+    }, []);
+    useEffect(() => {
+        return () => removeAndroidBackButtonHandler();
+    })
 
     const checkedLength = Object.keys(checked).length;
     return  (
