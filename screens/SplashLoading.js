@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Image, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import AnimatedCircularProgress from '../components/AnimatedCircularProgress'
 
-const SplashLoading = (props) => {
+const SplashLoading = ({navigation}) => {
   return (
       <View style={styles.container}>
         <ImageBackground
@@ -107,8 +107,8 @@ const SplashLoading = (props) => {
                   width={5}
                   prefill={0}
                   fill={100}
-                  duration={0}
-                  onAnimationComplete={() => props.navigation.navigate('ChooseChannel')}
+                  duration={3000}
+                  onAnimationComplete={() => navigation.navigate('Login')}
                   backgroundColor="#3a2e42"
                   tintColor="#7a5dd5"
                   style={{
