@@ -30,7 +30,11 @@ const ChooseChannel = ({navigation}) => {
 
     const handleAndroidBackButton = () => {
         BackHandler.addEventListener('hardwareBackPress', () => {
-            navigation.navigate("Login");
+            if(navigation.state.key === "ChooseChannel") {
+                navigation.navigate("ChooseChannel");
+            } else {
+                navigation.navigate("Login");
+            }
             return true;
         });
     };

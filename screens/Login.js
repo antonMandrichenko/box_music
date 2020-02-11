@@ -15,20 +15,24 @@ import firebase from "../config/firebase";
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [goback, setgoBack] = useState("hardwareBackPress");
   const [errorState, setErrorState] = useState("");
 
-  const handleBackButtonClick = () => {
-    setgoBack(props.navigation.goBack());
-    return true;
-  };
-
-  useEffect(() => {
-    BackHandler.addEventListener(goback, handleBackButtonClick); // works best when the goBack is async
-    return () => {
-      BackHandler.removeEventListener(goback, handleBackButtonClick);
+    const handleAndroidBackButton = () => {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+                props.navigation.navigate("Login");
+            return true;
+        });
     };
-  }, [goback]);
+    const removeAndroidBackButtonHandler = () => {
+        BackHandler.removeEventListener('hardwareBackPress', () => {});
+    }
+    useEffect(() => {
+        handleAndroidBackButton();
+
+    }, []);
+    useEffect(() => {
+        return () => removeAndroidBackButtonHandler();
+    })
 
   const signIn = () => {
     firebase
