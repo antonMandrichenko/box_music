@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import firebase from "../config/firebase";
+import uuid from 'react-uuid'
 
 const AppContext = React.createContext();
 import { AsyncStorage, Platform, InteractionManager } from "react-native";
@@ -19,7 +20,6 @@ const AppProvider = ({ children }) => {
   const [pickerSelection, setPickerSelection] = useState("");
   const [typeSelection, setTypeSelection] = useState("");
   const [review, setReview] = useState("");
-  const [uid, setUid] = useState("");
   const [songUid, setSongUid] = useState("");
   const [comments, setComments] = useState({});
   const [songs, setSongs] = useState([]);
@@ -113,17 +113,7 @@ const AppProvider = ({ children }) => {
             .child("songs/")
             .once("value")
             .then(function(snapshot) {
-                const obj = snapshot.val();
-                const keys = Object.keys(obj);
-                const lastKey = keys[keys.length - 1];
-                const newArr = [];
-                for (let i in obj) {
-                    if (i === lastKey) {
-                        newArr.push(obj[i]);
-                    }
-                    setSongUid(i);
-                }
-                setSongs(...newArr);
+                setSongs(Object.values(snapshot.val()));
             })};
     useEffect(() => {getDataFirebase()}, []);
   const playSelected = () => {
@@ -189,7 +179,8 @@ const AppProvider = ({ children }) => {
       .push()
       .set({
         reviews: review,
-        authorName: user
+        authorName: user,
+        uid: uuid()
       })
       .then(setReview(""));
 
@@ -200,28 +191,20 @@ const AppProvider = ({ children }) => {
       .child("user/userId/")
       .once("value")
       .then(function(snapshot) {
-        const obj = snapshot.val();
-        const arr = [];
-        for (let i in obj) {
-          arr.push({ review: obj[i].reviews });
-          setUid(i);
-        }
-        setComments(arr);
+          setComments(Object.values(snapshot.val() ));
       });
-
     useEffect(() => {
-        getReview();
         loadData();
-    }, []);
-
+    }, [comments]);
     useEffect(() => {
         if (Object.keys(checked).length !== 0) {
             setDataFirebase();
         }
     }, [preparedSongs]);
-  let userRef = firebase.database().ref("user/userId/" + uid);
+
+  let userRef = firebase.database().ref("user/userId/");
   let songRef = firebase.database().ref("songs/" + songUid);
-  const remove = () => userRef.remove();
+  const remove = (uid) => userRef.remove().uid === uid;
   const removeSong = () => songRef.remove();
 
   const toggleSwitch = () => {
@@ -285,12 +268,13 @@ const AppProvider = ({ children }) => {
           .ref("user/likes/")
           .push()
           .set({
-              like: like + 1,
+              like: like,
               authorName: "anonymous" || user,
               song: currentSong
           })
   }
 
+  useEffect(() => { getReview()}, [comments])
   const renderSongs = preparedSongs.length === 0 ? songs : preparedSongs;
   return (
     <AppContext.Provider

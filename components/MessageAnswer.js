@@ -9,11 +9,10 @@ import AppContext from "../context/AppContext";
 
 const MessageAnswer = props => {
   const { comments, remove } = React.useContext(AppContext);
-
   return (
     <>
-      {comments &&
-        comments.map(comment => (
+      {
+        comments.map((comment) => (
           <View style={styles.wrapper} key={Math.random() * 2}>
             <View style={styles.container}>
               <View style={styles.lineBefore} />
@@ -21,7 +20,7 @@ const MessageAnswer = props => {
               <View>
                 <Text style={styles.text}>Adam Lambert</Text>
                 <View style={styles.textAnswerWrapper}>
-                  <Text style={styles.textAnswer}>{comment.review}</Text>
+                  <Text style={styles.textAnswer}>{comment.reviews}</Text>
                 </View>
               </View>
             </View>
@@ -34,7 +33,7 @@ const MessageAnswer = props => {
               <TouchableOpacity style={styles.flex}>
                 <Image style={styles.iconReview} source={answer} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.flex} onPress={remove}>
+              <TouchableOpacity style={styles.flex} onPress={remove(comment.uid)}>
                 <Image style={styles.iconReview} source={cancel} />
               </TouchableOpacity>
             </View>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   Image,
   TouchableOpacity,
@@ -13,7 +13,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import AppContext from "../context/AppContext";
 
 const AddComment = () => {
-  const { review, setReview, sendReview } = React.useContext(AppContext);
+  const { review, setReview, getReview, comments, sendReview } = React.useContext(AppContext);
 
   return (
     <View style={styles.wrapper}>
@@ -28,7 +28,7 @@ const AddComment = () => {
         >
           <TextInput
             style={styles.input}
-            onChangeText={input => setReview(input)}
+            onChangeText={setReview}
             value={review}
             placeholder="Add your comment..."
             placeholderTextColor="#abaed0"
