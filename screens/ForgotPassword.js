@@ -5,14 +5,15 @@ import {
     StyleSheet,
     Image,
     ImageBackground,
-    TouchableOpacity
+    TouchableOpacity, Keyboard, TouchableWithoutFeedback
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 const ForgotPassword = (props) => {
 
     return (
-        <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={styles.container}>
             <ImageBackground
                 source={
                     __DEV__
@@ -64,6 +65,7 @@ const ForgotPassword = (props) => {
                 />
             </ImageBackground>
         </View>
+        </TouchableWithoutFeedback>
     );
 }
 

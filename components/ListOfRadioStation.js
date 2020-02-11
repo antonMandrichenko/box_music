@@ -4,8 +4,9 @@ import { Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import AppContext from "../context/AppContext";
 import { vw } from "react-native-expo-viewport-units";
 
-const ListOfRadioStation = ({handleCurrentTrack, setCurrentIndex}) => {
-  const { renderSongs, carouselRef } = React.useContext(AppContext);
+const ListOfRadioStation = ({handleCurrentTrack}) => {
+  const { renderSongs, carouselRef, setCurrentSong } = React.useContext(AppContext);
+
   const styles = StyleSheet.create({
     imageContainer: {
       width: 150,
@@ -26,7 +27,7 @@ const ListOfRadioStation = ({handleCurrentTrack, setCurrentIndex}) => {
 
   const _renderItem = ({ item, index }) => {
     const handleCurrentTrackFunc = () => handleCurrentTrack(index);
-
+    setCurrentSong(item.song)
     return (
       <TouchableOpacity onPress={handleCurrentTrackFunc}>
         <Image
@@ -39,7 +40,7 @@ const ListOfRadioStation = ({handleCurrentTrack, setCurrentIndex}) => {
   };
   return (
     <Carousel
-       firstItem={1}
+      firstItem={1}
       data={renderSongs}
       renderItem={_renderItem}
       sliderWidth={vw(100)}

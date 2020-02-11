@@ -28,6 +28,7 @@ const AppProvider = ({ children }) => {
   const [switchPlan, setSwitchPlan] = useState(true);
   const [preparedSongs, setPreparedSongs] = useState([]);
   const [user, setUser] = useState("");
+  const [currentSong, setCurrentSong] = useState("");
   const carouselRef = React.useRef(null);
 
   const handleChangeCountNext = () =>
@@ -276,6 +277,19 @@ const AppProvider = ({ children }) => {
       _clearTimeout(id);
     };
   }
+    const [like, setLike] = useState(0);
+  const sendLike = async () => {
+      await setLike(like + 1)
+          firebase
+          .database()
+          .ref("user/likes/")
+          .push()
+          .set({
+              like: like + 1,
+              authorName: "anonymous" || user,
+              song: currentSong
+          })
+  }
 
   const renderSongs = preparedSongs.length === 0 ? songs : preparedSongs;
   return (
@@ -303,6 +317,8 @@ const AppProvider = ({ children }) => {
         goForward,
         goBack,
         removeSong,
+        sendLike,
+        setCurrentSong,
         setFilter,
         email,
         error,

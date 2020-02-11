@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity, Keyboard, TouchableWithoutFeedback
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import AppContext from "../context/AppContext";
@@ -27,7 +27,8 @@ const EnterPassword = props => {
     await nav(props, "ChooseChannel");
   };
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
       <ImageBackground
         source={
           __DEV__
@@ -111,6 +112,7 @@ const EnterPassword = props => {
         <View style={styles.imageAdditional} />
       </ImageBackground>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

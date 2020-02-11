@@ -6,7 +6,7 @@ import {
     Image,
     ImageBackground,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity, ScrollView, Keyboard, TouchableWithoutFeedback
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import firebase from "../config/firebase";
@@ -28,6 +28,8 @@ const ForgotPasswordConfirm = (props) => {
     };
 
     return (
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <ScrollView>
         <View style={styles.container}>
             <ImageBackground
                 source={
@@ -111,6 +113,8 @@ const ForgotPasswordConfirm = (props) => {
                 />
             </ImageBackground>
         </View>
+        </ScrollView>
+        </TouchableWithoutFeedback>
     );
 }
 

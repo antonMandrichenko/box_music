@@ -5,13 +5,16 @@ import {
   StyleSheet,
   Image,
   ImageBackground,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 const EmailConfirm = props => {
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
       <ImageBackground
         source={
           __DEV__
@@ -50,6 +53,7 @@ const EmailConfirm = props => {
         <View style={styles.imageLiner} />
       </ImageBackground>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

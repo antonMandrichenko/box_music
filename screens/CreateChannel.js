@@ -10,7 +10,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   TouchableNativeFeedback,
-  Platform
+  Platform, Keyboard, TouchableWithoutFeedback
 } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
@@ -64,7 +64,8 @@ const CreateChannel = props => {
   ];
 
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
       <ImageBackground
         source={
           __DEV__
@@ -263,6 +264,7 @@ const CreateChannel = props => {
         </View>
       </ImageBackground>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

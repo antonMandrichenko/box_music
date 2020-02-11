@@ -6,13 +6,14 @@ import {
     TextInput,
     TouchableOpacity,
     View,
-    BackHandler,
+    BackHandler, Alert,
 } from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 import Channel from "../components/Channel";
 import Button from "../components/Button";
 import AppContext from "../context/AppContext";
 import { FontAwesome5 } from "@expo/vector-icons";
+import firebase from "../config/firebase";
 
 const ChooseChannel = ({navigation}) => {
     const {
@@ -50,6 +51,13 @@ const ChooseChannel = ({navigation}) => {
     })
 
     const checkedLength = Object.keys(checked).length;
+    const signOut = () => {
+        firebase.auth().signOut().then(function() {
+            navigation.navigate("Login")
+        }).catch(function(error) {
+            Alert(error.message)
+        });
+    }
     return  (
         <View style={styles.container}>
             <LinearGradient
@@ -137,9 +145,9 @@ const ChooseChannel = ({navigation}) => {
                     title="create your own channel"
                     handleChange={() => navigation.navigate("CreateChannel")}
                 />
-                {/*<TouchableOpacity onPress={() => navigation.navigate("Login")}>*/}
-                {/*    <Text>sign out</Text>*/}
-                {/*</TouchableOpacity>*/}
+                <TouchableOpacity onPress={signOut}>
+                    <Text>sign out</Text>
+                </TouchableOpacity>
             </LinearGradient>
         </View>
     );

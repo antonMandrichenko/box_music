@@ -15,7 +15,7 @@ import PlayerContext from "../context/PlayerContext";
 import PropTypes from 'prop-types';
 
 const NowPlaying = ({navigation}) => {
-  const { switchValue, preparedSongs, songs } = React.useContext(AppContext);
+  const { switchValue } = React.useContext(AppContext);
   const { isPlaying, handleCurrentTrack,setCurrentIndex } = React.useContext(PlayerContext);
   const nav = () => navigation.navigate('EditProfile');
 
