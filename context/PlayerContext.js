@@ -20,7 +20,7 @@ const PlayerProvider = ({children}) => {
                 interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
                 shouldDuckAndroid: true,
                 staysActiveInBackground: true,
-                playThroughEarpieceAndroid: true
+                playThroughEarpieceAndroid: false
             });
 
              loadAudio();

@@ -179,8 +179,7 @@ const AppProvider = ({ children }) => {
       .push()
       .set({
         reviews: review,
-        authorName: user,
-        uid: uuid()
+        authorName: user
       })
       .then(setReview(""));
 
@@ -193,9 +192,10 @@ const AppProvider = ({ children }) => {
       .then(function(snapshot) {
           setComments(Object.values(snapshot.val() ));
       });
+
     useEffect(() => {
         loadData();
-    }, [comments]);
+    }, []);
     useEffect(() => {
         if (Object.keys(checked).length !== 0) {
             setDataFirebase();
@@ -274,7 +274,7 @@ const AppProvider = ({ children }) => {
           })
   }
 
-  useEffect(() => { getReview()}, [comments])
+  useEffect(() => { getReview()}, [])
   const renderSongs = preparedSongs.length === 0 ? songs : preparedSongs;
   return (
     <AppContext.Provider
