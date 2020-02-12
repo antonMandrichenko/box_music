@@ -10,10 +10,10 @@ import user from "../assets/images/freddie.png";
 import send from "../assets/images/icons/send.png";
 import { vw } from "react-native-expo-viewport-units";
 import { LinearGradient } from "expo-linear-gradient";
-import AppContext from "../context/AppContext";
+import ReviewContext from "../context/ReviewContext";
 
 const AddComment = () => {
-  const { review, setReview, getReview, comments, sendReview } = React.useContext(AppContext);
+  const { review, setReview, sendReview } = React.useContext(ReviewContext);
 
   return (
     <View style={styles.wrapper}>

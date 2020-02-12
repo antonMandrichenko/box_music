@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AppNavigator from "./navigation/AppNavigator";
 import { AppProvider } from "./context/AppContext"
 import {PlayerProvider} from "./context/PlayerContext";
+import {ReviewProvider} from "./context/ReviewContext";
 export default function App(props) {
 
 
@@ -23,10 +24,12 @@ export default function App(props) {
     return (
         <AppProvider>
           <PlayerProvider>
-          <View style={styles.container}>
-            {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-            <AppNavigator />
-          </View>
+            <ReviewProvider>
+              <View style={styles.container}>
+                {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+                <AppNavigator />
+              </View>
+            </ReviewProvider>
           </PlayerProvider>
         </AppProvider>
     );

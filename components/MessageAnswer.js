@@ -5,10 +5,10 @@ import triangleBottom from "../assets/images/icons/triangleBottom.png";
 import answer from "../assets/images/icons/answer.png";
 import cancel from "../assets/images/icons/cancel.png";
 import { vw } from "react-native-expo-viewport-units";
-import AppContext from "../context/AppContext";
+import ReviewContext from "../context/ReviewContext";
 
 const MessageAnswer = props => {
-  const { comments, remove } = React.useContext(AppContext);
+  const { comments, remove } = React.useContext(ReviewContext);
   return (
     <>
       {

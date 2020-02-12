@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import firebase from "../config/firebase";
-import uuid from 'react-uuid'
-
-const AppContext = React.createContext();
 import { AsyncStorage, Platform, InteractionManager } from "react-native";
 import { radioPlaylist } from "../api/RadioPlaylist";
+
+const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [email, setEmail] = useState("");
@@ -19,16 +18,11 @@ const AppProvider = ({ children }) => {
   const [typeDisplayed, setTypeDisplayed] = useState(false);
   const [pickerSelection, setPickerSelection] = useState("");
   const [typeSelection, setTypeSelection] = useState("");
-  const [review, setReview] = useState("");
-  const [songUid, setSongUid] = useState("");
-  const [comments, setComments] = useState({});
   const [songs, setSongs] = useState([]);
   const [read, setRead] = useState("Read more");
   const [switchValue, setSwitchValue] = useState(false);
   const [switchPlan, setSwitchPlan] = useState(true);
   const [preparedSongs, setPreparedSongs] = useState([]);
-  const [user, setUser] = useState("");
-  const [currentSong, setCurrentSong] = useState("");
   const carouselRef = React.useRef(null);
 
   const handleChangeCountNext = () =>
@@ -138,7 +132,6 @@ const AppProvider = ({ children }) => {
           .flat(1)
       ]);
   };
-  firebase.auth().onAuthStateChanged(user => setUser("anonymous" || user.email));
 
   // const loadData = async () => {
   //   try {
@@ -172,26 +165,7 @@ const AppProvider = ({ children }) => {
     setTypeSelection(newValue);
     toggleType();
   };
-  const sendReview = () =>
-    firebase
-      .database()
-      .ref("user/userId/")
-      .push()
-      .set({
-        reviews: review,
-        authorName: user
-      })
-      .then(setReview(""));
 
-  const getReview = () =>
-    firebase
-      .database()
-      .ref()
-      .child("user/userId/")
-      .once("value")
-      .then(function(snapshot) {
-          setComments(Object.values(snapshot.val() ));
-      });
 
     useEffect(() => {
         loadData();
@@ -202,10 +176,7 @@ const AppProvider = ({ children }) => {
         }
     }, [preparedSongs]);
 
-  let userRef = firebase.database().ref("user/userId/");
-  let songRef = firebase.database().ref("songs/" + songUid);
-  const remove = (uid) => userRef.remove().uid === uid;
-  const removeSong = () => songRef.remove();
+
 
   const toggleSwitch = () => {
     setSwitchValue(!switchValue);
@@ -260,21 +231,8 @@ const AppProvider = ({ children }) => {
       _clearTimeout(id);
     };
   }
-    const [like, setLike] = useState(0);
-  const sendLike = async () => {
-      await setLike(like + 1)
-          firebase
-          .database()
-          .ref("user/likes/")
-          .push()
-          .set({
-              like: like,
-              authorName: "anonymous" || user,
-              song: currentSong
-          })
-  }
 
-  useEffect(() => { getReview()}, [])
+
   const renderSongs = preparedSongs.length === 0 ? songs : preparedSongs;
   return (
     <AppContext.Provider
@@ -293,16 +251,11 @@ const AppProvider = ({ children }) => {
         setPickerValue,
         setTypeValue,
         toggleType,
-        sendReview,
-        remove,
         toggleSwitch,
         playSelected,
         toggleSwitchPlan,
         goForward,
         goBack,
-        removeSong,
-        sendLike,
-        setCurrentSong,
         setFilter,
         email,
         error,
@@ -316,9 +269,6 @@ const AppProvider = ({ children }) => {
         pickerSelection,
         typeSelection,
         typeDisplayed,
-        setReview,
-        review,
-        comments,
         read,
         setRead,
         preparedSongs,

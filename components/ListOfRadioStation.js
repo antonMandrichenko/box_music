@@ -3,9 +3,11 @@ import Carousel from "react-native-snap-carousel";
 import { Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import AppContext from "../context/AppContext";
 import { vw } from "react-native-expo-viewport-units";
+import ReviewContext from "../context/ReviewContext";
 
 const ListOfRadioStation = ({handleCurrentTrack}) => {
-  const { renderSongs, carouselRef, setCurrentSong } = React.useContext(AppContext);
+  const { renderSongs, carouselRef } = React.useContext(AppContext);
+  const { setCurrentSong } = React.useContext(ReviewContext);
 
   const styles = StyleSheet.create({
     imageContainer: {

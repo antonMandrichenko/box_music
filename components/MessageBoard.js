@@ -6,13 +6,13 @@ import answer from "../assets/images/icons/answer.png";
 import { vw } from "react-native-expo-viewport-units";
 import MessageAnswer from "./MessageAnswer";
 import AddComment from "./AddComment";
-import AppContext from "../context/AppContext";
 import cancel from "../assets/images/icons/cancel.png";
+import ReviewContext from "../context/ReviewContext";
 
 const MessageBoard = () => {
   const [show, setShow] = React.useState(false);
   const [showReview, setShowReview] = React.useState(true);
-  const { comments } = React.useContext(AppContext);
+  const { comments } = React.useContext(ReviewContext);
   const toggleAnswer = () => setShow(!show);
   const toggleReview = () => setShowReview(!showReview);
   return (
