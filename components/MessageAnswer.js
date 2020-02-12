@@ -33,7 +33,7 @@ const MessageAnswer = props => {
               <TouchableOpacity style={styles.flex}>
                 <Image style={styles.iconReview} source={answer} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.flex} onPress={setComments(deleteReview(index))}>
+              <TouchableOpacity style={styles.flex} onPress={() => setComments(deleteReview(index))}>
                 <Image style={styles.iconReview} source={cancel} />
               </TouchableOpacity>
             </View>

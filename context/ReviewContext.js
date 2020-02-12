@@ -15,8 +15,7 @@ const ReviewProvider = ({children}) => {
 
     const reviewsObj = {
         reviews: review,
-        authorName: user,
-        uid: uuid()
+        authorName: user
     };
 
     const sendReview = () => {
