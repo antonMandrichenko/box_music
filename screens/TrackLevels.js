@@ -21,22 +21,19 @@ import binoculars from "../assets/images/icons/binoculars.png";
 import SubListOfRadioStation from "../components/SubListOfRadioStation";
 import PropTypes from "prop-types";
 import AppContext from "../context/AppContext";
+import ReviewContext from "../context/ReviewContext";
 
 const TrackLevels = ({ navigation }) => {
   const [switchValue, setSwitchValue] = React.useState(false);
+
   const darkColors = ["#373843", "#2e2f39", "#24252d"];
   const lightColors = ["#8855c1", "#8855c1", "#634cc8"];
   const nav = () => navigation.navigate("EditProfile");
   const toggleSwitch = () => {
     setSwitchValue(!switchValue);
   };
-  const {preparedSongs} = useContext(AppContext);
-
-  return preparedSongs.length === 0 ? (
-      <View style={[styles.containerLoader, styles.horizontal]}>
-        <ActivityIndicator size="large" color="#0000ff"/>
-      </View>
-  ) : (
+  const {totalLikes} = useContext(ReviewContext);
+  return (
     <ScrollView>
       <View style={styles.container}>
         <ImageBackground
@@ -86,7 +83,7 @@ const TrackLevels = ({ navigation }) => {
           </View>
           <PlayButtons nav={nav} />
           <View style={styles.containerHeader}>
-            <TrackLevel path={heart} count={36} preFill={45} w={20} h={20} />
+            <TrackLevel path={heart} count={totalLikes} preFill={45} w={20} h={20} />
             <TrackLevel path={single} count={245} preFill={25} w={10} h={20} />
             <TrackLevel path={double} count={1375} preFill={15} w={10} h={20} />
             <TrackLevel

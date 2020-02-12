@@ -9,7 +9,8 @@ const ReviewProvider = ({children}) => {
     const [user, setUser] = useState("");
     const [currentSong, setCurrentSong] = useState("");
     const [uid, setUid] = useState("");
-    const [like, setLike] = useState(0);
+    const [like, setLike] = useState(false);
+    const [totalLikes, setTotalLikes] = useState(0);
 
     firebase.auth().onAuthStateChanged(user => setUser(user.email || "anonymous" ));
 
@@ -55,18 +56,23 @@ const ReviewProvider = ({children}) => {
     useEffect(() => { getReview();}, []);
 
     const deleteReview = (index) => comments.filter((item, i) => i !== index);
-    const sendLike = async () => {
-        await setLike(prevState => prevState + 1)
-        firebase
-            .database()
-            .ref("user/likes/")
-            .push()
-            .set({
-                like: like,
-                authorName: "anonymous" || user,
-                song: currentSong
-            })
+    const sendLike =  () => {
+         setLike(!like);
+        if(!like) {
+            setTotalLikes(prevState => prevState + 1)
+        } else {
+            setTotalLikes(prevState => prevState - 1)
+        }
     }
+        // firebase
+        //     .database()
+        //     .ref("user/likes/")
+        //     .push()
+        //     .set({
+        //         like: like,
+        //         authorName: "anonymous" || user,
+        //         song: currentSong
+        //     })
 
     let userRef = firebase.database().ref("user/userId/" + uid[0]);
     let songRef = firebase.database().ref("songs/");
@@ -80,11 +86,14 @@ const ReviewProvider = ({children}) => {
                 removeSong,
                 deleteReview,
                 removeData,
+                sendLike,
                 setReview,
                 comments,
                 setComments,
                 setCurrentSong,
-                review
+                review,
+                totalLikes,
+                like
             }}
         >
             {children}

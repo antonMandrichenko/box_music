@@ -21,12 +21,14 @@ import AppContext from "../context/AppContext";
 import PlayerContext from "../context/PlayerContext";
 import { FontAwesome5 } from "@expo/vector-icons";
 import UserProfileButton from "./UserProfileButton";
+import ReviewContext from "../context/ReviewContext";
 
 const PlayButtons = ({ nav }) => {
   const { handlePlayPause, handleNextTrack, isPlaying,  } = useContext(
     PlayerContext
   );
-  const { preparedSongs, goForward, goBack, removeSong, pickerSelection, pickerDisplayed, setPickerValue, togglePicker, sendLike } = React.useContext(AppContext);
+  const { preparedSongs, goForward, goBack, removeSong, pickerSelection, pickerDisplayed, setPickerValue, togglePicker} = React.useContext(AppContext);
+  const {sendLike, like } = React.useContext(ReviewContext);
   return (
     <>
       <View style={styles.containerHeaderButtons}>
@@ -64,7 +66,7 @@ const PlayButtons = ({ nav }) => {
           </View>
         </View>
         <View style={styles.containerHeaderButtonsRight}>
-          <SmallButton path={heart} onPress={sendLike}/>
+          <SmallButton path={heart} onPress={sendLike} like={like}/>
           <SmallButton path={cancel} onPress={removeSong}/>
           <SmallButton path={arrowTop} onPress={goForward} />
           <SmallButton path={arrowBottom} onPress={goBack} />

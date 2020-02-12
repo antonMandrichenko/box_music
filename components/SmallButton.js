@@ -2,12 +2,12 @@ import React from 'react';
 import {Image, TouchableOpacity, View, StyleSheet} from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 
-const SmallButton = ({path, onPress}) => {
+const SmallButton = ({path, onPress, like}) => {
     return (
         <View style={styles.headerButtonRight}>
             <TouchableOpacity onPress={onPress}>
                 <LinearGradient
-                    colors={["#08080a", "#1d1e25"]}
+                    colors={!like ? ["#08080a", "#1d1e25"] : ["#634cc8", "#373843"]}
                     style={styles.square}
                     locations={[0.05, 1]}
                 >
