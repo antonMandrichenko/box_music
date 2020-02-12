@@ -8,11 +8,12 @@ import { vw } from "react-native-expo-viewport-units";
 import ReviewContext from "../context/ReviewContext";
 
 const MessageAnswer = props => {
-  const { comments, remove, deleteReview,setComments } = React.useContext(ReviewContext);
+  const { comments, remove, deleteReview,setComments,removeData } = React.useContext(ReviewContext);
   return (
     <>
       {
-        comments.map((comment, index) => (
+        comments.map((comment, index) => {
+          return (
           <View style={styles.wrapper} key={Math.random() * 2}>
             <View style={styles.container}>
               <View style={styles.lineBefore} />
@@ -33,12 +34,12 @@ const MessageAnswer = props => {
               <TouchableOpacity style={styles.flex}>
                 <Image style={styles.iconReview} source={answer} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.flex} onPress={() => setComments(deleteReview(index))}>
+              <TouchableOpacity style={styles.flex} onPress={() => {removeData(index);setComments(deleteReview(index));remove()}}>
                 <Image style={styles.iconReview} source={cancel} />
               </TouchableOpacity>
             </View>
           </View>
-        ))}
+        )})}
     </>
   );
 };

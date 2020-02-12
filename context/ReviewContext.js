@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import firebase from "../config/firebase";
-import uuid from 'react-uuid'
 
 const ReviewContext = React.createContext();
 
@@ -9,13 +8,14 @@ const ReviewProvider = ({children}) => {
     const [comments, setComments] = useState([]);
     const [user, setUser] = useState("");
     const [currentSong, setCurrentSong] = useState("");
+    const [uid, setUid] = useState("");
     const [like, setLike] = useState(0);
 
     firebase.auth().onAuthStateChanged(user => setUser(user.email || "anonymous" ));
 
     const reviewsObj = {
         reviews: review,
-        authorName: user
+        authorName: user,
     };
 
     const sendReview = () => {
@@ -35,12 +35,25 @@ const ReviewProvider = ({children}) => {
             .child("user/userId/")
             .once("value")
             .then(function(snapshot) {
+                let userData = snapshot.val();
+                for (let key of Object.keys(userData)) {
+                    setUid(Object.keys(snapshot.val()))
+                }
                 if(snapshot.val()) {
                     setComments(Object.values(snapshot.val()));
                 }
             });
-
+    const removeData = (index) => {
+        firebase.database().ref().child('user/userId/').once('value', snap => {
+            let userData = [snap.val()];
+            for (let key of Object.keys(userData)) {
+                firebase.database().ref().child('user/userId/'+uid[index])
+                    // .child(key).remove();
+            }
+        });
+    }
     useEffect(() => { getReview();}, []);
+
     const deleteReview = (index) => comments.filter((item, i) => i !== index);
     const sendLike = async () => {
         await setLike(prevState => prevState + 1)
@@ -55,7 +68,7 @@ const ReviewProvider = ({children}) => {
             })
     }
 
-    let userRef = firebase.database().ref("user/userId/");
+    let userRef = firebase.database().ref("user/userId/" + uid[0]);
     let songRef = firebase.database().ref("songs/");
     const remove = () => userRef.remove();
     const removeSong = () => songRef.remove();
@@ -66,6 +79,7 @@ const ReviewProvider = ({children}) => {
                 remove,
                 removeSong,
                 deleteReview,
+                removeData,
                 setReview,
                 comments,
                 setComments,
