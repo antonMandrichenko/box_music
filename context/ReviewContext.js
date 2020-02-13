@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import firebase from "../config/firebase";
 import {debounce} from "../constants/Layout";
 
+const db = firebase.firestore();
 const ReviewContext = React.createContext();
 
+const log = console.log;
 const ReviewProvider = ({children}) => {
     const [review, setReview] = useState("");
     const [comments, setComments] = useState([]);
@@ -58,24 +60,33 @@ const ReviewProvider = ({children}) => {
 
     const deleteReview = (index) => comments.filter((item, i) => i !== index);
     const toggleLike =  () => {
-         setLike(!like);
+        setLike(!like);
         if(!like) {
             setTotalLikes(prevState => prevState + 1);
+            debounce(sendLikeToFirebase(1), 200)
         } else {
             setTotalLikes(prevState => prevState - 1);
+            debounce(sendLikeToFirebase(-1), 200)
         }
     };
 
-        const sendLikeToFirebase = () =>{
-        firebase
-            .database()
-            .ref("user/likes/")
-            .push()
-            .set({
-                like: totalLikes,
-                authorName: "anonymous" || user,
-                song: currentSong
-            })}
+        const sendLikeToFirebase = async (incremental) => {
+        return  firebase.database()
+            .ref()
+            .child("user/likes/like")
+            .once("value").then((snapshot) => setTotalLikes(snapshot.val()))
+            .then(
+                 await firebase
+                     .database()
+                     .ref("user/likes/")
+                     .update({
+                         like: totalLikes + incremental,
+                         authorName: user,
+                         song: currentSong
+                     })
+            )
+
+                }
 
     let userRef = firebase.database().ref("user/userId/" + uid[0]);
     let songRef = firebase.database().ref("songs/");
