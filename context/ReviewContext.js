@@ -31,7 +31,7 @@ const ReviewProvider = ({ children }) => {
     comments.push(reviewsObj);
     firebase
       .database()
-      .ref("user/userId/")
+      .ref("users/userId/")
       .push()
       .set(reviewsObj)
       .then(setReview(""));
@@ -41,7 +41,7 @@ const ReviewProvider = ({ children }) => {
     firebase
       .database()
       .ref()
-      .child("user/userId/")
+      .child("users/userId/")
       .once("value")
       .then(function(snapshot) {
         let userData = snapshot.val();
@@ -52,22 +52,7 @@ const ReviewProvider = ({ children }) => {
           setComments(Object.values(snapshot.val()));
         }
       });
-  const removeData = index => {
-    firebase
-      .database()
-      .ref()
-      .child("user/userId/")
-      .once("value", snap => {
-        let userData = [snap.val()];
-        for (let key of Object.keys(userData)) {
-          firebase
-            .database()
-            .ref()
-            .child("user/userId/" + uid[index]);
-          // .child(key).remove();
-        }
-      });
-  };
+
   useEffect(() => {
     getReview();
   }, []);
@@ -88,7 +73,7 @@ const ReviewProvider = ({ children }) => {
     return firebase
       .database()
       .ref()
-      .child("user/likes/like")
+      .child("users/likes/like")
       .once("value")
       .then(snapshot => {
         if (snapshot.val() === undefined) {
@@ -99,7 +84,7 @@ const ReviewProvider = ({ children }) => {
       .then(
         await firebase
           .database()
-          .ref("user/likes/")
+          .ref("users/likes/")
           .update({
             like: totalLikes + incremental,
             authorName: user,
@@ -107,19 +92,37 @@ const ReviewProvider = ({ children }) => {
           })
       );
   };
-
-  let userRef = firebase.database().ref("user/userId/" + uid[0]);
-  let songRef = firebase.database().ref("songs/");
-  const remove = () => userRef.remove();
+  const setData = index => {
+    firebase
+      .database()
+      .ref()
+      .child("users/userId/")
+      .once("value", snap => {
+        let userData = [snap.val()];
+        console.log(snap.val());
+        for (let key of Object.keys(userData)) {
+          firebase
+            .database()
+            .ref()
+            .child("users/userId/" );
+        }
+      });
+  };
+  let songRef = firebase.database().ref("users/songs/");
+  const removeCommentsFromFireBase = index =>
+    firebase
+      .database()
+      .ref("users/userId/" + uid[index])
+      .remove();
   const removeSong = () => songRef.remove();
   return (
     <ReviewContext.Provider
       value={{
         sendReview,
-        remove,
+        removeCommentsFromFireBase,
         removeSong,
         deleteReview,
-        removeData,
+        setData,
         toggleLike,
         setReview,
         comments,

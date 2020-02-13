@@ -97,14 +97,14 @@ const AppProvider = ({ children }) => {
     const setDataFirebase = () =>
         firebase
             .database()
-            .ref("songs/")
+            .ref("users/songs/")
             .push()
             .set(preparedSongs);
     const getDataFirebase = () => {
         firebase
             .database()
             .ref()
-            .child("songs/")
+            .child("users/songs/")
             .once("value")
             .then(function(snapshot) {
                 setSongs(Object.values(snapshot.val()));

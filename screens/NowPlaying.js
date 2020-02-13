@@ -31,19 +31,19 @@ const NowPlaying = ({navigation}) => {
           style={styles.imageBackground}
         >
 
-          <PlayButtons nav={nav}/>
+          {/*<PlayButtons nav={nav}/>*/}
           <View style={styles.containerCarousel}>
-            <ListOfRadioStation setCurrentIndex={setCurrentIndex} handleCurrentTrack={handleCurrentTrack}/>
+            {/*<ListOfRadioStation setCurrentIndex={setCurrentIndex} handleCurrentTrack={handleCurrentTrack}/>*/}
           </View>
           <View style={styles.containerBeforeSlider}>
             <Text style={styles.textAdditional}>• Up Next</Text>
-            <SmallButton path={addSong} />
+            {/*<SmallButton path={addSong} />*/}
           </View>
           <View style={styles.containerSubCarousel}>
-            <SubListOfRadioStation setCurrentIndex={setCurrentIndex} />
+            {/*<SubListOfRadioStation setCurrentIndex={setCurrentIndex} />*/}
           </View>
           <View style={styles.containerEqualizer}>
-            <EqualizerScreen playing={isPlaying} />
+            {/*<EqualizerScreen playing={isPlaying} />*/}
           </View>
           <View style={styles.containerBeforeSlider}>
             {switchValue ? (
