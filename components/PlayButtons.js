@@ -28,7 +28,7 @@ const PlayButtons = ({ nav }) => {
     PlayerContext
   );
   const { preparedSongs, goForward, goBack, removeSong, pickerSelection, pickerDisplayed, setPickerValue, togglePicker} = React.useContext(AppContext);
-  const {sendLike, like } = React.useContext(ReviewContext);
+  const {toggleLike, like } = React.useContext(ReviewContext);
   return (
     <>
       <View style={styles.containerHeaderButtons}>
@@ -66,7 +66,7 @@ const PlayButtons = ({ nav }) => {
           </View>
         </View>
         <View style={styles.containerHeaderButtonsRight}>
-          <SmallButton path={heart} onPress={sendLike} like={like}/>
+          <SmallButton path={heart} onPress={toggleLike} like={like}/>
           <SmallButton path={cancel} onPress={removeSong}/>
           <SmallButton path={arrowTop} onPress={goForward} />
           <SmallButton path={arrowBottom} onPress={goBack} />

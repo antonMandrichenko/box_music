@@ -20,3 +20,13 @@ export const upgradePlan = [
   { key: "All Kits Included" },
   { key: "IOS Support" }
 ];
+
+export const debounce = (func, wait = 100) => {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func.apply(this, args);
+    }, wait);
+  };
+}

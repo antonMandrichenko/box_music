@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import firebase from "../config/firebase";
+import {debounce} from "../constants/Layout";
 
 const ReviewContext = React.createContext();
 
@@ -12,7 +13,7 @@ const ReviewProvider = ({children}) => {
     const [like, setLike] = useState(false);
     const [totalLikes, setTotalLikes] = useState(0);
 
-    firebase.auth().onAuthStateChanged(user => setUser(user.email || "anonymous" ));
+    // firebase.auth().onAuthStateChanged(user => {if(user !== null) {setUser(user.email)}});
 
     const reviewsObj = {
         reviews: review,
@@ -56,23 +57,25 @@ const ReviewProvider = ({children}) => {
     useEffect(() => { getReview();}, []);
 
     const deleteReview = (index) => comments.filter((item, i) => i !== index);
-    const sendLike =  () => {
+    const toggleLike =  () => {
          setLike(!like);
         if(!like) {
-            setTotalLikes(prevState => prevState + 1)
+            setTotalLikes(prevState => prevState + 1);
         } else {
-            setTotalLikes(prevState => prevState - 1)
+            setTotalLikes(prevState => prevState - 1);
         }
-    }
-        // firebase
-        //     .database()
-        //     .ref("user/likes/")
-        //     .push()
-        //     .set({
-        //         like: like,
-        //         authorName: "anonymous" || user,
-        //         song: currentSong
-        //     })
+    };
+
+        const sendLikeToFirebase = () =>{
+        firebase
+            .database()
+            .ref("user/likes/")
+            .push()
+            .set({
+                like: totalLikes,
+                authorName: "anonymous" || user,
+                song: currentSong
+            })}
 
     let userRef = firebase.database().ref("user/userId/" + uid[0]);
     let songRef = firebase.database().ref("songs/");
@@ -86,7 +89,7 @@ const ReviewProvider = ({children}) => {
                 removeSong,
                 deleteReview,
                 removeData,
-                sendLike,
+                toggleLike,
                 setReview,
                 comments,
                 setComments,
