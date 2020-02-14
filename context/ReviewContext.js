@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import firebase from "../config/firebase";
 import { debounce } from "../constants/Layout";
+import * as ImagePicker from "expo-image-picker";
+import userImage from "../assets/images/user.png";
+import { Platform } from "react-native";
 
 const ReviewContext = React.createContext();
 
@@ -15,13 +18,9 @@ const ReviewProvider = ({ children }) => {
 
   const getUser = () =>
     firebase.auth().onAuthStateChanged(user => {
-      if (user !== null) {
-        setUser(user.email);
-      }
+      setUser(user.email);
     });
-
   useEffect(() => getUser(), []);
-
   const reviewsObj = {
     reviews: review,
     authorName: user
@@ -99,12 +98,11 @@ const ReviewProvider = ({ children }) => {
       .child("users/userId/")
       .once("value", snap => {
         let userData = [snap.val()];
-        console.log(snap.val());
         for (let key of Object.keys(userData)) {
           firebase
             .database()
             .ref()
-            .child("users/userId/" );
+            .child("users/userId/");
         }
       });
   };
@@ -115,6 +113,85 @@ const ReviewProvider = ({ children }) => {
       .ref("users/userId/" + uid[index])
       .remove();
   const removeSong = () => songRef.remove();
+
+  const [image, setImage] = useState(null);
+
+  React.useEffect(() => {
+    getPermissionAsync();
+  }, []);
+
+  const getPermissionAsync = async () => {
+    if (Platform.OS === "ios") {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      }
+    }
+  };
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+      await firebase
+        .database()
+        .ref()
+        .child("users/images/")
+        .once("value")
+        .then(function(snapshot) {
+            const arr = Object.values(snapshot.val());
+            const data = arr.find(item => item.authorName === user);
+          if (user === null) {
+            firebase
+              .database()
+              .ref("users/images/")
+               .child(user.slice(0, user.indexOf('.') ))
+              .update({
+                  image: result.uri,
+                  authorName: user,
+                  id: 1
+              });
+          } else {
+            firebase
+              .database()
+              .ref("users/images")
+               .child(user.slice(0, user.indexOf('.')))
+              .update({
+                image: result.uri,
+                authorName: user,
+                  id: 2
+              });
+          }
+        });
+    }
+  };
+
+  const getImageFromFireBase = async () => {
+    if (image === null) {
+      await firebase
+        .database()
+        .ref()
+        .child("users/images/")
+        .once("value")
+        .then(function(snapshot) {
+            if (snapshot.val().authorName === user) {
+                setImage(snapshot.val().image);
+          } else {
+                setImage(userImage);
+            }
+        });
+    }
+  };
+
+  useEffect(() => {
+    getImageFromFireBase();
+  }, [user]);
+
   return (
     <ReviewContext.Provider
       value={{
@@ -124,13 +201,15 @@ const ReviewProvider = ({ children }) => {
         deleteReview,
         setData,
         toggleLike,
+        pickImage,
         setReview,
         comments,
         setComments,
         setCurrentSong,
         review,
         totalLikes,
-        like
+        like,
+        image
       }}
     >
       {children}

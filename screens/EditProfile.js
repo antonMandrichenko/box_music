@@ -15,10 +15,12 @@ import AppContext from "../context/AppContext";
 import { vw } from "react-native-expo-viewport-units";
 import {freePlan} from "../constants/Layout";
 import {upgradePlan} from "../constants/Layout";
+import ReviewContext from "../context/ReviewContext";
 
 const EditProfile = ({navigation}) => {
 
   const { switchPlan, toggleSwitchPlan } = React.useContext(AppContext);
+  const { pickImage, image } = React.useContext(ReviewContext);
 
   const darkColors = ["#373843", "#2e2f39"];
   const lightColors = ["#17165a", "#3736bc"];
@@ -54,12 +56,13 @@ const EditProfile = ({navigation}) => {
             <Image
               source={
                 __DEV__
-                  ? require("../assets/images/freddie.png")
-                  : require("../assets/images/freddie.png")
+                  ? {uri: image}
+                  : {uri: image}
               }
               style={styles.circleInnerImage}
             />
           </LinearGradient>
+          <TouchableOpacity onPress={pickImage}>
 
             <Image
               source={
@@ -69,7 +72,7 @@ const EditProfile = ({navigation}) => {
               }
               style={styles.circleSmall}
             />
-
+          </TouchableOpacity>
         </View>
 
         <Text style={styles.login}>Adam Lambert</Text>
