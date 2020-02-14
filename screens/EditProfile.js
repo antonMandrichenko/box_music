@@ -54,10 +54,7 @@ const EditProfile = ({navigation}) => {
             locations={[0, 0.2, 0.8, 1]}
           >
             <Image
-              source={
-                __DEV__
-                  ? {uri: image}
-                  : {uri: image}
+              source={image ? {uri: image} : require("../assets/images/user.png")
               }
               style={styles.circleInnerImage}
             />

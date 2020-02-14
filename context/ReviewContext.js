@@ -18,7 +18,9 @@ const ReviewProvider = ({ children }) => {
 
   const getUser = () =>
     firebase.auth().onAuthStateChanged(user => {
-      setUser(user.email);
+        if(user !== null) {
+            setUser(user.email);
+        }
     });
   useEffect(() => getUser(), []);
   const reviewsObj = {
@@ -54,7 +56,7 @@ const ReviewProvider = ({ children }) => {
 
   useEffect(() => {
     getReview();
-  }, []);
+  }, [user]);
 
   const deleteReview = index => comments.filter((item, i) => i !== index);
   const toggleLike = () => {
@@ -144,27 +146,23 @@ const ReviewProvider = ({ children }) => {
         .child("users/images/")
         .once("value")
         .then(function(snapshot) {
-            const arr = Object.values(snapshot.val());
-            const data = arr.find(item => item.authorName === user);
           if (user === null) {
             firebase
               .database()
               .ref("users/images/")
-               .child(user.slice(0, user.indexOf('.') ))
+              .child(user.slice(0, user.indexOf(".")))
               .update({
-                  image: result.uri,
-                  authorName: user,
-                  id: 1
+                image: result.uri,
+                authorName: user,
               });
           } else {
             firebase
               .database()
               .ref("users/images")
-               .child(user.slice(0, user.indexOf('.')))
+              .child(user.slice(0, user.indexOf(".")))
               .update({
                 image: result.uri,
                 authorName: user,
-                  id: 2
               });
           }
         });
@@ -172,19 +170,22 @@ const ReviewProvider = ({ children }) => {
   };
 
   const getImageFromFireBase = async () => {
-    if (image === null) {
+    if (user) {
       await firebase
         .database()
-        .ref()
-        .child("users/images/")
+        .ref("users/images/")
+        .child(user.slice(0, user.indexOf(".")))
         .once("value")
         .then(function(snapshot) {
-            if (snapshot.val().authorName === user) {
-                setImage(snapshot.val().image);
-          } else {
+            if (snapshot.val().image === "" ) {
                 setImage(userImage);
-            }
+            } else
+          if (user === snapshot.val().authorName) {
+            setImage(snapshot.val().image);
+          }
         });
+    } else {
+        setImage(userImage);
     }
   };
 

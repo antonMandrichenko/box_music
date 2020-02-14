@@ -24,6 +24,7 @@ const AppProvider = ({ children }) => {
   const [switchPlan, setSwitchPlan] = useState(true);
   const [preparedSongs, setPreparedSongs] = useState([]);
   const carouselRef = React.useRef(null);
+  const [user, setUser] = useState("");
 
   const handleChangeCountNext = () =>
     setCounter({ start: counter.start + 9, end: counter.end + 9 });
@@ -81,6 +82,25 @@ const AppProvider = ({ children }) => {
       await firebase
         .auth()
         .createUserWithEmailAndPassword(emailStorage, passwordStorage)
+        .then(
+          firebase
+            .database()
+            .ref()
+            .child("users/images/")
+            .once("value")
+            .then(function(snapshot) {
+              firebase
+                .database()
+                .ref("users/images")
+                .child(
+                    email.slice(0, email.indexOf("."))
+                )
+                .update({
+                  image: "",
+                  authorName: email.slice(0, email.indexOf(".")),
+                });
+            })
+        )
         .catch(function(error) {
           const errorMessage = error.message;
           setError(errorMessage);
@@ -94,43 +114,46 @@ const AppProvider = ({ children }) => {
       [title]: !checked[title]
     });
   };
-    const setDataFirebase = () =>
-        firebase
-            .database()
-            .ref("users/songs/")
-            .push()
-            .set(preparedSongs);
-    const getDataFirebase = () => {
-        firebase
-            .database()
-            .ref()
-            .child("users/songs/")
-            .once("value")
-            .then(function(snapshot) {
-                setSongs(Object.values(snapshot.val()));
-            })};
-    useEffect(() => {getDataFirebase()}, []);
+  const setDataFirebase = () =>
+    firebase
+      .database()
+      .ref("users/songs/")
+      .push()
+      .set(preparedSongs);
+  const getDataFirebase = () => {
+    firebase
+      .database()
+      .ref()
+      .child("users/songs/")
+      .once("value")
+      .then(function(snapshot) {
+        setSongs(Object.values(snapshot.val()));
+      });
+  };
+  useEffect(() => {
+    getDataFirebase();
+  }, []);
   const playSelected = () => {
-      const checkedSongs = [checked].reduce((resultArr, item) => {
-        return [
-          ...resultArr,
-          Object.keys(item).reduce(
-            (resultObject, value) =>
-              item[value] === true
-                ? { ...resultObject, [value]: item[value] }
-                : resultObject,
-            {}
-          )
-        ];
-      }, []);
-      setPreparedSongs([
-        ...checkedSongs
-          .map(song => Object.keys(song))
-          .join("")
-          .split(",")
-          .map(item => data.filter(song => song.title === item))
-          .flat(1)
-      ]);
+    const checkedSongs = [checked].reduce((resultArr, item) => {
+      return [
+        ...resultArr,
+        Object.keys(item).reduce(
+          (resultObject, value) =>
+            item[value] === true
+              ? { ...resultObject, [value]: item[value] }
+              : resultObject,
+          {}
+        )
+      ];
+    }, []);
+    setPreparedSongs([
+      ...checkedSongs
+        .map(song => Object.keys(song))
+        .join("")
+        .split(",")
+        .map(item => data.filter(song => song.title === item))
+        .flat(1)
+    ]);
   };
 
   // const loadData = async () => {
@@ -166,17 +189,14 @@ const AppProvider = ({ children }) => {
     toggleType();
   };
 
-
-    useEffect(() => {
-        loadData();
-    }, []);
-    useEffect(() => {
-        if (Object.keys(checked).length !== 0) {
-            setDataFirebase();
-        }
-    }, [preparedSongs]);
-
-
+  useEffect(() => {
+    loadData();
+  }, []);
+  useEffect(() => {
+    if (Object.keys(checked).length !== 0) {
+      setDataFirebase();
+    }
+  }, [preparedSongs]);
 
   const toggleSwitch = () => {
     setSwitchValue(!switchValue);
@@ -184,12 +204,12 @@ const AppProvider = ({ children }) => {
   const toggleSwitchPlan = () => {
     setSwitchPlan(!switchPlan);
   };
-    const goForward = () => {
-        setTimeout(() => carouselRef.current.snapToNext(), 250)
-    }
-    const goBack = () => {
-        setTimeout(() => carouselRef.current.snapToPrev(), 250)
-    }
+  const goForward = () => {
+    setTimeout(() => carouselRef.current.snapToNext(), 250);
+  };
+  const goBack = () => {
+    setTimeout(() => carouselRef.current.snapToPrev(), 250);
+  };
   const _setTimeout = global.setTimeout;
   const _clearTimeout = global.clearTimeout;
   const MAX_TIMER_DURATION_MS = 60 * 1000;
@@ -231,7 +251,6 @@ const AppProvider = ({ children }) => {
       _clearTimeout(id);
     };
   }
-
 
   const renderSongs = preparedSongs.length === 0 ? songs : preparedSongs;
   return (
