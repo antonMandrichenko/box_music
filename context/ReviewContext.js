@@ -16,48 +16,52 @@ const ReviewProvider = ({ children }) => {
   const [like, setLike] = useState(false);
   const [totalLikes, setTotalLikes] = useState(0);
 
-  const getUser = () =>
-    firebase.auth().onAuthStateChanged(user => {
-        if(user !== null) {
-            setUser(user.email);
-        }
-    });
-  useEffect(() => getUser(), []);
+    const getUser = async () => {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                const userEmail = user.email;
+                setUser(userEmail);
+            } else {
+                setUser("Anonymous")
+            }
+        });
+    };
+    useEffect(() => {
+        getUser();
+    }, []);
   const reviewsObj = {
     reviews: review,
-    authorName: user
+    authorName: user,
+    id: comments.length + 1
   };
 
-  const sendReview = () => {
+  const sendComments = () => {
     comments.push(reviewsObj);
     firebase
       .database()
-      .ref("users/userId/")
-      .push()
+      .ref("users/comments/")
+      .child(user.slice(0, user.indexOf(".")))
+      .child(comments.length)
       .set(reviewsObj)
       .then(setReview(""));
   };
 
-  const getReview = () =>
+  const getComments = () =>
     firebase
       .database()
-      .ref()
-      .child("users/userId/")
+      .ref("users/comments/")
+        // .child(user.slice(0, user.indexOf(".")))
       .once("value")
       .then(function(snapshot) {
-        let userData = snapshot.val();
-        for (let key of Object.keys(userData)) {
-          setUid(Object.keys(snapshot.val()));
-        }
-        if (snapshot.val()) {
-          setComments(Object.values(snapshot.val()));
-        }
+          if(snapshot.val()) {
+              const m = (Object.values(snapshot.val()));
+              for (let i of m) {
+                  setComments(Object.values(i));
+              }
+          }
+
       });
-
-  useEffect(() => {
-    getReview();
-  }, [user]);
-
+    useEffect(() => { getComments()}, []);
   const deleteReview = index => comments.filter((item, i) => i !== index);
   const toggleLike = () => {
     setLike(!like);
@@ -97,23 +101,27 @@ const ReviewProvider = ({ children }) => {
     firebase
       .database()
       .ref()
-      .child("users/userId/")
+      .child("users/comments/")
       .once("value", snap => {
         let userData = [snap.val()];
         for (let key of Object.keys(userData)) {
           firebase
             .database()
             .ref()
-            .child("users/userId/");
+            .child("users/comments/");
         }
       });
   };
-  let songRef = firebase.database().ref("users/songs/");
-  const removeCommentsFromFireBase = index =>
-    firebase
-      .database()
-      .ref("users/userId/" + uid[index])
-      .remove();
+  let songRef = firebase.database().ref("users/playlists/");
+  const removeCommentsFromFireBase = (id) => {
+      firebase
+          .database()
+          .ref("users/comments/" )
+          .child(user.slice(0, user.indexOf(".")))
+          .child(id)
+          .remove();
+  }
+
   const removeSong = () => songRef.remove();
 
   const [image, setImage] = useState(null);
@@ -196,7 +204,7 @@ const ReviewProvider = ({ children }) => {
   return (
     <ReviewContext.Provider
       value={{
-        sendReview,
+         sendComments,
         removeCommentsFromFireBase,
         removeSong,
         deleteReview,

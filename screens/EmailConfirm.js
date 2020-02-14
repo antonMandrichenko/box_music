@@ -50,7 +50,7 @@ const EmailConfirm = props => {
             <Text style={styles.text}>Next</Text>
           </LinearGradient>
         </TouchableOpacity>
-        <View style={styles.imageLiner} />
+        <View style={styles.imageLine} />
       </ImageBackground>
     </View>
     </TouchableWithoutFeedback>

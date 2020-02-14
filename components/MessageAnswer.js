@@ -47,7 +47,7 @@ const MessageAnswer = props => {
                 onPress={() => {
                   setData(index);
                   setComments(deleteReview(index));
-                  removeCommentsFromFireBase(index);
+                  removeCommentsFromFireBase(comment.id);
                 }}
               >
                 <Image style={styles.iconReview} source={cancel} />

@@ -85,20 +85,21 @@ const AppProvider = ({ children }) => {
         .then(
           firebase
             .database()
-            .ref()
-            .child("users/images/")
-            .once("value")
-            .then(function(snapshot) {
-              firebase
-                .database()
-                .ref("users/images")
-                .child(
-                    email.slice(0, email.indexOf("."))
-                )
-                .update({
-                  image: "",
-                  authorName: email.slice(0, email.indexOf(".")),
-                });
+            .ref("users/images/")
+            .child(user.slice(0, user.indexOf(".")))
+            .update({
+              image: "",
+              authorName: user.slice(0, user.indexOf("."))
+            })
+        )
+        .then(
+          firebase
+            .database()
+            .ref("users/comments/")
+            .child(user.slice(0, user.indexOf(".")))
+            .update({
+              review: null,
+              authorName: user.slice(0, user.indexOf("."))
             })
         )
         .catch(function(error) {
@@ -114,20 +115,40 @@ const AppProvider = ({ children }) => {
       [title]: !checked[title]
     });
   };
-  const setDataFirebase = () =>
-    firebase
-      .database()
-      .ref("users/songs/")
-      .push()
-      .set(preparedSongs);
+  const getUser = async () => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const userEmail = user.email;
+        setUser(userEmail);
+      } else {
+          setUser("Anonymous")
+      }
+    });
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
+  const setDataFirebase = () => {
+    if (user) {
+      firebase
+        .database()
+        .ref("users/playlists/")
+        .child(user.slice(0, user.indexOf(".")))
+        .push()
+        .set(preparedSongs);
+    }
+  };
+
   const getDataFirebase = () => {
     firebase
       .database()
       .ref()
-      .child("users/songs/")
+      .child("users/playlists/")
       .once("value")
       .then(function(snapshot) {
-        setSongs(Object.values(snapshot.val()));
+        if (snapshot.val() !== null) {
+          setSongs(Object.values(snapshot.val()));
+        }
       });
   };
   useEffect(() => {
