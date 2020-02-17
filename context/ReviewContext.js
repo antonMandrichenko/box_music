@@ -30,7 +30,9 @@ const ReviewProvider = ({ children }) => {
   useEffect(() => {
     getUser();
   }, []);
-  const reviewsObj = {
+    console.log(user)
+
+    const reviewsObj = {
     reviews: review,
     authorName: user,
     id: comments.length + 1,
@@ -140,6 +142,7 @@ const ReviewProvider = ({ children }) => {
       }
     }
   };
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -147,15 +150,16 @@ const ReviewProvider = ({ children }) => {
       aspect: [4, 3],
       quality: 1
     });
-
     if (!result.cancelled) {
       setImage(result.uri);
       await firebase
         .database()
-        .ref()
-        .child("users/images/")
+        .ref("users/comments/")
+          .child(user.slice(0, user.indexOf(".")))
         .once("value")
         .then(function(snapshot) {
+            const val = Object.values(snapshot.val());
+            val.map(item => item.image = result.uri )
           if (user === null) {
             firebase
               .database()
@@ -163,7 +167,8 @@ const ReviewProvider = ({ children }) => {
               .child(user.slice(0, user.indexOf(".")))
               .update({
                 image: result.uri,
-                authorName: user
+                authorName: user,
+                  test: 1
               });
           } else {
             firebase
@@ -172,7 +177,8 @@ const ReviewProvider = ({ children }) => {
               .child(user.slice(0, user.indexOf(".")))
               .update({
                 image: result.uri,
-                authorName: user
+                authorName: user,
+                  test: 2
               });
           }
         });

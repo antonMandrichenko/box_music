@@ -16,8 +16,6 @@ const MessageAnswer = props => {
     user
   } = React.useContext(ReviewContext);
 
-  useEffect(() => {
-  }, [user]);
   return (
     <>
       {comments.map((comment, index) => {
@@ -43,11 +41,8 @@ const MessageAnswer = props => {
                 <Image style={styles.iconReview} source={answer} />
               </TouchableOpacity>
 
-              {user.slice(0, user.indexOf(".")) ===
-                comment.authorName.slice(
-                  0,
-                  comment.authorName.indexOf(".")
-                ) && (
+              { user ===
+                comment.authorName && (
                 <TouchableOpacity
                   style={styles.flex}
                   onPress={() => {
@@ -58,7 +53,7 @@ const MessageAnswer = props => {
                 >
                   <Image style={styles.iconReview} source={cancel} />
                 </TouchableOpacity>
-              )}
+                  )}
             </View>
           </View>
         );
