@@ -26,7 +26,7 @@ const MessageAnswer = props => {
               <View style={styles.lineBefore} />
               <Image style={styles.image} source={{ uri: image }} />
               <View>
-                <Text style={styles.text}>{comment.authorName.slice(0, comment.authorName.indexOf('@'))}</Text>
+                <Text style={styles.text}>{comment.authorName}</Text>
                 <View style={styles.textAnswerWrapper}>
                   <Text style={styles.textAnswer}>{comment.reviews}</Text>
                 </View>
