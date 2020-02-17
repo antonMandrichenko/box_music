@@ -1,9 +1,8 @@
 import React, {useContext} from "react";
-import {ImageBackground, View, StyleSheet, Text, ActivityIndicator, ScrollView} from "react-native";
+import {ImageBackground, View, StyleSheet, Text, ScrollView} from "react-native";
 import {vh, vw} from "react-native-expo-viewport-units";
 import PlayButtons from "../components/PlayButtons";
 import MessageBoard from "../components/MessageBoard";
-import AddComment from "../components/AddComment";
 import PropTypes from "prop-types";
 import AppContext from "../context/AppContext";
 
@@ -11,11 +10,7 @@ const Message = ({ navigation }) => {
   const nav = () => navigation.navigate("EditProfile");
   const {preparedSongs} = useContext(AppContext);
 
-  return preparedSongs.length === 0 ? (
-      <View style={[styles.containerLoader, styles.horizontal]}>
-        <ActivityIndicator size="large" color="#0000ff"/>
-      </View>
-  ) : (
+  return  (
       <ScrollView>
     <View style={styles.container}>
       <ImageBackground

@@ -14,7 +14,7 @@ const TrackPlayerComponent = () => {
     playbackInstance
   } = useContext(PlayerContext);
 
-  const { songs } = useContext(AppContext);
+  const { songs, goBack, goForward } = useContext(AppContext);
 
   const renderFileInfo = () => {
     return playbackInstance
@@ -30,7 +30,7 @@ const TrackPlayerComponent = () => {
   return (
     <View style={styles.container}>
       <View style={styles.containerWrapper}>
-        <TouchableOpacity onPress={handlePreviousTrack}>
+        <TouchableOpacity onPress={() => {handlePreviousTrack(); goBack()}}>
           <FontAwesome5 name="backward" size={16} color="#93A8B3" />
         </TouchableOpacity>
         <Play
@@ -38,7 +38,7 @@ const TrackPlayerComponent = () => {
           handlePlayPause={handlePlayPause}
           styles={styles}
         />
-        <TouchableOpacity onPress={handleNextTrack}>
+        <TouchableOpacity onPress={() => {handleNextTrack(); goForward();}}>
           <FontAwesome5 name="forward" size={16} color="#93A8B3" />
         </TouchableOpacity>
       </View>

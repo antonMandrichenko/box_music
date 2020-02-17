@@ -92,16 +92,6 @@ const AppProvider = ({ children }) => {
               authorName: user.slice(0, user.indexOf("."))
             })
         )
-        .then(
-          firebase
-            .database()
-            .ref("users/comments/")
-            .child(user.slice(0, user.indexOf(".")))
-            .update({
-              review: null,
-              authorName: user.slice(0, user.indexOf("."))
-            })
-        )
         .catch(function(error) {
           const errorMessage = error.message;
           setError(errorMessage);

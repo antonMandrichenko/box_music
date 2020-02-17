@@ -7,7 +7,7 @@ import {
   FlatList,
   Text,
   Image,
-  SafeAreaView, ActivityIndicator, TouchableOpacity
+  SafeAreaView
 } from "react-native";
 import { vh, vw } from "react-native-expo-viewport-units";
 import PlayButtons from "../components/PlayButtons";
@@ -39,13 +39,8 @@ const NewsRead = ({ title, text, image }) => {
 const News = ({navigation}) => {
   const { data } = React.useContext(AppContext);
   const nav = () => navigation.navigate("EditProfile");
-  const {preparedSongs} = useContext(AppContext);
 
-  return preparedSongs.length === 0 ? (
-      <View style={[styles.containerLoader, styles.horizontal]}>
-        <ActivityIndicator size="large" color="#0000ff"/>
-      </View>
-  ) : (
+  return (
     <View style={styles.container}>
       <ImageBackground
         source={

@@ -7,7 +7,9 @@ import {
   TextInput,
   TouchableNativeFeedback,
   TouchableOpacity,
-  View, Modal, TouchableHighlight
+  View,
+  Modal,
+  TouchableHighlight
 } from "react-native";
 import SmallButton from "./SmallButton";
 import heart from "../assets/images/icons/heart.png";
@@ -23,11 +25,20 @@ import UserProfileButton from "./UserProfileButton";
 import ReviewContext from "../context/ReviewContext";
 
 const PlayButtons = ({ nav }) => {
-  const { handlePlayPause, handleNextTrack, isPlaying,  } = useContext(
+  const { handlePlayPause, handleNextTrack, isPlaying } = useContext(
     PlayerContext
   );
-  const { preparedSongs, goForward, goBack, removeSong, pickerSelection, pickerDisplayed, setPickerValue, togglePicker} = React.useContext(AppContext);
-  const {toggleLike, like, image } = React.useContext(ReviewContext);
+  const {
+    preparedSongs,
+    goForward,
+    goBack,
+    removeSong,
+    pickerSelection,
+    pickerDisplayed,
+    setPickerValue,
+    togglePicker
+  } = React.useContext(AppContext);
+  const { toggleLike, like, image } = React.useContext(ReviewContext);
   return (
     <>
       <View style={styles.containerHeaderButtons}>
@@ -52,7 +63,7 @@ const PlayButtons = ({ nav }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.buttonNext}>
-            <TouchableOpacity onPress={handleNextTrack}>
+            <TouchableOpacity onPress={() => {handleNextTrack(); goForward();}}>
               <Image
                 source={
                   __DEV__
@@ -65,8 +76,8 @@ const PlayButtons = ({ nav }) => {
           </View>
         </View>
         <View style={styles.containerHeaderButtonsRight}>
-          <SmallButton path={heart} onPress={toggleLike} like={like}/>
-          <SmallButton path={cancel} onPress={removeSong}/>
+          <SmallButton path={heart} onPress={toggleLike} like={like} />
+          <SmallButton path={cancel} onPress={removeSong} />
           <SmallButton path={arrowTop} onPress={goForward} />
           <SmallButton path={arrowBottom} onPress={goBack} />
           <UserProfileButton path={image} nav={nav} />
@@ -87,14 +98,13 @@ const PlayButtons = ({ nav }) => {
             />
           </LinearGradient>
           <View>
-
             <TouchableNativeFeedback
-                onPress={togglePicker}
-                background={
-                  Platform.OS === "android"
-                      ? TouchableNativeFeedback.SelectableBackground()
-                      : ""
-                }
+              onPress={togglePicker}
+              background={
+                Platform.OS === "android"
+                  ? TouchableNativeFeedback.SelectableBackground()
+                  : ""
+              }
             >
               <LinearGradient
                 style={styles.inputChannelButton}
@@ -107,37 +117,30 @@ const PlayButtons = ({ nav }) => {
               </LinearGradient>
             </TouchableNativeFeedback>
             <Modal
-                visible={pickerDisplayed}
-                animationType={"slide"}
-                transparent={true}
+              visible={pickerDisplayed}
+              animationType={"slide"}
+              transparent={true}
             >
               <View style={styles.modalWindow}>
                 {preparedSongs.map((value, index) => {
                   return (
-                      <React.Fragment key={index}>
-                      <Image style={styles.modalImage} source={value.image}/>
+                    <React.Fragment key={index}>
+                      <Image style={styles.modalImage} source={value.image} />
 
                       <TouchableHighlight
-                          key={index}
-                          onPress={() =>
-                              setPickerValue(value.title)
-                          }
-                          style={{ paddingTop: 4, paddingBottom: 4 }}
+                        key={index}
+                        onPress={() => setPickerValue(value.title)}
+                        style={{ paddingTop: 4, paddingBottom: 4 }}
                       >
-
-                          <Text style={styles.modalText}>
-                            {value.title}
-                          </Text>
-
-
+                        <Text style={styles.modalText}>{value.title}</Text>
                       </TouchableHighlight>
-                      </React.Fragment>
+                    </React.Fragment>
                   );
                 })}
 
                 <TouchableHighlight
-                    onPress={togglePicker}
-                    style={{ paddingTop: 4, paddingBottom: 4 }}
+                  onPress={togglePicker}
+                  style={{ paddingTop: 4, paddingBottom: 4 }}
                 >
                   <Text style={styles.modalTextCancel}>Cancel</Text>
                 </TouchableHighlight>
@@ -286,19 +289,19 @@ const styles = StyleSheet.create({
 
     position: "absolute"
   },
-    modalText: {
+  modalText: {
     color: "#abaed0",
-      padding: 10,
-      fontSize: 16,
-      width: "100%"
-},
+    padding: 10,
+    fontSize: 16,
+    width: "100%"
+  },
   modalTextCancel: {
     color: "#abaed0",
-      padding: 20,
-      fontSize: 24,
-      borderRadius: 3,
-      borderColor: "#abaed0"
-},
+    padding: 20,
+    fontSize: 24,
+    borderRadius: 3,
+    borderColor: "#abaed0"
+  },
   modalImage: {
     width: 40,
     height: 40,
