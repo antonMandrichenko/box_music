@@ -56,10 +56,10 @@ const ReviewProvider = ({ children }) => {
       .once("value")
       .then(function(snapshot) {
         if (snapshot.val()) {
-          const m = Object.values(snapshot.val()).flat(1);
-          for (let i of m) {
-            setComments(prevState => [...prevState, {...i}]);
-          }
+          const m = Object.assign(Object.values(snapshot.val()));
+            const obj = m.map(item => Object.values(item));
+            const arr = (obj.flat(2))
+            setComments(arr);
         }
       });
   useEffect(() => {
@@ -156,9 +156,6 @@ const ReviewProvider = ({ children }) => {
         .child(user.slice(0, user.indexOf(".")))
         .once("value")
         .then(function(snapshot) {
-            // const val = Object.values(snapshot.val());
-            // val.map(item => item.image = result.uri );
-            // console.log(val);
           if (user === null) {
             firebase
               .database()

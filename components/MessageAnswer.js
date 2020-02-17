@@ -24,7 +24,10 @@ const MessageAnswer = props => {
           <View style={styles.wrapper} key={Math.random() * 2}>
             <View style={styles.container}>
               <View style={styles.lineBefore} />
+              {/*{ user ===*/}
+              {/*comment.authorName && (*/}
               <Image style={styles.image} source={{ uri: image }} />
+              {/*// )}*/}
               <View>
                 <Text style={styles.text}>{comment.authorName}</Text>
                 <View style={styles.textAnswerWrapper}>
