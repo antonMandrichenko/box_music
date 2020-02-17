@@ -1,6 +1,5 @@
 import React from "react";
 import {Image, Text, TouchableOpacity, View, StyleSheet, ImageBackground} from "react-native";
-import user from "../assets/images/freddie.png";
 import triangleBottom from "../assets/images/icons/triangleBottom.png";
 import answer from "../assets/images/icons/answer.png";
 import { vw } from "react-native-expo-viewport-units";
@@ -12,7 +11,7 @@ import ReviewContext from "../context/ReviewContext";
 const MessageBoard = () => {
   const [show, setShow] = React.useState(false);
   const [showReview, setShowReview] = React.useState(true);
-  const { comments, image } = React.useContext(ReviewContext);
+  const { comments, image, user } = React.useContext(ReviewContext);
   const toggleAnswer = () => setShow(!show);
   const toggleReview = () => setShowReview(!showReview);
   return (
@@ -20,7 +19,7 @@ const MessageBoard = () => {
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <Image style={styles.image} source={image} />
-          <Text style={styles.text}>Adam Lambert</Text>
+          <Text style={styles.text}>{user.slice(0, user.indexOf('@'))}</Text>
         </View>
         <View style={styles.container}>
           <TouchableOpacity style={styles.flex} onPress={toggleAnswer}>

@@ -20,7 +20,7 @@ import ReviewContext from "../context/ReviewContext";
 const EditProfile = ({navigation}) => {
 
   const { switchPlan, toggleSwitchPlan } = React.useContext(AppContext);
-  const { pickImage, image } = React.useContext(ReviewContext);
+  const { pickImage, image, user } = React.useContext(ReviewContext);
 
   const darkColors = ["#373843", "#2e2f39"];
   const lightColors = ["#17165a", "#3736bc"];
@@ -72,7 +72,7 @@ const EditProfile = ({navigation}) => {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.login}>Adam Lambert</Text>
+        <Text style={styles.login}>{user}</Text>
         <View style={styles.blackLine} />
         <View style={styles.containerBeforeSlider}>
           <Text style={styles.textAdditional}>• Subscription Plan •</Text>

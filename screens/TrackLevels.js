@@ -20,7 +20,6 @@ import double from "../assets/images/icons/double.png";
 import binoculars from "../assets/images/icons/binoculars.png";
 import SubListOfRadioStation from "../components/SubListOfRadioStation";
 import PropTypes from "prop-types";
-import AppContext from "../context/AppContext";
 import ReviewContext from "../context/ReviewContext";
 
 const TrackLevels = ({ navigation }) => {
@@ -32,7 +31,7 @@ const TrackLevels = ({ navigation }) => {
   const toggleSwitch = () => {
     setSwitchValue(!switchValue);
   };
-  const {totalLikes, image} = useContext(ReviewContext);
+  const {totalLikes, image, user} = useContext(ReviewContext);
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -47,7 +46,7 @@ const TrackLevels = ({ navigation }) => {
           <View style={styles.containerHeader}>
             <View style={styles.center}>
               <Image style={styles.imageReview} source={image} />
-              <Text style={styles.userName}> Taney Windy </Text>
+              <Text style={styles.userName}> {user.slice(0, user.indexOf('@'))} </Text>
             </View>
             <TouchableOpacity onPress={toggleSwitch}>
               <LinearGradient
