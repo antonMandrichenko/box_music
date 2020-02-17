@@ -54,7 +54,7 @@ const EditProfile = ({navigation}) => {
             locations={[0, 0.2, 0.8, 1]}
           >
             <Image
-              // source={image ? {uri: image} : require("../assets/images/user.png")}
+              source={image ? {uri: image} : require("../assets/images/user.png")}
               style={styles.circleInnerImage}
             />
           </LinearGradient>
