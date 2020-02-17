@@ -30,9 +30,7 @@ const ReviewProvider = ({ children }) => {
   useEffect(() => {
     getUser();
   }, []);
-    console.log(user)
-
-    const reviewsObj = {
+  const reviewsObj = {
     reviews: review,
     authorName: user,
     id: comments.length + 1,
@@ -142,7 +140,6 @@ const ReviewProvider = ({ children }) => {
       }
     }
   };
-
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -150,16 +147,18 @@ const ReviewProvider = ({ children }) => {
       aspect: [4, 3],
       quality: 1
     });
+
     if (!result.cancelled) {
       setImage(result.uri);
       await firebase
         .database()
         .ref("users/comments/")
-          .child(user.slice(0, user.indexOf(".")))
+        .child(user.slice(0, user.indexOf(".")))
         .once("value")
         .then(function(snapshot) {
-            const val = Object.values(snapshot.val());
-            val.map(item => item.image = result.uri )
+            // const val = Object.values(snapshot.val());
+            // val.map(item => item.image = result.uri );
+            // console.log(val);
           if (user === null) {
             firebase
               .database()
