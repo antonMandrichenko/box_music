@@ -75,6 +75,7 @@ const AppProvider = ({ children }) => {
   const signUp = async e => {
     if (password !== passwordConfirm) {
       setError("password must be the same");
+      return ;
     } else {
       e.preventDefault();
       const emailStorage = await AsyncStorage.getItem("email");
@@ -88,7 +89,6 @@ const AppProvider = ({ children }) => {
             .ref("users/images/")
             .child(user.slice(0, user.indexOf(".")))
             .update({
-              image: "",
               authorName: user.slice(0, user.indexOf("."))
             })
         )
@@ -120,8 +120,6 @@ const AppProvider = ({ children }) => {
       if (user) {
         const userEmail = user.email;
         setUser(userEmail);
-      } else {
-          setUser("Anonymous")
       }
     });
   };

@@ -4,7 +4,6 @@ import { debounce } from "../constants/Layout";
 import * as ImagePicker from "expo-image-picker";
 import userImage from "../assets/images/user.png";
 import { Platform } from "react-native";
-
 const ReviewContext = React.createContext();
 
 const ReviewProvider = ({ children }) => {
@@ -12,27 +11,30 @@ const ReviewProvider = ({ children }) => {
   const [comments, setComments] = useState([]);
   const [user, setUser] = useState("");
   const [currentSong, setCurrentSong] = useState("");
-  const [uid, setUid] = useState("");
   const [like, setLike] = useState(false);
   const [totalLikes, setTotalLikes] = useState(0);
+  const [image, setImage] = useState(null);
 
-    const getUser = async () => {
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                const userEmail = user.email;
-                setUser(userEmail);
-            } else {
-                setUser("Anonymous")
-            }
-        });
-    };
-    useEffect(() => {
-        getUser();
-    }, []);
+  const getUser = async () => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const userEmail = user.email;
+        setUser(userEmail);
+      } else {
+        console.log(
+            'user not found'
+        )
+      }
+    });
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
   const reviewsObj = {
     reviews: review,
     authorName: user,
-    id: comments.length + 1
+    id: comments.length + 1,
+    image: image
   };
 
   const sendComments = () => {
@@ -50,18 +52,19 @@ const ReviewProvider = ({ children }) => {
     firebase
       .database()
       .ref("users/comments/")
-        // .child(user.slice(0, user.indexOf(".")))
+      // .child(user.slice(0, user.indexOf(".")))
       .once("value")
       .then(function(snapshot) {
-          if(snapshot.val()) {
-              const m = (Object.values(snapshot.val()));
-              for (let i of m) {
-                  setComments(Object.values(i));
-              }
+        if (snapshot.val()) {
+          const m = Object.values(snapshot.val()).flat(1);
+          for (let i of m) {
+            setComments(prevState => [...prevState, {...i}]);
           }
-
+        }
       });
-    useEffect(() => { getComments()}, []);
+  useEffect(() => {
+    getComments();
+  }, []);
   const deleteReview = index => comments.filter((item, i) => i !== index);
   const toggleLike = () => {
     setLike(!like);
@@ -113,18 +116,17 @@ const ReviewProvider = ({ children }) => {
       });
   };
   let songRef = firebase.database().ref("users/playlists/");
-  const removeCommentsFromFireBase = (id) => {
-      firebase
-          .database()
-          .ref("users/comments/" )
-          .child(user.slice(0, user.indexOf(".")))
-          .child(id)
-          .remove();
-  }
+  const removeCommentsFromFireBase = id => {
+    firebase
+      .database()
+      .ref("users/comments/")
+      .child(user.slice(0, user.indexOf(".")))
+      .child(id)
+      .remove();
+  };
 
   const removeSong = () => songRef.remove();
 
-  const [image, setImage] = useState(null);
 
   React.useEffect(() => {
     getPermissionAsync();
@@ -161,7 +163,7 @@ const ReviewProvider = ({ children }) => {
               .child(user.slice(0, user.indexOf(".")))
               .update({
                 image: result.uri,
-                authorName: user,
+                authorName: user
               });
           } else {
             firebase
@@ -170,7 +172,7 @@ const ReviewProvider = ({ children }) => {
               .child(user.slice(0, user.indexOf(".")))
               .update({
                 image: result.uri,
-                authorName: user,
+                authorName: user
               });
           }
         });
@@ -185,15 +187,16 @@ const ReviewProvider = ({ children }) => {
         .child(user.slice(0, user.indexOf(".")))
         .once("value")
         .then(function(snapshot) {
-            if (snapshot.val().image === "" ) {
+            if(snapshot.val() === null) {
                 setImage(userImage);
-            } else
-          if (user === snapshot.val().authorName) {
+            } else if (snapshot.val().image === "") {
+            setImage(userImage);
+          } else if (user === snapshot.val().authorName) {
             setImage(snapshot.val().image);
           }
         });
     } else {
-        setImage(userImage);
+      setImage(userImage);
     }
   };
 
@@ -204,7 +207,7 @@ const ReviewProvider = ({ children }) => {
   return (
     <ReviewContext.Provider
       value={{
-         sendComments,
+        sendComments,
         removeCommentsFromFireBase,
         removeSong,
         deleteReview,
@@ -218,7 +221,8 @@ const ReviewProvider = ({ children }) => {
         review,
         totalLikes,
         like,
-        image
+        image,
+        user
       }}
     >
       {children}

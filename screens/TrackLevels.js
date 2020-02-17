@@ -32,7 +32,7 @@ const TrackLevels = ({ navigation }) => {
   const toggleSwitch = () => {
     setSwitchValue(!switchValue);
   };
-  const {totalLikes} = useContext(ReviewContext);
+  const {totalLikes, image} = useContext(ReviewContext);
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -46,7 +46,7 @@ const TrackLevels = ({ navigation }) => {
         >
           <View style={styles.containerHeader}>
             <View style={styles.center}>
-              <Image style={styles.imageReview} source={user} />
+              <Image style={styles.imageReview} source={image} />
               <Text style={styles.userName}> Taney Windy </Text>
             </View>
             <TouchableOpacity onPress={toggleSwitch}>

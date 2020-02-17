@@ -12,14 +12,14 @@ import ReviewContext from "../context/ReviewContext";
 const MessageBoard = () => {
   const [show, setShow] = React.useState(false);
   const [showReview, setShowReview] = React.useState(true);
-  const { comments } = React.useContext(ReviewContext);
+  const { comments, image } = React.useContext(ReviewContext);
   const toggleAnswer = () => setShow(!show);
   const toggleReview = () => setShowReview(!showReview);
   return (
     <View style={{ flexDirection: "column" }}>
       <View style={styles.wrapper}>
         <View style={styles.container}>
-          <Image style={styles.image} source={user} />
+          <Image style={styles.image} source={image} />
           <Text style={styles.text}>Adam Lambert</Text>
         </View>
         <View style={styles.container}>

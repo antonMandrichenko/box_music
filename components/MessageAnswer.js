@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Image, Text, TouchableOpacity, View, StyleSheet } from "react-native";
-import user from "../assets/images/freddie.png";
 import triangleBottom from "../assets/images/icons/triangleBottom.png";
 import answer from "../assets/images/icons/answer.png";
 import cancel from "../assets/images/icons/cancel.png";
@@ -13,19 +12,20 @@ const MessageAnswer = props => {
     removeCommentsFromFireBase,
     deleteReview,
     setComments,
-    setData
+    setData,
+    user
   } = React.useContext(ReviewContext);
-  const arr = [];
 
+  useEffect(() => {
+  }, [user]);
   return (
     <>
       {comments.map((comment, index) => {
-        arr.push(index);
         return (
           <View style={styles.wrapper} key={Math.random() * 2}>
             <View style={styles.container}>
               <View style={styles.lineBefore} />
-              <Image style={styles.image} source={user} />
+              <Image style={styles.image} source={{ uri: comment.image }} />
               <View>
                 <Text style={styles.text}>Adam Lambert</Text>
                 <View style={styles.textAnswerWrapper}>
@@ -42,16 +42,23 @@ const MessageAnswer = props => {
               <TouchableOpacity style={styles.flex}>
                 <Image style={styles.iconReview} source={answer} />
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.flex}
-                onPress={() => {
-                  setData(index);
-                  setComments(deleteReview(index));
-                  removeCommentsFromFireBase(comment.id);
-                }}
-              >
-                <Image style={styles.iconReview} source={cancel} />
-              </TouchableOpacity>
+
+              {user.slice(0, user.indexOf(".")) ===
+                comment.authorName.slice(
+                  0,
+                  comment.authorName.indexOf(".")
+                ) && (
+                <TouchableOpacity
+                  style={styles.flex}
+                  onPress={() => {
+                    setData(index);
+                    setComments(deleteReview(index));
+                    removeCommentsFromFireBase(comment.id);
+                  }}
+                >
+                  <Image style={styles.iconReview} source={cancel} />
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         );

@@ -14,7 +14,6 @@ import heart from "../assets/images/icons/heart.png";
 import cancel from "../assets/images/icons/cancel.png";
 import arrowTop from "../assets/images/icons/arrow-top.png";
 import arrowBottom from "../assets/images/icons/arrow-bot.png";
-import user from "../assets/images/freddie.png";
 import { LinearGradient } from "expo-linear-gradient";
 import { vw } from "react-native-expo-viewport-units";
 import AppContext from "../context/AppContext";
@@ -28,7 +27,7 @@ const PlayButtons = ({ nav }) => {
     PlayerContext
   );
   const { preparedSongs, goForward, goBack, removeSong, pickerSelection, pickerDisplayed, setPickerValue, togglePicker} = React.useContext(AppContext);
-  const {toggleLike, like } = React.useContext(ReviewContext);
+  const {toggleLike, like, image } = React.useContext(ReviewContext);
   return (
     <>
       <View style={styles.containerHeaderButtons}>
@@ -70,7 +69,7 @@ const PlayButtons = ({ nav }) => {
           <SmallButton path={cancel} onPress={removeSong}/>
           <SmallButton path={arrowTop} onPress={goForward} />
           <SmallButton path={arrowBottom} onPress={goBack} />
-          <UserProfileButton path={user} nav={nav} />
+          <UserProfileButton path={image} nav={nav} />
         </View>
       </View>
       <View style={styles.containerHeaderInputStation}>

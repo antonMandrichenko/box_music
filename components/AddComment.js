@@ -6,19 +6,18 @@ import {
   StyleSheet,
   TextInput
 } from "react-native";
-import user from "../assets/images/freddie.png";
 import send from "../assets/images/icons/send.png";
 import { vw } from "react-native-expo-viewport-units";
 import { LinearGradient } from "expo-linear-gradient";
 import ReviewContext from "../context/ReviewContext";
 
 const AddComment = () => {
-  const { review, setReview, sendComments } = React.useContext(ReviewContext);
+  const { review, setReview, sendComments, image } = React.useContext(ReviewContext);
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <Image style={styles.imageReview} source={user} />
+        <Image style={styles.imageReview} source={image} />
       </View>
       <View style={styles.container}>
         <LinearGradient
