@@ -12,6 +12,7 @@ const ReviewProvider = ({ children }) => {
   const [user, setUser] = useState("");
   const [currentSong, setCurrentSong] = useState("");
   const [like, setLike] = useState(false);
+  const [likes, setLikes] = useState(0);
   const [totalLikes, setTotalLikes] = useState(0);
   const [image, setImage] = useState(null);
 
@@ -21,9 +22,7 @@ const ReviewProvider = ({ children }) => {
         const userEmail = user.email;
         setUser(userEmail);
       } else {
-        console.log(
-            'user not found'
-        )
+        console.log("user not found");
       }
     });
   };
@@ -57,11 +56,33 @@ const ReviewProvider = ({ children }) => {
       .then(function(snapshot) {
         if (snapshot.val()) {
           const m = Object.assign(Object.values(snapshot.val()));
-            const obj = m.map(item => Object.values(item));
-            const arr = (obj.flat(2))
-            setComments(arr);
+          const obj = m.map(item => Object.values(item));
+          const arr = obj.flat(2);
+          setComments(arr);
         }
       });
+
+  const countALlLikes = () => {
+    firebase
+      .database()
+      .ref("users")
+      .child("likes")
+      .once("value")
+      .then(function(snapshot) {
+        const obj = snapshot.val();
+        const val = Object.values(obj).map(item => item.like);
+        const result = val.reduce(
+          (previousValue, currentValue) => previousValue + currentValue
+        );
+        setTotalLikes(result);
+      });
+  };
+  useEffect(() => {
+    countALlLikes();
+  }, [likes]);
+  useEffect(() => {
+    getAllLikes();
+  }, []);
   useEffect(() => {
     getComments();
   }, []);
@@ -69,10 +90,10 @@ const ReviewProvider = ({ children }) => {
   const toggleLike = () => {
     setLike(!like);
     if (!like) {
-      setTotalLikes(prevState => prevState + 1);
+      setLikes(prevState => prevState + 1);
       debounce(sendLikeToFirebase(1), 200);
     } else {
-      setTotalLikes(prevState => prevState - 1);
+      setLikes(prevState => prevState - 1);
       debounce(sendLikeToFirebase(-1), 200);
     }
   };
@@ -80,25 +101,13 @@ const ReviewProvider = ({ children }) => {
   const sendLikeToFirebase = async incremental => {
     return firebase
       .database()
-      .ref()
-      .child("users/likes/like")
-      .once("value")
-      .then(snapshot => {
-        if (snapshot.val() === undefined) {
-        } else {
-          setTotalLikes(snapshot.val());
-        }
-      })
-      .then(
-        await firebase
-          .database()
-          .ref("users/likes/")
-          .update({
-            like: totalLikes + incremental,
-            authorName: user,
-            song: currentSong
-          })
-      );
+      .ref("users/likes/")
+      .child(user.slice(0, user.indexOf(".")))
+      .set({
+        like: likes + incremental,
+        authorName: user,
+        song: currentSong
+      });
   };
   const setData = index => {
     firebase
@@ -126,7 +135,6 @@ const ReviewProvider = ({ children }) => {
   };
 
   const removeSong = () => songRef.remove();
-
 
   React.useEffect(() => {
     getPermissionAsync();
@@ -164,7 +172,7 @@ const ReviewProvider = ({ children }) => {
               .update({
                 image: result.uri,
                 authorName: user,
-                  test: 1
+                test: 1
               });
           } else {
             firebase
@@ -174,7 +182,7 @@ const ReviewProvider = ({ children }) => {
               .update({
                 image: result.uri,
                 authorName: user,
-                  test: 2
+                test: 2
               });
           }
         });
@@ -189,9 +197,9 @@ const ReviewProvider = ({ children }) => {
         .child(user.slice(0, user.indexOf(".")))
         .once("value")
         .then(function(snapshot) {
-            if(snapshot.val() === null) {
-                setImage(userImage);
-            } else if (snapshot.val().image === "") {
+          if (snapshot.val() === null) {
+            setImage(userImage);
+          } else if (snapshot.val().image === "") {
             setImage(userImage);
           } else if (user === snapshot.val().authorName) {
             setImage(snapshot.val().image);

@@ -48,6 +48,19 @@ const Login = props => {
           return false;
         })
       )
+        .then(
+              firebase
+                .database()
+                .ref("likes")
+                .child(user.slice(0, user.indexOf(".")))
+                  .once("value", snap => {
+                    if (snap.val() === null) {
+                        console.log(snap.val())
+                        console.log("snap")
+                      }else {
+                      console.log('elseSnap')
+                    }})
+        )
       // .then(
       //   firebase
       //     .database()
