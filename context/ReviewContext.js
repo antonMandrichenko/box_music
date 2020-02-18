@@ -80,9 +80,7 @@ const ReviewProvider = ({ children }) => {
   useEffect(() => {
     countALlLikes();
   }, [likes]);
-  useEffect(() => {
-    getAllLikes();
-  }, []);
+
   useEffect(() => {
     getComments();
   }, []);
