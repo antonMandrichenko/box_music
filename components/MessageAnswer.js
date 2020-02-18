@@ -24,10 +24,8 @@ const MessageAnswer = props => {
           <View style={styles.wrapper} key={Math.random() * 2}>
             <View style={styles.container}>
               <View style={styles.lineBefore} />
-              {/*{ user ===*/}
-              {/*comment.authorName && (*/}
-              <Image style={styles.image} source={comment.image} />
-              {/*// )}*/}
+
+              <Image style={styles.image} source={image} />
               <View>
                 <Text style={styles.text}>{comment.authorName}</Text>
                 <View style={styles.textAnswerWrapper}>
@@ -44,7 +42,6 @@ const MessageAnswer = props => {
               <TouchableOpacity style={styles.flex}>
                 <Image style={styles.iconReview} source={answer} />
               </TouchableOpacity>
-
               { user ===
                 comment.authorName && (
                 <TouchableOpacity

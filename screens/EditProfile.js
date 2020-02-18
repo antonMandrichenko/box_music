@@ -54,12 +54,12 @@ const EditProfile = ({navigation}) => {
             locations={[0, 0.2, 0.8, 1]}
           >
             <Image
-              source={image ? {uri: image} : require("../assets/images/user.png")}
+              source={image ?  image : require("../assets/images/user.png")}
               style={styles.circleInnerImage}
             />
           </LinearGradient>
+          <View>
           <TouchableOpacity onPress={pickImage}>
-
             <Image
               source={
                 __DEV__
@@ -70,7 +70,7 @@ const EditProfile = ({navigation}) => {
             />
           </TouchableOpacity>
         </View>
-
+        </View>
         <Text style={styles.login}>{user}</Text>
         <View style={styles.blackLine} />
         <View style={styles.containerBeforeSlider}>

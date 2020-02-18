@@ -15,6 +15,7 @@ const ReviewProvider = ({ children }) => {
   const [likes, setLikes] = useState(0);
   const [totalLikes, setTotalLikes] = useState(0);
   const [image, setImage] = useState(null);
+  const [imageForEachComment, setImageForEachComment] = useState("");
 
   const getUser = async () => {
     firebase.auth().onAuthStateChanged(user => {
@@ -32,7 +33,7 @@ const ReviewProvider = ({ children }) => {
   const reviewsObj = {
     reviews: review,
     authorName: user,
-    id: comments.length + 1,
+    id: comments.length + 1
   };
 
   const sendComments = () => {
@@ -43,13 +44,13 @@ const ReviewProvider = ({ children }) => {
       .child(user.slice(0, user.indexOf(".")))
       .child(comments.length)
       .set(reviewsObj)
-        .then(
-            firebase
-                .database()
-                .ref("users/comments/")
-                .child(user.slice(0, user.indexOf(".")))
-                .update({image: image})
-        )
+      .then(
+        firebase
+          .database()
+          .ref("users/comments/")
+          .child(user.slice(0, user.indexOf(".")))
+          .update({ image: image })
+      )
       .then(setReview(""));
   };
 
@@ -64,7 +65,8 @@ const ReviewProvider = ({ children }) => {
           const m = Object.assign(Object.values(snapshot.val()));
           const obj = m.map(item => Object.values(item));
           const arr = obj.flat(2);
-          setComments(arr);
+          const commentsData = arr.filter(image => image.authorName);
+          setComments(commentsData);
         }
       });
 
@@ -152,9 +154,8 @@ const ReviewProvider = ({ children }) => {
       }
     }
   };
-    const [obj,setObj] = useState({});
 
-    const pickImage = async () => {
+  const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -162,49 +163,24 @@ const ReviewProvider = ({ children }) => {
       quality: 1
     });
     if (!result.cancelled) {
-        setImage(result.uri);
-        firebase
-            .database()
-            .ref()
-            .child("users/comments/")
-            .child(user.slice(0, user.indexOf(".")))
-            .update( {image: result.uri})
+      setImage(result.uri);
+      firebase
+        .database()
+        .ref()
+        .child("users/comments/")
+        .child(user.slice(0, user.indexOf(".")))
+        .update({ image: result.uri });
     }
   };
-
-    // const changeAllImages = () => {
-    //     firebase
-    //         .database()
-    //         .ref()
-    //         .child("users/comments/")
-    //         .once("value")
-    //         .then(snap => {
-    //             const userSlice = user.slice(0, user.indexOf("."))
-    //             const obj = snap.val()
-    //             const changeImage = (obj) => {
-    //                 const val =obj[userSlice];
-    //                 for (let i in val) {
-    //                     val[i].image = result.uri
-    //                 }
-    //                 return obj;
-    //             }
-    //             changeImage(obj);
-    //             console.log(obj);
-    //         });
-    // };
 
   const getImageFromFireBase = async () => {
     if (user) {
       await firebase
         .database()
         .ref("users/comments/")
-        .child(user.slice(0, user.indexOf(".")))
-        .child("image")
         .once("value")
         .then(function(snapshot) {
-          if (snapshot.val() === null) {
-            setImage(userImage);
-          } else setImage(snapshot.val());
+          setImageForEachComment(snapshot.val());
         });
     } else {
       setImage(userImage);
@@ -233,7 +209,8 @@ const ReviewProvider = ({ children }) => {
         totalLikes,
         like,
         image,
-        user
+        user,
+        imageForEachComment
       }}
     >
       {children}
