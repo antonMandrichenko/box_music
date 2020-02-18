@@ -26,7 +26,7 @@ const MessageAnswer = props => {
               <View style={styles.lineBefore} />
               {/*{ user ===*/}
               {/*comment.authorName && (*/}
-              <Image style={styles.image} source={{ uri: image }} />
+              <Image style={styles.image} source={comment.image} />
               {/*// )}*/}
               <View>
                 <Text style={styles.text}>{comment.authorName}</Text>

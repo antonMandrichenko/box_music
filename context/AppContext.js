@@ -75,7 +75,7 @@ const AppProvider = ({ children }) => {
   const signUp = async e => {
     if (password !== passwordConfirm) {
       setError("password must be the same");
-      return ;
+      return;
     } else {
       e.preventDefault();
       const emailStorage = await AsyncStorage.getItem("email");
