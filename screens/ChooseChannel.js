@@ -145,9 +145,9 @@ const ChooseChannel = ({navigation}) => {
                     title="create your own channel"
                     handleChange={() => navigation.navigate("CreateChannel")}
                 />
-                <TouchableOpacity onPress={signOut}>
-                    <Text>sign out</Text>
-                </TouchableOpacity>
+                {/*<TouchableOpacity onPress={signOut}>*/}
+                {/*    <Text>sign out</Text>*/}
+                {/*</TouchableOpacity>*/}
             </LinearGradient>
         </View>
     );

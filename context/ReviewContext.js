@@ -54,21 +54,39 @@ const ReviewProvider = ({ children }) => {
       .then(setReview(""));
   };
 
-  const getComments = () =>
-    firebase
-      .database()
-      .ref("users/comments/")
-      // .child(user.slice(0, user.indexOf(".")))
-      .once("value")
-      .then(function(snapshot) {
-        if (snapshot.val()) {
-          const m = Object.assign(Object.values(snapshot.val()));
-          const obj = m.map(item => Object.values(item));
-          const arr = obj.flat(2);
-          const commentsData = arr.filter(image => image.authorName);
-          setComments(commentsData);
-        }
-      });
+    const getComments = () =>
+        firebase
+            .database()
+            .ref("users/comments/")
+            .once("value")
+            .then(function(snapshot) {
+                if (snapshot.val()) {
+                    const keys = Object.keys(snapshot.val());
+                    const reviews = keys
+                        .reduce((result, key) => {
+                            const snapKey = snapshot.val()[key];
+                            return [
+                                ...result,
+                                Object.keys(snapKey).reduce(
+                                    (acc, keyReview) =>
+                                        keyReview !== "image"
+                                            ? [
+                                                ...acc,
+                                                {
+                                                    reviews: snapKey[keyReview].reviews,
+                                                    image: snapKey.image,
+                                                    authorName: snapKey[keyReview].authorName
+                                                }
+                                            ]
+                                            : acc,
+                                    []
+                                )
+                            ];
+                        }, [])
+                        .flat(1);
+                    setComments(reviews);
+                }
+            });
 
   const countALlLikes = () => {
     firebase
@@ -85,13 +103,7 @@ const ReviewProvider = ({ children }) => {
         setTotalLikes(result);
       });
   };
-  useEffect(() => {
-    countALlLikes();
-  }, [likes]);
 
-  useEffect(() => {
-    getComments();
-  }, []);
   const deleteReview = index => comments.filter((item, i) => i !== index);
   const toggleLike = () => {
     setLike(!like);
@@ -104,17 +116,17 @@ const ReviewProvider = ({ children }) => {
     }
   };
 
-  const sendLikeToFirebase = async incremental => {
-    return firebase
-      .database()
-      .ref("users/likes/")
-      .child(user.slice(0, user.indexOf(".")))
-      .set({
-        like: likes + incremental,
-        authorName: user,
-        song: currentSong
-      });
-  };
+    const sendLikeToFirebase = async incremental => {
+        return firebase
+            .database()
+            .ref("users/likes/")
+            .child(user.slice(0, user.indexOf(".")))
+            .set({
+                like: likes + incremental,
+                authorName: user,
+                song: currentSong
+            });
+    };
   const setData = index => {
     firebase
       .database()
@@ -142,9 +154,6 @@ const ReviewProvider = ({ children }) => {
 
   const removeSong = () => songRef.remove();
 
-  React.useEffect(() => {
-    getPermissionAsync();
-  }, []);
 
   const getPermissionAsync = async () => {
     if (Platform.OS === "ios") {
@@ -163,13 +172,13 @@ const ReviewProvider = ({ children }) => {
       quality: 1
     });
     if (!result.cancelled) {
-      setImage(result.uri);
-      firebase
-        .database()
-        .ref()
-        .child("users/comments/")
-        .child(user.slice(0, user.indexOf(".")))
-        .update({ image: result.uri });
+        setImage(result.uri);
+        firebase
+            .database()
+            .ref()
+            .child("users/comments/")
+            .child(user.slice(0, user.indexOf(".")))
+            .update({ image: result.uri });
     }
   };
 
@@ -187,10 +196,23 @@ const ReviewProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    getImageFromFireBase();
-  }, [user]);
+    useEffect(() => {
+        getImageFromFireBase();
+    }, [user, image]);
+    useEffect(() => {
+        countALlLikes();
+    }, [likes]);
 
+    useEffect(() => {
+        getComments();
+    }, [image]);
+
+    useEffect(() => {
+        getPermissionAsync();
+    }, []);
+    useEffect(() => {
+        getUser();
+    }, []);
   return (
     <ReviewContext.Provider
       value={{

@@ -25,7 +25,7 @@ const MessageAnswer = props => {
             <View style={styles.container}>
               <View style={styles.lineBefore} />
 
-              <Image style={styles.image} source={image} />
+              <Image style={styles.image} source={{uri: comment.image}} />
               <View>
                 <Text style={styles.text}>{comment.authorName}</Text>
                 <View style={styles.textAnswerWrapper}>

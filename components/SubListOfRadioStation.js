@@ -36,7 +36,7 @@ const SubListOfRadioStation = () => {
             inactiveSlideOpacity={0.7}
             layoutCardOffset={9}
             activeAnimationType={'spring'}
-            activeSlideAlignment={renderSongs.length < 3 ? 'center' : 'start'}
+            activeSlideAlignment={renderSongs.length < 4 ? 'center' : 'start'}
             activeAnimationOptions={{
                 friction: 4,
                 tension: 40
@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#4d4f5e",
         borderRadius: 10,
-        paddingBottom: 20
+        paddingBottom: 20,
+        paddingVertical: 10
     },
     image: {
         width: 80,

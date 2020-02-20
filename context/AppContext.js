@@ -72,30 +72,31 @@ const AppProvider = ({ children }) => {
     AsyncStorage.setItem("password", password);
   }, [email, password]);
 
-  const signUp = async e => {
+  const signUp = async (e, nav) => {
     if (password !== passwordConfirm) {
       setError("password must be the same");
       return;
-    } else {
+    } else if (password === passwordConfirm) {
       e.preventDefault();
       const emailStorage = await AsyncStorage.getItem("email");
       const passwordStorage = await AsyncStorage.getItem("password");
       await firebase
-        .auth()
-        .createUserWithEmailAndPassword(emailStorage, passwordStorage)
-        .then(
-          firebase
-            .database()
-            .ref("users/images/")
-            .child(user.slice(0, user.indexOf(".")))
-            .update({
-              authorName: user.slice(0, user.indexOf("."))
-            })
-        )
-        .catch(function(error) {
-          const errorMessage = error.message;
-          setError(errorMessage);
-        });
+          .auth()
+          .createUserWithEmailAndPassword(emailStorage, passwordStorage)
+          .then( user &&
+              firebase
+                  .database()
+                  .ref("users/images/")
+                  .child(user.slice(0, user.indexOf(".")))
+                  .update({
+                    authorName: user.slice(0, user.indexOf("."))
+                  })
+          )
+          .then(nav.navigate('ChooseChannel'))
+          .catch(function(error) {
+            const errorMessage = error.message;
+            setError(errorMessage);
+          });
     }
   };
 

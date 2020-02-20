@@ -25,9 +25,16 @@
     "ios": {
       "supportsTablet": true
     },    "android": {
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "READ_INTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE"
+      ],
       "package": "crypto.android"
     }
   },
   "name": "crypto",
-  "displayName": "cryptoDisplay"
+  "displayName": "cryptoDisplay",
+
 }

@@ -24,120 +24,121 @@ const EditProfile = ({navigation}) => {
 
   const darkColors = ["#373843", "#2e2f39"];
   const lightColors = ["#17165a", "#3736bc"];
-
+  const requireImage = image ?  image : require("../assets/images/user.png")
   return (
       <ScrollView>
-    <View style={styles.container}>
-      <ImageBackground
-        source={
-          __DEV__
-            ? require("../assets/images/background-login.jpg")
-            : require("../assets/images/background-login.jpg")
-        }
-        style={styles.imageBackground}
-      >
-        <View style={styles.textTitleWrapper}>
-          <View style={styles.leftArrow}>
-            <SmallButton path={leftArrow} onPress={() => navigation.navigate('NowPlaying')} />
-          </View>
-          <Text style={styles.textTitle}>Edit profile</Text>
-        </View>
-        <View style={styles.circleInnerImageWrapper}>
-          <LinearGradient
-            colors={[
-              "rgba(151,232,243,1)",
-              "rgba(50,149,182,1)",
-              "rgba(204,63,223,1)",
-              "rgba(255,127,136,1)"
-            ]}
-            style={styles.circle}
-            locations={[0, 0.2, 0.8, 1]}
-          >
-            <Image
-              source={image ?  image : require("../assets/images/user.png")}
-              style={styles.circleInnerImage}
-            />
-          </LinearGradient>
-          <View>
-          <TouchableOpacity onPress={pickImage}>
-            <Image
+        <View style={styles.container}>
+          <ImageBackground
               source={
                 __DEV__
-                  ? require("../assets/images/icons/user.png")
-                  : require("../assets/images/icons/user.png")
+                    ? require("../assets/images/background-login.jpg")
+                    : require("../assets/images/background-login.jpg")
               }
-              style={styles.circleSmall}
-            />
-          </TouchableOpacity>
-        </View>
-        </View>
-        <Text style={styles.login}>{user}</Text>
-        <View style={styles.blackLine} />
-        <View style={styles.containerBeforeSlider}>
-          <Text style={styles.textAdditional}>• Subscription Plan •</Text>
-        </View>
-        <View style={styles.containerButtons}>
-          <TouchableOpacity onPress={toggleSwitchPlan}>
-            <LinearGradient
-              style={styles.inputChannelButton}
-              colors={switchPlan ? darkColors : lightColors}
-              locations={[0.05, 1]}
-            >
-              <Text style={styles.buttonColor}>Free</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={toggleSwitchPlan}>
-            <LinearGradient
-              style={styles.inputChannelButton}
-              colors={switchPlan ? lightColors : darkColors}
-              locations={[0.05, 1]}
-            >
-              <Text style={styles.buttonColor}>Upgraded</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
+              style={styles.imageBackground}
+          >
+            <View style={styles.textTitleWrapper}>
+              <View style={styles.leftArrow}>
+                <SmallButton path={leftArrow} onPress={() => navigation.navigate('NowPlaying')} />
+              </View>
+              <Text style={styles.textTitle}>Edit profile</Text>
+            </View>
+            <TouchableOpacity onPress={pickImage}>
+              <View style={styles.circleInnerImageWrapper}>
+                  <LinearGradient
+                      colors={[
+                        "rgba(151,232,243,1)",
+                        "rgba(50,149,182,1)",
+                        "rgba(204,63,223,1)",
+                        "rgba(255,127,136,1)"
+                      ]}
+                      style={styles.circle}
+                      locations={[0, 0.2, 0.8, 1]}
+                  >
+                    <Image
+                        source={requireImage}
+                        style={styles.circleInnerImage}
+                    />
+                  </LinearGradient>
+                <View>
 
-        <View style={styles.containerButtons}>
-          <LinearGradient
-            style={styles.list}
-            colors={lightColors}
-            locations={[0.05, 1]}
-          >
-            <View style={styles.planList}>
-              <Text style={styles.textPrice}>{switchPlan ? 20 : 0}$</Text>
+                  <Image
+                      source={
+                        __DEV__
+                            ? require("../assets/images/icons/user.png")
+                            : require("../assets/images/icons/user.png")
+                      }
+                      style={styles.circleSmall}
+                  />
+                </View>
+              </View>
+            </TouchableOpacity>
+            <Text style={styles.login}>{user}</Text>
+            <View style={styles.blackLine} />
+            <View style={styles.containerBeforeSlider}>
+              <Text style={styles.textAdditional}>• Subscription Plan •</Text>
             </View>
-            <View style={styles.planList}>
-              <FlatList
-                contentContainerStyle={styles.containerPlanList}
-                data={switchPlan ? upgradePlan : freePlan}
-                renderItem={({ item }) => (
-                  <Text style={styles.textList}>• {item.key}</Text>
-                )}
-              />
+            <View style={styles.containerButtons}>
+              <TouchableOpacity onPress={toggleSwitchPlan}>
+                <LinearGradient
+                    style={styles.inputChannelButton}
+                    colors={switchPlan ? darkColors : lightColors}
+                    locations={[0.05, 1]}
+                >
+                  <Text style={styles.buttonColor}>Free</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={toggleSwitchPlan}>
+                <LinearGradient
+                    style={styles.inputChannelButton}
+                    colors={switchPlan ? lightColors : darkColors}
+                    locations={[0.05, 1]}
+                >
+                  <Text style={styles.buttonColor}>Upgraded</Text>
+                </LinearGradient>
+              </TouchableOpacity>
             </View>
-          </LinearGradient>
+
+            <View style={styles.containerButtons}>
+              <LinearGradient
+                  style={styles.list}
+                  colors={lightColors}
+                  locations={[0.05, 1]}
+              >
+                <View style={styles.planList}>
+                  <Text style={styles.textPrice}>{switchPlan ? 20 : 0}$</Text>
+                </View>
+                <View style={styles.planList}>
+                  <FlatList
+                      contentContainerStyle={styles.containerPlanList}
+                      data={switchPlan ? upgradePlan : freePlan}
+                      renderItem={({ item }) => (
+                          <Text style={styles.textList}>• {item.key}</Text>
+                      )}
+                  />
+                </View>
+              </LinearGradient>
+            </View>
+            <TouchableOpacity onPress={() => navigation.navigate('ChooseChannel')}>
+              <LinearGradient
+                  style={styles.button}
+                  colors={["#373843", "#2e2f39", "#24252d"]}
+                  locations={[0.3, 0.5, 0.8]}
+              >
+                <Text style={styles.text}>Cancel Current Subscription</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <View style={styles.blackLine} />
+            <TouchableOpacity onPress={() => navigation.navigate('NowPlaying')}>
+              <LinearGradient
+                  style={styles.button}
+                  colors={["#373843", "#2e2f39", "#24252d"]}
+                  locations={[0.3, 0.5, 0.8]}
+              >
+                <Text style={styles.text}>Save and Continue</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </ImageBackground>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('ChooseChannel')}>
-          <LinearGradient
-            style={styles.button}
-            colors={["#373843", "#2e2f39", "#24252d"]}
-            locations={[0.3, 0.5, 0.8]}
-          >
-            <Text style={styles.text}>Cancel Current Subscription</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-        <View style={styles.blackLine} />
-        <TouchableOpacity onPress={() => navigation.navigate('NowPlaying')}>
-          <LinearGradient
-            style={styles.button}
-            colors={["#373843", "#2e2f39", "#24252d"]}
-            locations={[0.3, 0.5, 0.8]}
-          >
-            <Text style={styles.text}>Save and Continue</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </ImageBackground>
-    </View>
       </ScrollView>
   );
 };
