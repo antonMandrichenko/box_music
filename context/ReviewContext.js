@@ -182,19 +182,22 @@ const ReviewProvider = ({ children }) => {
     }
   };
 
-  const getImageFromFireBase = async () => {
-    if (user) {
-      await firebase
-        .database()
-        .ref("users/comments/")
-        .once("value")
-        .then(function(snapshot) {
-          setImageForEachComment(snapshot.val());
-        });
-    } else {
-      setImage(userImage);
-    }
-  };
+    const getImageFromFireBase = async () => {
+        if (user) {
+            firebase
+                .database()
+                .ref()
+                .child("users/comments/")
+                .child(user.slice(0, user.indexOf(".")))
+                .once("value")
+                .then(function(snapshot) {
+                    if(snapshot.val()){
+                        setImage(snapshot.val().image || userImage);
+
+                    }
+                });
+        }
+    };
 
     useEffect(() => {
         getImageFromFireBase();

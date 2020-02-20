@@ -104,7 +104,7 @@ const SplashLoading = ({ navigation }) => {
                             width={5}
                             prefill={0}
                             fill={100}
-                            duration={0}
+                            duration={3000}
                             onAnimationComplete={checkIfLogin}
                             backgroundColor="#3a2e42"
                             tintColor="#7a5dd5"
