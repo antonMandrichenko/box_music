@@ -30,7 +30,7 @@ const ReviewProvider = ({ children }) => {
   const reviewsObj = {
     reviews: review,
     authorName: user,
-    id: (comments.length + 1).toString()
+    id: (comments.length + 1)
   };
 
   const sendComments = () => {
@@ -39,7 +39,7 @@ const ReviewProvider = ({ children }) => {
       .database()
       .ref("users/comments/")
       .child(user.slice(0, user.indexOf(".")))
-      .child((comments.length + 1).toString())
+      .child(comments.length + 1)
       .set(reviewsObj)
       .then(setReview(""));
   };
@@ -120,10 +120,9 @@ const ReviewProvider = ({ children }) => {
       .database()
       .ref("users/likes/")
       .child(user.slice(0, user.indexOf(".")))
-      .set({
+      .update({
         like: likes + incremental,
-        authorName: user,
-        song: currentSong
+        authorName: user
       });
   };
   const setData = index => {
@@ -190,9 +189,9 @@ const ReviewProvider = ({ children }) => {
         .once("value")
         .then(function(snapshot) {
             if(snapshot.val()){
-                setImage(snapshot.val().image || userImage);
+                setImage(snapshot.val().image);
 
-            }
+            } else setImage(userImage)
         });
     }
   };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import firebase from "../config/firebase";
 import { AsyncStorage, Platform, InteractionManager } from "react-native";
 import { radioPlaylist } from "../api/RadioPlaylist";
+import userImage from "../assets/images/user.png";
 
 const AppContext = React.createContext();
 
@@ -87,11 +88,20 @@ const AppProvider = ({ children }) => {
           firebase
             .database()
             .ref("users/images/")
-            .child(user.slice(0, user.indexOf(".")))
+            .child(emailStorage.slice(0, emailStorage.indexOf(".")))
             .update({
-              authorName: user.slice(0, user.indexOf("."))
+              authorName: emailStorage.slice(0, emailStorage.indexOf("."))
             })
         )
+          .then(
+              firebase
+                  .database()
+                  .ref("users/comments/")
+                  .child(emailStorage.slice(0, emailStorage.indexOf(".")))
+                  .set({
+                    image: userImage
+                  })
+          )
           .then(nav.navigate('ChooseChannel'))
         .catch(function(error) {
           const errorMessage = error.message;

@@ -23,7 +23,7 @@ const MessageAnswer = props => {
           <View style={styles.wrapper} key={Math.random() * 2}>
             <View style={styles.container}>
               <View style={styles.lineBefore} />
-              <Image style={styles.image} source={{ uri: image }} />
+              <Image style={styles.image} source={{ uri: comment.image }} />
               <View>
                 <Text style={styles.text}>{comment.authorName.slice(0, comment.authorName.indexOf("@"))}</Text>
                 <View style={styles.textAnswerWrapper}>
