@@ -15,7 +15,6 @@ const ReviewProvider = ({ children }) => {
   const [likes, setLikes] = useState(0);
   const [totalLikes, setTotalLikes] = useState(0);
   const [image, setImage] = useState(null);
-  const [imageForEachComment, setImageForEachComment] = useState("");
 
   const getUser = async () => {
       await firebase.auth().onAuthStateChanged(user => {
@@ -27,32 +26,23 @@ const ReviewProvider = ({ children }) => {
       }
     });
   };
-  useEffect(() => {
-    getUser();
-  }, []);
-  const reviewsObj = {
-    reviews: review,
-    authorName: user,
-    id: comments.length + 1
-  };
 
-  const sendComments = async () => {
-    comments.push(reviewsObj);
-      await firebase
-      .database()
-      .ref("users/comments/")
-      .child(user.slice(0, user.indexOf(".")))
-      .child(comments.length)
-      .set(reviewsObj)
-      .then(
-          await firebase
-          .database()
-          .ref("users/comments/")
-          .child(user.slice(0, user.indexOf(".")))
-          .update({ image: image })
-      )
-      .then(setReview(""));
-  };
+    const reviewsObj = {
+        reviews: review,
+        authorName: user,
+        id: comments.length
+    };
+
+    const sendComments = () => {
+        setComments([...comments, { image, ...reviewsObj }]);
+        firebase
+            .database()
+            .ref("users/comments/")
+            .child(user.slice(0, user.indexOf(".")))
+            .child(comments.length)
+            .set(reviewsObj)
+            .then(setReview(""));
+    };
 
     const getComments = async () => {
         try{
@@ -240,8 +230,7 @@ const ReviewProvider = ({ children }) => {
         totalLikes,
         like,
         image,
-        user,
-        imageForEachComment
+        user
       }}
     >
       {children}

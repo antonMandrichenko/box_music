@@ -12,6 +12,7 @@ const MessageBoard = () => {
   const [show, setShow] = React.useState(false);
   const [showReview, setShowReview] = React.useState(true);
   const { comments, image, user } = React.useContext(ReviewContext);
+  console.log(user);
   const toggleAnswer = () => setShow(!show);
   const toggleReview = () => setShowReview(!showReview);
   return (
