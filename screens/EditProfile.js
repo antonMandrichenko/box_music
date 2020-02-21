@@ -55,10 +55,17 @@ const EditProfile = ({navigation}) => {
             style={styles.circle}
             locations={[0, 0.2, 0.8, 1]}
           >
-            <Image
-              source={image ?  image : require("../assets/images/user.png")}
-              style={styles.circleInnerImage}
-            />
+            {image ?
+                <Image
+                    source={{uri: image}}
+                    style={styles.circleInnerImage}
+                /> :
+                <Image
+                    source={require("../assets/images/user.png")}
+                    style={styles.circleInnerImage}
+                />
+            }
+
           </LinearGradient>
           </TouchableOpacity>
           <View>
