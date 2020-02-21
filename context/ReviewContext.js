@@ -18,7 +18,7 @@ const ReviewProvider = ({ children }) => {
   const [imageForEachComment, setImageForEachComment] = useState("");
 
   const getUser = async () => {
-    firebase.auth().onAuthStateChanged(user => {
+      await firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const userEmail = user.email;
         setUser(userEmail);
@@ -36,16 +36,16 @@ const ReviewProvider = ({ children }) => {
     id: comments.length + 1
   };
 
-  const sendComments = () => {
+  const sendComments = async () => {
     comments.push(reviewsObj);
-    firebase
+      await firebase
       .database()
       .ref("users/comments/")
       .child(user.slice(0, user.indexOf(".")))
       .child(comments.length)
       .set(reviewsObj)
       .then(
-        firebase
+          await firebase
           .database()
           .ref("users/comments/")
           .child(user.slice(0, user.indexOf(".")))
@@ -54,42 +54,48 @@ const ReviewProvider = ({ children }) => {
       .then(setReview(""));
   };
 
-    const getComments = () =>
-        firebase
-            .database()
-            .ref("users/comments/")
-            .once("value")
-            .then(function(snapshot) {
-                if (snapshot.val()) {
-                    const keys = Object.keys(snapshot.val());
-                    const reviews = keys
-                        .reduce((result, key) => {
-                            const snapKey = snapshot.val()[key];
-                            return [
-                                ...result,
-                                Object.keys(snapKey).reduce(
-                                    (acc, keyReview) =>
-                                        keyReview !== "image"
-                                            ? [
-                                                ...acc,
-                                                {
-                                                    reviews: snapKey[keyReview].reviews,
-                                                    image: snapKey.image,
-                                                    authorName: snapKey[keyReview].authorName
-                                                }
-                                            ]
-                                            : acc,
-                                    []
-                                )
-                            ];
-                        }, [])
-                        .flat(1);
-                    setComments(reviews);
-                }
-            });
+    const getComments = async () => {
+        try{
+            await firebase
+                .database()
+                .ref("users/comments/")
+                .once("value")
+                .then(function(snapshot) {
+                    if (snapshot.val()) {
+                        const keys = Object.keys(snapshot.val());
+                        const reviews = keys
+                            .reduce((result, key) => {
+                                const snapKey = snapshot.val()[key];
+                                return [
+                                    ...result,
+                                    Object.keys(snapKey).reduce(
+                                        (acc, keyReview) =>
+                                            keyReview !== "image"
+                                                ? [
+                                                    ...acc,
+                                                    {
+                                                        reviews: snapKey[keyReview].reviews,
+                                                        image: snapKey.image,
+                                                        authorName: snapKey[keyReview].authorName
+                                                    }
+                                                ]
+                                                : acc,
+                                        []
+                                    )
+                                ];
+                            }, [])
+                            .flat(1);
+                        setComments(reviews);
+                    }
+                });
+        }
+        catch (e) {
+            console.log(e.message)
+        }
+    }
 
-  const countALlLikes = () => {
-    firebase
+  const countALlLikes = async () => {
+      await firebase
       .database()
       .ref("users")
       .child("likes")
@@ -117,7 +123,7 @@ const ReviewProvider = ({ children }) => {
   };
 
     const sendLikeToFirebase = async incremental => {
-        return firebase
+        return await firebase
             .database()
             .ref("users/likes/")
             .child(user.slice(0, user.indexOf(".")))
@@ -127,8 +133,8 @@ const ReviewProvider = ({ children }) => {
                 song: currentSong
             });
     };
-  const setData = index => {
-    firebase
+  const setData = async ()=> {
+      await firebase
       .database()
       .ref()
       .child("users/comments/")
@@ -143,8 +149,8 @@ const ReviewProvider = ({ children }) => {
       });
   };
   let songRef = firebase.database().ref("users/playlists/");
-  const removeCommentsFromFireBase = id => {
-    firebase
+  const removeCommentsFromFireBase = async(id) => {
+      await firebase
       .database()
       .ref("users/comments/")
       .child(user.slice(0, user.indexOf(".")))
@@ -173,7 +179,7 @@ const ReviewProvider = ({ children }) => {
     });
     if (!result.cancelled) {
         setImage(result.uri);
-        firebase
+        await firebase
             .database()
             .ref()
             .child("users/comments/")
@@ -184,7 +190,7 @@ const ReviewProvider = ({ children }) => {
 
     const getImageFromFireBase = async () => {
         if (user) {
-            firebase
+            await firebase
                 .database()
                 .ref()
                 .child("users/comments/")

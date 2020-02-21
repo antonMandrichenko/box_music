@@ -84,7 +84,7 @@ const AppProvider = ({ children }) => {
           .auth()
           .createUserWithEmailAndPassword(emailStorage, passwordStorage)
           .then( user &&
-              firebase
+              await firebase
                   .database()
                   .ref("users/images/")
                   .child(user.slice(0, user.indexOf(".")))
@@ -107,7 +107,7 @@ const AppProvider = ({ children }) => {
     });
   };
   const getUser = async () => {
-    firebase.auth().onAuthStateChanged(user => {
+    await firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const userEmail = user.email;
         setUser(userEmail);
@@ -117,9 +117,9 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     getUser();
   }, []);
-  const setDataFirebase = () => {
+  const setDataFirebase = async () => {
     if (user) {
-      firebase
+      await firebase
         .database()
         .ref("users/playlists/")
         .child(user.slice(0, user.indexOf(".")))
@@ -128,8 +128,8 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const getDataFirebase = () => {
-    firebase
+  const getDataFirebase = async () => {
+    await firebase
       .database()
       .ref()
       .child("users/playlists/")
@@ -143,7 +143,8 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     getDataFirebase();
   }, []);
-  const playSelected = () => {
+  const playSelected = async () => {
+    try{
     const checkedSongs = [checked].reduce((resultArr, item) => {
       return [
         ...resultArr,
@@ -156,7 +157,7 @@ const AppProvider = ({ children }) => {
         )
       ];
     }, []);
-    setPreparedSongs([
+    await setPreparedSongs([
       ...checkedSongs
         .map(song => Object.keys(song))
         .join("")
@@ -164,7 +165,9 @@ const AppProvider = ({ children }) => {
         .map(item => data.filter(song => song.title === item))
         .flat(1)
     ]);
-  };
+  }catch (e) {
+      console.log(e);
+    }};
 
   // const loadData = async () => {
   //   try {
