@@ -40,20 +40,20 @@ const Login = props => {
 
   const signIn = () => {
     firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(
-            firebase.auth().onAuthStateChanged(user => {
-              if (user) {
-                props.navigation.navigate("ChooseChannel");
-              }
-              return false;
-            })
-        )
-        .catch(error => {
-          const errorCode = error.message;
-          setErrorState(errorCode);
-        });
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(
+        firebase.auth().onAuthStateChanged(user => {
+          if (user) {
+            props.navigation.navigate("ChooseChannel");
+          }
+          return false;
+        })
+      )
+      .catch(error => {
+        const errorCode = error.message;
+        setErrorState(errorCode);
+      });
   };
   const handleSubmitGoogle = () => {
     if (!firebase.auth().currentUser) {
@@ -63,14 +63,14 @@ const Login = props => {
       firebase.auth().signInWithPopup(provider);
 
       firebase
-          .auth()
-          .getRedirectResult()
-          .then(function(authData) {
-            console.log(authData);
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
+        .auth()
+        .getRedirectResult()
+        .then(function(authData) {
+          console.log(authData);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   };
   const handleSubmitFacebook = () => {
@@ -86,7 +86,7 @@ const Login = props => {
           .then(function(authData) {
           })
           .catch(function(error) {
-          });
+            });
     }
   };
   useEffect(() => {
@@ -98,154 +98,154 @@ const Login = props => {
   }, []);
   return (
 
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.container}>
-          <ImageBackground
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={
+            __DEV__
+              ? require("../assets/images/background-login.jpg")
+              : require("../assets/images/background-login.jpg")
+          }
+          style={styles.imageBackground}
+        >
+          <LinearGradient
+            colors={[
+              "rgba(151,232,243,1)",
+              "rgba(50,149,182,1)",
+              "rgba(204,63,223,1)",
+              "rgba(255,127,136,1)"
+            ]}
+            style={styles.circle}
+            locations={[0, 0.2, 0.8, 1]}
+          >
+            <View style={styles.circleInner}>
+              <Image
+                source={
+                  __DEV__
+                    ? require("../assets/images/vybn.png")
+                    : require("../assets/images/vybn.png")
+                }
+                style={styles.circleInnerImage}
+              />
+            </View>
+          </LinearGradient>
+          <KeyboardAvoidingView style={styles.containerWrapKeyboard} behavior="height" enabled>
+          <Text style={styles.login}> login </Text>
+          <View style={styles.blackLine} />
+          <LinearGradient
+            colors={["#08080a", "#1d1e25"]}
+            style={styles.inputWrapper}
+            locations={[0.05, 1]}
+          >
+            <ImageBackground
               source={
                 __DEV__
-                    ? require("../assets/images/background-login.jpg")
-                    : require("../assets/images/background-login.jpg")
+                  ? require("../assets/images/icons/email.png")
+                  : require("../assets/images/icons/email.png")
               }
-              style={styles.imageBackground}
+              style={styles.emailIcon}
+            />
+            <View style={styles.line} />
+            <TextInput
+              style={styles.input}
+              onChangeText={input => setEmail(input)}
+              value={email}
+              placeholder="Enter your email"
+              placeholderTextColor="#abaed0"
+            />
+          </LinearGradient>
+          <LinearGradient
+            colors={["#08080a", "#1d1e25"]}
+            style={styles.inputWrapper}
+            locations={[0.05, 1]}
           >
+            <ImageBackground
+              source={
+                __DEV__
+                  ? require("../assets/images/icons/password.png")
+                  : require("../assets/images/icons/password.png")
+              }
+              style={styles.passwordIcon}
+            />
+            <View style={styles.line} />
+            <TextInput
+              secureTextEntry={true}
+              style={styles.input}
+              onChangeText={input => setPassword(input)}
+              value={password}
+              placeholder="Enter password"
+              placeholderTextColor="#abaed0"
+            />
+          </LinearGradient>
+          <TouchableOpacity
+            style={styles.forgotPassword}
+            onPress={() => props.navigation.navigate("ForgotPasswordConfirm")}
+          >
+            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+          </TouchableOpacity>
+          </KeyboardAvoidingView>
+
+          <Text style={styles.error}>{errorState}</Text>
+          <TouchableOpacity onPress={() => signIn()}>
             <LinearGradient
-                colors={[
-                  "rgba(151,232,243,1)",
-                  "rgba(50,149,182,1)",
-                  "rgba(204,63,223,1)",
-                  "rgba(255,127,136,1)"
-                ]}
-                style={styles.circle}
-                locations={[0, 0.2, 0.8, 1]}
+              style={styles.button}
+              colors={["#373843", "#2e2f39", "#24252d"]}
+              locations={[0.3, 0.5, 0.8]}
             >
-              <View style={styles.circleInner}>
-                <Image
-                    source={
-                      __DEV__
-                          ? require("../assets/images/vybn.png")
-                          : require("../assets/images/vybn.png")
-                    }
-                    style={styles.circleInnerImage}
-                />
-              </View>
+              <Text style={styles.text}>Login</Text>
             </LinearGradient>
-            <KeyboardAvoidingView style={styles.containerWrapKeyboard} behavior="height" enabled>
-              <Text style={styles.login}> login </Text>
-              <View style={styles.blackLine} />
-              <LinearGradient
-                  colors={["#08080a", "#1d1e25"]}
-                  style={styles.inputWrapper}
-                  locations={[0.05, 1]}
-              >
-                <ImageBackground
-                    source={
-                      __DEV__
-                          ? require("../assets/images/icons/email.png")
-                          : require("../assets/images/icons/email.png")
-                    }
-                    style={styles.emailIcon}
-                />
-                <View style={styles.line} />
-                <TextInput
-                    style={styles.input}
-                    onChangeText={input => setEmail(input)}
-                    value={email}
-                    placeholder="Enter your email"
-                    placeholderTextColor="#abaed0"
-                />
-              </LinearGradient>
-              <LinearGradient
-                  colors={["#08080a", "#1d1e25"]}
-                  style={styles.inputWrapper}
-                  locations={[0.05, 1]}
-              >
-                <ImageBackground
-                    source={
-                      __DEV__
-                          ? require("../assets/images/icons/password.png")
-                          : require("../assets/images/icons/password.png")
-                    }
-                    style={styles.passwordIcon}
-                />
-                <View style={styles.line} />
-                <TextInput
-                    secureTextEntry={true}
-                    style={styles.input}
-                    onChangeText={input => setPassword(input)}
-                    value={password}
-                    placeholder="Enter password"
-                    placeholderTextColor="#abaed0"
-                />
-              </LinearGradient>
-              <TouchableOpacity
-                  style={styles.forgotPassword}
-                  onPress={() => props.navigation.navigate("ForgotPasswordConfirm")}
-              >
-                <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-              </TouchableOpacity>
-            </KeyboardAvoidingView>
+          </TouchableOpacity>
+          {/*<View style={styles.socialWrapper}>*/}
+          {/*  <TouchableOpacity onPress={handleSubmitFacebook}>*/}
+          {/*    <LinearGradient*/}
+          {/*      style={styles.facebook}*/}
+          {/*      colors={["#373843", "#2e2f39", "#24252d"]}*/}
+          {/*      locations={[0.3, 0.5, 0.8]}*/}
+          {/*    >*/}
+          {/*      <ImageBackground*/}
+          {/*        source={*/}
+          {/*          __DEV__*/}
+          {/*            ? require("../assets/images/icons/facebook.png")*/}
+          {/*            : require("../assets/images/icons/facebook.png")*/}
+          {/*        }*/}
+          {/*        style={styles.facebookBaseline}*/}
+          {/*      />*/}
+          {/*      <View style={styles.line} />*/}
+          {/*      <Text style={styles.text}>Facebook</Text>*/}
+          {/*    </LinearGradient>*/}
+          {/*  </TouchableOpacity>*/}
+          {/*  <TouchableOpacity onPress={handleSubmitGoogle}>*/}
+          {/*    <LinearGradient*/}
+          {/*      style={styles.google}*/}
+          {/*      colors={["#373843", "#2e2f39", "#24252d"]}*/}
+          {/*      locations={[0.3, 0.5, 0.8]}*/}
+          {/*    >*/}
+          {/*      <ImageBackground*/}
+          {/*        source={*/}
+          {/*          __DEV__*/}
+          {/*            ? require("../assets/images/icons/google.png")*/}
+          {/*            : require("../assets/images/icons/google.png")*/}
+          {/*        }*/}
+          {/*        style={styles.googleBaseline}*/}
+          {/*      />*/}
+          {/*      <View style={styles.line} />*/}
 
-            <Text style={styles.error}>{errorState}</Text>
-            <TouchableOpacity onPress={() => signIn()}>
-              <LinearGradient
-                  style={styles.button}
-                  colors={["#373843", "#2e2f39", "#24252d"]}
-                  locations={[0.3, 0.5, 0.8]}
-              >
-                <Text style={styles.text}>Login</Text>
-              </LinearGradient>
+          {/*      <Text style={styles.text}>Google</Text>*/}
+          {/*    </LinearGradient>*/}
+          {/*  </TouchableOpacity>*/}
+          {/*</View>*/}
+          <View style={styles.blackLine} />
+          <View style={styles.accountWrapper}>
+            <Text style={styles.account}>Don't have an account</Text>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate("EmailConfirmation")}
+            >
+              <Text style={styles.signUp}>Sign up</Text>
             </TouchableOpacity>
-            {/*<View style={styles.socialWrapper}>*/}
-            {/*  <TouchableOpacity onPress={handleSubmitFacebook}>*/}
-            {/*    <LinearGradient*/}
-            {/*      style={styles.facebook}*/}
-            {/*      colors={["#373843", "#2e2f39", "#24252d"]}*/}
-            {/*      locations={[0.3, 0.5, 0.8]}*/}
-            {/*    >*/}
-            {/*      <ImageBackground*/}
-            {/*        source={*/}
-            {/*          __DEV__*/}
-            {/*            ? require("../assets/images/icons/facebook.png")*/}
-            {/*            : require("../assets/images/icons/facebook.png")*/}
-            {/*        }*/}
-            {/*        style={styles.facebookBaseline}*/}
-            {/*      />*/}
-            {/*      <View style={styles.line} />*/}
-            {/*      <Text style={styles.text}>Facebook</Text>*/}
-            {/*    </LinearGradient>*/}
-            {/*  </TouchableOpacity>*/}
-            {/*  <TouchableOpacity onPress={handleSubmitGoogle}>*/}
-            {/*    <LinearGradient*/}
-            {/*      style={styles.google}*/}
-            {/*      colors={["#373843", "#2e2f39", "#24252d"]}*/}
-            {/*      locations={[0.3, 0.5, 0.8]}*/}
-            {/*    >*/}
-            {/*      <ImageBackground*/}
-            {/*        source={*/}
-            {/*          __DEV__*/}
-            {/*            ? require("../assets/images/icons/google.png")*/}
-            {/*            : require("../assets/images/icons/google.png")*/}
-            {/*        }*/}
-            {/*        style={styles.googleBaseline}*/}
-            {/*      />*/}
-            {/*      <View style={styles.line} />*/}
-
-            {/*      <Text style={styles.text}>Google</Text>*/}
-            {/*    </LinearGradient>*/}
-            {/*  </TouchableOpacity>*/}
-            {/*</View>*/}
-            <View style={styles.blackLine} />
-            <View style={styles.accountWrapper}>
-              <Text style={styles.account}>Don't have an account</Text>
-              <TouchableOpacity
-                  onPress={() => props.navigation.navigate("EmailConfirmation")}
-              >
-                <Text style={styles.signUp}>Sign up</Text>
-              </TouchableOpacity>
-            </View>
-          </ImageBackground>
-        </View>
-      </TouchableWithoutFeedback>
+          </View>
+        </ImageBackground>
+      </View>
+    </TouchableWithoutFeedback>
 
   );
 };

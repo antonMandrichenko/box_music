@@ -17,7 +17,7 @@ const ReviewProvider = ({ children }) => {
   const [image, setImage] = useState(null);
 
   const getUser = async () => {
-      await firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const userEmail = user.email;
         setUser(userEmail);
@@ -27,65 +27,59 @@ const ReviewProvider = ({ children }) => {
     });
   };
 
-    const reviewsObj = {
-        reviews: review,
-        authorName: user,
-        id: comments.length
-    };
+  const reviewsObj = {
+    reviews: review,
+    authorName: user,
+    id: comments.length
+  };
 
-    const sendComments = () => {
-        setComments([...comments, { image, ...reviewsObj }]);
-        firebase
-            .database()
-            .ref("users/comments/")
-            .child(user.slice(0, user.indexOf(".")))
-            .child(comments.length)
-            .set(reviewsObj)
-            .then(setReview(""));
-    };
+  const sendComments = () => {
+    setComments([...comments, { image, ...reviewsObj }]);
+    firebase
+      .database()
+      .ref("users/comments/")
+      .child(user.slice(0, user.indexOf(".")))
+      .child(comments.length)
+      .set(reviewsObj)
+      .then(setReview(""));
+  };
 
-    const getComments = async () => {
-        try{
-            await firebase
-                .database()
-                .ref("users/comments/")
-                .once("value")
-                .then(function(snapshot) {
-                    if (snapshot.val()) {
-                        const keys = Object.keys(snapshot.val());
-                        const reviews = keys
-                            .reduce((result, key) => {
-                                const snapKey = snapshot.val()[key];
-                                return [
-                                    ...result,
-                                    Object.keys(snapKey).reduce(
-                                        (acc, keyReview) =>
-                                            keyReview !== "image"
-                                                ? [
-                                                    ...acc,
-                                                    {
-                                                        reviews: snapKey[keyReview].reviews,
-                                                        image: snapKey.image,
-                                                        authorName: snapKey[keyReview].authorName
-                                                    }
-                                                ]
-                                                : acc,
-                                        []
-                                    )
-                                ];
-                            }, [])
-                            .flat(1);
-                        setComments(reviews);
-                    }
-                });
+  const getComments = () =>
+    firebase
+      .database()
+      .ref("users/comments/")
+      .once("value")
+      .then(function(snapshot) {
+        if (snapshot.val()) {
+          const keys = Object.keys(snapshot.val());
+          const reviews = keys
+            .reduce((result, key) => {
+              const snapKey = snapshot.val()[key];
+              return [
+                ...result,
+                Object.keys(snapKey).reduce(
+                  (acc, keyReview) =>
+                    keyReview !== "image"
+                      ? [
+                          ...acc,
+                          {
+                            review: snapKey[keyReview].reviews,
+                            image: snapKey.image,
+                            authorName: snapKey[keyReview].authorName
+                          }
+                        ]
+                      : acc,
+                  []
+                )
+              ];
+            }, [])
+            .flat(1);
+          setComments(reviews);
         }
-        catch (e) {
-            console.log(e.message)
-        }
-    }
+      });
 
-  const countALlLikes = async () => {
-      await firebase
+  const countALlLikes = () => {
+    firebase
       .database()
       .ref("users")
       .child("likes")
@@ -97,7 +91,14 @@ const ReviewProvider = ({ children }) => {
           (previousValue, currentValue) => previousValue + currentValue
         );
         setTotalLikes(result);
-      });
+      })
+        .then(
+         firebase
+        .database()
+        .ref("users")
+        .child("totalLikes")
+        .update({likes: totalLikes})
+        );
   };
 
   const deleteReview = index => comments.filter((item, i) => i !== index);
@@ -112,19 +113,19 @@ const ReviewProvider = ({ children }) => {
     }
   };
 
-    const sendLikeToFirebase = async incremental => {
-        return await firebase
-            .database()
-            .ref("users/likes/")
-            .child(user.slice(0, user.indexOf(".")))
-            .set({
-                like: likes + incremental,
-                authorName: user,
-                song: currentSong
-            });
-    };
-  const setData = async ()=> {
-      await firebase
+  const sendLikeToFirebase = async incremental => {
+    return firebase
+      .database()
+      .ref("users/likes/")
+      .child(user.slice(0, user.indexOf(".")))
+      .set({
+        like: likes + incremental,
+        authorName: user,
+        song: currentSong
+      });
+  };
+  const setData = index => {
+    firebase
       .database()
       .ref()
       .child("users/comments/")
@@ -139,8 +140,8 @@ const ReviewProvider = ({ children }) => {
       });
   };
   let songRef = firebase.database().ref("users/playlists/");
-  const removeCommentsFromFireBase = async(id) => {
-      await firebase
+  const removeCommentsFromFireBase = id => {
+    firebase
       .database()
       .ref("users/comments/")
       .child(user.slice(0, user.indexOf(".")))
@@ -149,7 +150,6 @@ const ReviewProvider = ({ children }) => {
   };
 
   const removeSong = () => songRef.remove();
-
 
   const getPermissionAsync = async () => {
     if (Platform.OS === "ios") {
@@ -168,50 +168,50 @@ const ReviewProvider = ({ children }) => {
       quality: 1
     });
     if (!result.cancelled) {
-        setImage(result.uri);
-        await firebase
-            .database()
-            .ref()
-            .child("users/comments/")
-            .child(user.slice(0, user.indexOf(".")))
-            .update({ image: result.uri });
+      setImage(result.uri);
+      firebase
+        .database()
+        .ref()
+        .child("users/comments/")
+        .child(user.slice(0, user.indexOf(".")))
+        .update({ image: result.uri });
     }
   };
 
-    const getImageFromFireBase = async () => {
-        if (user) {
-            await firebase
-                .database()
-                .ref()
-                .child("users/comments/")
-                .child(user.slice(0, user.indexOf(".")))
-                .once("value")
-                .then(function(snapshot) {
-                    if(snapshot.val()){
-                        setImage(snapshot.val().image || userImage);
+  const getImageFromFireBase = async () => {
+    if (user) {
+      firebase
+        .database()
+        .ref()
+        .child("users/comments/")
+        .child(user.slice(0, user.indexOf(".")))
+        .once("value")
+        .then(function(snapshot) {
+            if(snapshot.val()){
+                setImage(snapshot.val().image || userImage);
 
-                    }
-                });
-        }
-    };
+            }
+        });
+    }
+  };
 
-    useEffect(() => {
-        getImageFromFireBase();
-    }, [user, image]);
-    useEffect(() => {
-        countALlLikes();
-    }, [likes]);
+  useEffect(() => {
+    getImageFromFireBase();
+  }, [user, image]);
+  useEffect(() => {
+    countALlLikes();
+  }, [likes]);
 
-    useEffect(() => {
-        getComments();
-    }, [image]);
+  useEffect(() => {
+    getComments();
+  }, [image]);
 
-    useEffect(() => {
-        getPermissionAsync();
-    }, []);
-    useEffect(() => {
-        getUser();
-    }, []);
+  useEffect(() => {
+    getPermissionAsync();
+  }, []);
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <ReviewContext.Provider
       value={{

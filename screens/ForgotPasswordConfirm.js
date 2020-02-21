@@ -6,7 +6,7 @@ import {
     Image,
     ImageBackground,
     TextInput,
-    TouchableOpacity, ScrollView, Keyboard, TouchableWithoutFeedback
+    TouchableOpacity, ScrollView, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import firebase from "../config/firebase";
@@ -58,6 +58,7 @@ const ForgotPasswordConfirm = (props) => {
                     please, type your email
                 </Text>
                 <View style={styles.blackLine} />
+                <KeyboardAvoidingView style={styles.containerWrapKeyboard} behavior="height" enabled>
                 <LinearGradient
                     colors={["#08080a", "#1d1e25"]}
                     style={styles.inputWrapper}
@@ -82,6 +83,7 @@ const ForgotPasswordConfirm = (props) => {
                         placeholderTextColor="#abaed0"
                     />
                 </LinearGradient>
+                </KeyboardAvoidingView>
                 <Text
                     style={styles.textDescription}
                 >
@@ -264,7 +266,12 @@ const styles = StyleSheet.create({
         textShadowColor: "#272730",
         textShadowOffset: { width: 1, height: 2 },
         fontSize: 12
-    }
+    },
+    containerWrapKeyboard: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });
 
 export default ForgotPasswordConfirm;

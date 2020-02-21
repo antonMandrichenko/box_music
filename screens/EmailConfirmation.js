@@ -16,79 +16,79 @@ import AppContext from "../context/AppContext";
 
 const EmailConfirmation = props => {
   const { email, onSubmitEmail, handleChange, error, nav } = useContext(
-      AppContext
+    AppContext
   );
   return (
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+      <ImageBackground
+        source={
+          __DEV__
+            ? require("../assets/images/emailconfirm-background.jpg")
+            : require("../assets/images/emailconfirm-background.jpg")
+        }
+        style={styles.imageBackground}
+      >
+        <Text style={styles.textTitle}>just a more step</Text>
+        <Image
+          source={
+            __DEV__
+              ? require("../assets/images/icons/email-copy.png")
+              : require("../assets/images/icons/email-copy.png")
+          }
+          style={styles.emailIcon}
+        />
+        <KeyboardAvoidingView style={styles.containerWrapKeyboard} behavior="height" enabled>
+        <Text style={styles.mainText}>email confirmation</Text>
+        <View style={styles.blackLine} />
+        <LinearGradient
+          colors={["#08080a", "#1d1e25"]}
+          style={styles.inputWrapper}
+          locations={[0.05, 1]}
+        >
           <ImageBackground
-              source={
-                __DEV__
-                    ? require("../assets/images/emailconfirm-background.jpg")
-                    : require("../assets/images/emailconfirm-background.jpg")
-              }
-              style={styles.imageBackground}
+            source={
+              __DEV__
+                ? require("../assets/images/icons/email.png")
+                : require("../assets/images/icons/email.png")
+            }
+            style={styles.emailSmallIcon}
+          />
+          <View style={styles.line} />
+          <TextInput
+            style={styles.input}
+            onChangeText={e => handleChange(e)}
+            value={email}
+            placeholder="Enter your email"
+            placeholderTextColor="#abaed0"
+          />
+        </LinearGradient>
+        <Text style={{ color: "red", height: 15 }}>
+          {error && "The email address is badly formatted."}
+        </Text>
+        </KeyboardAvoidingView>
+        <Text style={styles.textAdditional}>
+          Please verify your email address so you can sign in if you ever forgot
+          your password, we've sent confirmation email too.
+        </Text>
+        <View style={styles.blackLine} />
+        <TouchableOpacity
+          onPress={() => {
+            onSubmitEmail, nav(props, "EnterPassword");
+          }}
+        >
+          <LinearGradient
+            style={styles.button}
+            colors={["#373843", "#2e2f39", "#24252d"]}
+            locations={[0.3, 0.5, 0.8]}
           >
-            <Text style={styles.textTitle}>just a more step</Text>
-            <Image
-                source={
-                  __DEV__
-                      ? require("../assets/images/icons/email-copy.png")
-                      : require("../assets/images/icons/email-copy.png")
-                }
-                style={styles.emailIcon}
-            />
-            <KeyboardAvoidingView style={styles.containerWrapKeyboard} behavior="height" enabled>
-              <Text style={styles.mainText}>email confirmation</Text>
-              <View style={styles.blackLine} />
-              <LinearGradient
-                  colors={["#08080a", "#1d1e25"]}
-                  style={styles.inputWrapper}
-                  locations={[0.05, 1]}
-              >
-                <ImageBackground
-                    source={
-                      __DEV__
-                          ? require("../assets/images/icons/email.png")
-                          : require("../assets/images/icons/email.png")
-                    }
-                    style={styles.emailSmallIcon}
-                />
-                <View style={styles.line} />
-                <TextInput
-                    style={styles.input}
-                    onChangeText={e => handleChange(e)}
-                    value={email}
-                    placeholder="Enter your email"
-                    placeholderTextColor="#abaed0"
-                />
-              </LinearGradient>
-              <Text style={{ color: "red", height: 15 }}>
-                {error && "The email address is badly formatted."}
-              </Text>
-            </KeyboardAvoidingView>
-            <Text style={styles.textAdditional}>
-              Please verify your email address so you can sign in if you ever forgot
-              your password, we've sent confirmation email too.
-            </Text>
-            <View style={styles.blackLine} />
-            <TouchableOpacity
-                onPress={() => {
-                  onSubmitEmail, nav(props, "EnterPassword");
-                }}
-            >
-              <LinearGradient
-                  style={styles.button}
-                  colors={["#373843", "#2e2f39", "#24252d"]}
-                  locations={[0.3, 0.5, 0.8]}
-              >
-                <Text style={styles.text}>Confirm Mail</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            <View style={styles.buttonImage} />
-          </ImageBackground>
-        </View>
-      </TouchableWithoutFeedback>
+            <Text style={styles.text}>Confirm Mail</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <View style={styles.buttonImage} />
+      </ImageBackground>
+    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

@@ -13,47 +13,47 @@ import { LinearGradient } from "expo-linear-gradient";
 
 const EmailConfirm = props => {
   return (
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.container}>
-          <ImageBackground
-              source={
-                __DEV__
-                    ? require("../assets/images/emailconfirm-background.jpg")
-                    : require("../assets/images/emailconfirm-background.jpg")
-              }
-              style={styles.imageBackground}
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+      <ImageBackground
+        source={
+          __DEV__
+            ? require("../assets/images/emailconfirm-background.jpg")
+            : require("../assets/images/emailconfirm-background.jpg")
+        }
+        style={styles.imageBackground}
+      >
+        <Text style={styles.textTitle}>just a more step</Text>
+        <Image
+          source={
+            __DEV__
+              ? require("../assets/images/icons/email-copy.png")
+              : require("../assets/images/icons/email-copy.png")
+          }
+          style={styles.emailIcon}
+        />
+        <Text style={styles.textMain}>congratulation</Text>
+        <View style={styles.blackLine} />
+        <Text style={styles.textAdditional}>
+          Your Account has successfully registered. To complete the process
+          please check your email for a validation request
+        </Text>
+        <View style={styles.blackLine} />
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate("ForgotPassword")}
+        >
+          <LinearGradient
+            style={styles.button}
+            colors={["#373843", "#2e2f39", "#24252d"]}
+            locations={[0.3, 0.5, 0.8]}
           >
-            <Text style={styles.textTitle}>just a more step</Text>
-            <Image
-                source={
-                  __DEV__
-                      ? require("../assets/images/icons/email-copy.png")
-                      : require("../assets/images/icons/email-copy.png")
-                }
-                style={styles.emailIcon}
-            />
-            <Text style={styles.textMain}>congratulation</Text>
-            <View style={styles.blackLine} />
-            <Text style={styles.textAdditional}>
-              Your Account has successfully registered. To complete the process
-              please check your email for a validation request
-            </Text>
-            <View style={styles.blackLine} />
-            <TouchableOpacity
-                onPress={() => props.navigation.navigate("ForgotPassword")}
-            >
-              <LinearGradient
-                  style={styles.button}
-                  colors={["#373843", "#2e2f39", "#24252d"]}
-                  locations={[0.3, 0.5, 0.8]}
-              >
-                <Text style={styles.text}>Next</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            <View style={styles.imageLine} />
-          </ImageBackground>
-        </View>
-      </TouchableWithoutFeedback>
+            <Text style={styles.text}>Next</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <View style={styles.imageLine} />
+      </ImageBackground>
+    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

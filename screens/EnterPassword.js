@@ -27,95 +27,95 @@ const EnterPassword = ({navigation}) => {
     signUp(e, navigation);
   };
   return (
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.container}>
-          <ImageBackground
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={
+            __DEV__
+              ? require("../assets/images/emailconfirm-background.jpg")
+              : require("../assets/images/emailconfirm-background.jpg")
+          }
+          style={styles.imageBackground}
+        >
+          <Text style={styles.textTitle}>let's finish this.</Text>
+          <Image
+            source={
+              __DEV__
+                ? require("../assets/images/icons/key-confirm.png")
+                : require("../assets/images/icons/key-confirm.png")
+            }
+            style={styles.keyIcon}
+          />
+          <KeyboardAvoidingView style={styles.containerWrapKeyboard} behavior="height" enabled>
+          <Text style={styles.textMain}>create your password</Text>
+          <View style={styles.blackLine} />
+          <LinearGradient
+            colors={["#08080a", "#1d1e25"]}
+            style={styles.inputWrapper}
+            locations={[0.05, 1]}
+          >
+            <ImageBackground
               source={
                 __DEV__
-                    ? require("../assets/images/emailconfirm-background.jpg")
-                    : require("../assets/images/emailconfirm-background.jpg")
+                  ? require("../assets/images/icons/password.png")
+                  : require("../assets/images/icons/password.png")
               }
-              style={styles.imageBackground}
-          >
-            <Text style={styles.textTitle}>let's finish this.</Text>
-            <Image
-                source={
-                  __DEV__
-                      ? require("../assets/images/icons/key-confirm.png")
-                      : require("../assets/images/icons/key-confirm.png")
-                }
-                style={styles.keyIcon}
+              style={styles.iconPassword}
             />
-            <KeyboardAvoidingView style={styles.containerWrapKeyboard} behavior="height" enabled>
-              <Text style={styles.textMain}>create your password</Text>
-              <View style={styles.blackLine} />
-              <LinearGradient
-                  colors={["#08080a", "#1d1e25"]}
-                  style={styles.inputWrapper}
-                  locations={[0.05, 1]}
-              >
-                <ImageBackground
-                    source={
-                      __DEV__
-                          ? require("../assets/images/icons/password.png")
-                          : require("../assets/images/icons/password.png")
-                    }
-                    style={styles.iconPassword}
-                />
-                <View style={styles.line} />
-                <TextInput
-                    secureTextEntry={true}
-                    style={styles.input}
-                    onChangeText={e => handleChangePassword(e)}
-                    value={password}
-                    placeholder="Enter password"
-                    placeholderTextColor="#abaed0"
-                />
-              </LinearGradient>
-              <LinearGradient
-                  colors={["#08080a", "#1d1e25"]}
-                  style={styles.inputWrapper}
-                  locations={[0.05, 1]}
-              >
-                <ImageBackground
-                    source={
-                      __DEV__
-                          ? require("../assets/images/icons/password.png")
-                          : require("../assets/images/icons/password.png")
-                    }
-                    style={styles.iconPasswordMain}
-                />
-                <View style={styles.line} />
-                <TextInput
-                    secureTextEntry={true}
-                    style={styles.input}
-                    onChangeText={e => handleChangeConfirmPassword(e)}
-                    value={passwordConfirm}
-                    placeholder="Confirm password"
-                    placeholderTextColor="#abaed0"
-                />
-              </LinearGradient>
-              <Text style={styles.textAdditional}>
-                Make sure that! The passwords you entered are the same in both
-                fields
-              </Text>
-              <Text style={styles.textError}>{error}</Text>
-            </KeyboardAvoidingView>
+            <View style={styles.line} />
+            <TextInput
+              secureTextEntry={true}
+              style={styles.input}
+              onChangeText={e => handleChangePassword(e)}
+              value={password}
+              placeholder="Enter password"
+              placeholderTextColor="#abaed0"
+            />
+          </LinearGradient>
+          <LinearGradient
+            colors={["#08080a", "#1d1e25"]}
+            style={styles.inputWrapper}
+            locations={[0.05, 1]}
+          >
+            <ImageBackground
+              source={
+                __DEV__
+                  ? require("../assets/images/icons/password.png")
+                  : require("../assets/images/icons/password.png")
+              }
+              style={styles.iconPasswordMain}
+            />
+            <View style={styles.line} />
+            <TextInput
+              secureTextEntry={true}
+              style={styles.input}
+              onChangeText={e => handleChangeConfirmPassword(e)}
+              value={passwordConfirm}
+              placeholder="Confirm password"
+              placeholderTextColor="#abaed0"
+            />
+          </LinearGradient>
+          <Text style={styles.textAdditional}>
+            Make sure that! The passwords you entered are the same in both
+            fields
+          </Text>
+          <Text style={styles.textError}>{error}</Text>
+          </KeyboardAvoidingView>
 
-            <View style={styles.blackLine} />
-            <TouchableOpacity onPress={authClient}>
-              <LinearGradient
-                  style={styles.button}
-                  colors={["#373843", "#2e2f39", "#24252d"]}
-                  locations={[0.3, 0.5, 0.8]}
-              >
-                <Text style={styles.text}>Start My Adventure</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            <View style={styles.imageAdditional} />
-          </ImageBackground>
-        </View>
-      </TouchableWithoutFeedback>
+          <View style={styles.blackLine} />
+          <TouchableOpacity onPress={authClient}>
+            <LinearGradient
+              style={styles.button}
+              colors={["#373843", "#2e2f39", "#24252d"]}
+              locations={[0.3, 0.5, 0.8]}
+            >
+              <Text style={styles.text}>Start My Adventure</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          <View style={styles.imageAdditional} />
+        </ImageBackground>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
