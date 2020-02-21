@@ -85,9 +85,10 @@ const ReviewProvider = ({ children }) => {
       .child("likes")
       .once("value")
       .then(function(snapshot) {
-          if(+snapshot.val() > 0) {
+          if(snapshot.val()) {
               const obj = snapshot.val();
               const val = Object.values(obj).map(item => item.like);
+              console.log(val);
               const result = val.reduce(
                   (previousValue, currentValue) => previousValue + currentValue
               );
