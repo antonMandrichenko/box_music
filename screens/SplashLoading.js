@@ -97,14 +97,14 @@ const SplashLoading = ({ navigation }) => {
                   justifyContent: "center"
                 }}
                 locations={[0, 0.5, 1]}
-              ></LinearGradient>
+              />
             </LinearGradient>
             <AnimatedCircularProgress
               size={68}
               width={5}
               prefill={0}
               fill={100}
-              duration={3000}
+              duration={0}
               onAnimationComplete={checkIfLogin}
               backgroundColor="#3a2e42"
               tintColor="#7a5dd5"

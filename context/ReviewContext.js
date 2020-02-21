@@ -30,7 +30,7 @@ const ReviewProvider = ({ children }) => {
   const reviewsObj = {
     reviews: review,
     authorName: user,
-    id: comments.length
+    id: (comments.length + 1).toString()
   };
 
   const sendComments = () => {
@@ -39,7 +39,7 @@ const ReviewProvider = ({ children }) => {
       .database()
       .ref("users/comments/")
       .child(user.slice(0, user.indexOf(".")))
-      .child(comments.length)
+      .child((comments.length + 1).toString())
       .set(reviewsObj)
       .then(setReview(""));
   };
@@ -63,7 +63,7 @@ const ReviewProvider = ({ children }) => {
                       ? [
                           ...acc,
                           {
-                            review: snapKey[keyReview].reviews,
+                            reviews: snapKey[keyReview].reviews,
                             image: snapKey.image,
                             authorName: snapKey[keyReview].authorName
                           }
@@ -85,12 +85,14 @@ const ReviewProvider = ({ children }) => {
       .child("likes")
       .once("value")
       .then(function(snapshot) {
-        const obj = snapshot.val();
-        const val = Object.values(obj).map(item => item.like);
-        const result = val.reduce(
-          (previousValue, currentValue) => previousValue + currentValue
-        );
-        setTotalLikes(result);
+          if(+snapshot.val() > 0) {
+              const obj = snapshot.val();
+              const val = Object.values(obj).map(item => item.like);
+              const result = val.reduce(
+                  (previousValue, currentValue) => previousValue + currentValue
+              );
+              setTotalLikes(result);
+          }
       })
         .then(
          firebase

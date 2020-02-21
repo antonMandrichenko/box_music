@@ -7,10 +7,7 @@ const UserProfileButton = ({path, nav}) => {
     return (
         <View style={styles.headerButtonRight}>
             <TouchableOpacity onPress={nav}>
-                    <Image
-                        source={path}
-                        style={styles.square}
-                    />
+                <Image style={styles.square} source={{uri: path}} />
             </TouchableOpacity>
         </View>
     );

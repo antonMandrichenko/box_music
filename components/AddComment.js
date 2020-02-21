@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {
   Image,
   TouchableOpacity,
@@ -12,12 +12,14 @@ import { LinearGradient } from "expo-linear-gradient";
 import ReviewContext from "../context/ReviewContext";
 
 const AddComment = () => {
-  const { review, setReview, sendComments, image } = React.useContext(ReviewContext);
+  const { review, setReview, sendComments, image } = React.useContext(
+    ReviewContext
+  );
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <Image style={styles.imageReview} source={image} />
+        <Image style={styles.imageReview} source={{ uri: image }} />
       </View>
       <View style={styles.container}>
         <LinearGradient
@@ -34,15 +36,14 @@ const AddComment = () => {
           />
         </LinearGradient>
         <LinearGradient
-            style={styles.inputChannelButton}
-            colors={["#373843", "#2e2f39", "#24252d"]}
-            locations={[0.3, 0.5, 0.8]}
+          style={styles.inputChannelButton}
+          colors={["#373843", "#2e2f39", "#24252d"]}
+          locations={[0.3, 0.5, 0.8]}
         >
           <TouchableOpacity style={styles.flex} onPress={sendComments}>
             <Image style={styles.iconReview} source={send} />
           </TouchableOpacity>
         </LinearGradient>
-
       </View>
     </View>
   );
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     width: vw(65),
     color: "#abaed0",
     paddingVertical: 5,
-    paddingHorizontal: 5,
+    paddingHorizontal: 5
   },
   inputChannelButton: {
     height: 39,

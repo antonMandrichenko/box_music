@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Image, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import React from "react";
+import { Text, TouchableOpacity, View, StyleSheet, Image } from "react-native";
 import triangleBottom from "../assets/images/icons/triangleBottom.png";
 import answer from "../assets/images/icons/answer.png";
 import cancel from "../assets/images/icons/cancel.png";
@@ -16,7 +16,6 @@ const MessageAnswer = props => {
     user,
     image
   } = React.useContext(ReviewContext);
-
   return (
     <>
       {comments.map((comment, index) => {
@@ -24,10 +23,9 @@ const MessageAnswer = props => {
           <View style={styles.wrapper} key={Math.random() * 2}>
             <View style={styles.container}>
               <View style={styles.lineBefore} />
-
-              <Image style={styles.image} source={comment.image || image} />
+              <Image style={styles.image} source={{ uri: image }} />
               <View>
-                <Text style={styles.text}>{comment.authorName}</Text>
+                <Text style={styles.text}>{comment.authorName.slice(0, comment.authorName.indexOf("@"))}</Text>
                 <View style={styles.textAnswerWrapper}>
                   <Text style={styles.textAnswer}>{comment.reviews}</Text>
                 </View>
@@ -42,8 +40,7 @@ const MessageAnswer = props => {
               <TouchableOpacity style={styles.flex}>
                 <Image style={styles.iconReview} source={answer} />
               </TouchableOpacity>
-              { user ===
-                comment.authorName && (
+              {user === comment.authorName && (
                 <TouchableOpacity
                   style={styles.flex}
                   onPress={() => {
@@ -54,7 +51,7 @@ const MessageAnswer = props => {
                 >
                   <Image style={styles.iconReview} source={cancel} />
                 </TouchableOpacity>
-                  )}
+              )}
             </View>
           </View>
         );

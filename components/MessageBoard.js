@@ -1,5 +1,12 @@
 import React from "react";
-import {Image, Text, TouchableOpacity, View, StyleSheet, ImageBackground} from "react-native";
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  ImageBackground
+} from "react-native";
 import triangleBottom from "../assets/images/icons/triangleBottom.png";
 import answer from "../assets/images/icons/answer.png";
 import { vw } from "react-native-expo-viewport-units";
@@ -18,8 +25,8 @@ const MessageBoard = () => {
     <View style={{ flexDirection: "column" }}>
       <View style={styles.wrapper}>
         <View style={styles.container}>
-          <Image style={styles.image} source={image} />
-          <Text style={styles.text}>{user.slice(0, user.indexOf('@'))}</Text>
+          <Image style={styles.image} source={{ uri: image }} />
+          <Text style={styles.text}>{user.slice(0, user.indexOf("@"))}</Text>
         </View>
         <View style={styles.container}>
           <TouchableOpacity style={styles.flex} onPress={toggleAnswer}>
@@ -34,17 +41,20 @@ const MessageBoard = () => {
             style={styles.flex}
             onPress={showReview ? () => false : toggleReview}
           >
-            {showReview ?
-                <Image style={ styles.iconReview } source={answer} /> :
-                <Image style={ styles.iconReview } source={answer} />
-            }
-          </TouchableOpacity >
-          {showReview && <TouchableOpacity
+            {showReview ? (
+              <Image style={styles.iconReview} source={answer} />
+            ) : (
+              <Image style={styles.iconReview} source={answer} />
+            )}
+          </TouchableOpacity>
+          {showReview && (
+            <TouchableOpacity
               style={styles.flex}
-              onPress={showReview ?  toggleReview : () => false}
-          >
-            <Image style={styles.iconReview} source={cancel} />
-          </TouchableOpacity> }
+              onPress={showReview ? toggleReview : () => false}
+            >
+              <Image style={styles.iconReview} source={cancel} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
       {showReview && <AddComment />}

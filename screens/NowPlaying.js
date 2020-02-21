@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import {ActivityIndicator, ImageBackground, ScrollView, Text, View, StyleSheet} from "react-native";
+import React from "react";
+import {ImageBackground, ScrollView, Text, View, StyleSheet} from "react-native";
 import {vw} from "react-native-expo-viewport-units";
 import SmallButton from "../components/SmallButton";
 import EqualizerScreen from "../components/EqualizerScreen";

@@ -25,7 +25,7 @@ const NewsRead = ({ title, text, image }) => {
   return (
     <View style={styles.containerBeforeSlider}>
       <View style={styles.imageNewsWrapper}>
-        <Image style={styles.imageNews} source={image} />
+        <Image style={styles.imageNews} source={{uri: image}} />
       </View>
       <View style={{ flexDirection: "column" }}>
         <Text style={styles.title}>{title}</Text>

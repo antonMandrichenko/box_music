@@ -45,7 +45,7 @@ const TrackLevels = ({ navigation }) => {
         >
           <View style={styles.containerHeader}>
             <View style={styles.center}>
-              <Image style={styles.imageReview} source={image} />
+              <Image style={styles.imageReview} source={{uri: image}} />
               <Text style={styles.userName}> {user.slice(0, user.indexOf('@'))} </Text>
             </View>
             <TouchableOpacity onPress={toggleSwitch}>
