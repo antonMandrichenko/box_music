@@ -25,7 +25,7 @@ const NewsRead = ({ title, text, image }) => {
   return (
     <View style={styles.containerBeforeSlider}>
       <View style={styles.imageNewsWrapper}>
-        <Image style={styles.imageNews} source={{uri: image}} />
+        <Image style={styles.imageNews} source={image} />
       </View>
       <View style={{ flexDirection: "column" }}>
         <Text style={styles.title}>{title}</Text>
@@ -52,7 +52,6 @@ const News = ({navigation}) => {
       >
         <PlayButtons nav={nav}/>
         <ScrollView>
-          <SafeAreaView style={styles.container}>
             <FlatList
               data={data}
               renderItem={({ item }) => (
@@ -75,7 +74,6 @@ const News = ({navigation}) => {
               keyExtractor={item => (Math.random() * 2).toString()}
               showsVerticalScrollIndicator={false}
             />
-          </SafeAreaView>
         </ScrollView>
       </ImageBackground>
     </View>

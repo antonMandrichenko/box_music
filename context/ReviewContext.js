@@ -190,8 +190,7 @@ const ReviewProvider = ({ children }) => {
         .then(function(snapshot) {
             if(snapshot.val()){
                 setImage(snapshot.val().image);
-
-            } else setImage(userImage)
+            }
         });
     }
   };
