@@ -35,15 +35,15 @@ const AddComment = () => {
             placeholderTextColor="#abaed0"
           />
         </LinearGradient>
-        <LinearGradient
-          style={styles.inputChannelButton}
-          colors={["#373843", "#2e2f39", "#24252d"]}
-          locations={[0.3, 0.5, 0.8]}
-        >
-          <TouchableOpacity style={styles.flex} onPress={sendComments}>
+        <TouchableOpacity style={styles.flex} onPress={sendComments}>
+          <LinearGradient
+            style={styles.inputChannelButton}
+            colors={["#373843", "#2e2f39", "#24252d"]}
+            locations={[0.3, 0.5, 0.8]}
+          >
             <Image style={styles.iconReview} source={send} />
-          </TouchableOpacity>
-        </LinearGradient>
+          </LinearGradient>
+        </TouchableOpacity>
       </View>
     </View>
   );
